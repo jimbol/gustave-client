@@ -22,14 +22,14 @@ class StickyMenu extends Component {
       height: windowDimensions.height,
       width: windowDimensions.width,
 
-      top: args.change,
+      change: args.change,
     }
   }
 
   getStyles() {
     var vert = this.state.edge === 'left' || this.state.edge === 'right';
 
-    var change = this.state.top;
+    var change = this.state.change;
 
     return {
       height: (vert) ? this.state.height : change,

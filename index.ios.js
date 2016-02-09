@@ -12,6 +12,7 @@ import React, {
 import Dimensions from 'Dimensions';
 import styles from './styles.js';
 import StickyMenu from './components/sticky-menu/';
+import Card from './components/card/';
 
 class Gustave extends Component {
   constructor() {
@@ -35,6 +36,7 @@ class Gustave extends Component {
 
   _panResponder = {};
   _passingFn = (evt, gestureState) => true;
+
   componentWillMount() {
     this._panResponder = PanResponder.create({
       // Ask to be the responder:
@@ -190,14 +192,6 @@ class Gustave extends Component {
     ]).start();
   }
 
-  fullHeight() {
-    return {height: this.state.height}
-  }
-
-  fullWidth() {
-    return {width: this.state.width}
-  }
-
   getCardStyles() {
     return {
       transform: [
@@ -207,7 +201,21 @@ class Gustave extends Component {
     }
   }
 
+  fullHeight() {
+    return {height: this.state.height}
+  }
+
+  fullWidth() {
+    return {width: this.state.width}
+  }
+
   render() {
+    // var arr = [1,2,3];
+    // var results = [];
+    // arr.forEach(function(num) {
+    //   results.push(<Card key={num} />)
+    // });
+
     return (
       <View style={[styles.container, this.fullHeight(), this.fullWidth()]} {...this._panResponder.panHandlers}>
 
@@ -226,27 +234,7 @@ class Gustave extends Component {
         </StickyMenu>
 
         <View style={styles.cardContainer}>
-          <Animated.View style={[styles.card, this.getCardStyles(), this.fullHeight(), this.fullWidth()]}>
-            <Text style={styles.subTitle}>
-              Drinks with friends at
-            </Text>
-            <Text style={styles.title}>
-              Cafe Mustache
-            </Text>
-            <Text style={styles.subTitle}>
-              $ · Cafe
-            </Text>
-            <Text style={styles.text}>
-              Address: 2313 N Milwaukee Ave, Chicago, IL 60647{"\n"}
-              Phone:(773) 687-9063{"\n"}
-              Hours: Open today · 7AM–2AM{"\n"}
-              Menu: cafemustache.com
-            </Text>
-            <Text style={styles.text}>
-              Hip hangout offering coffee, local microbrews & light bites in chill quarters with an eclectic look.
-            </Text>
-          </Animated.View>
-
+          <Card x={this.state.x} y={this.state.y} />
         </View>
       </View>
     );
