@@ -71,20 +71,15 @@ class Gustave extends Component {
     if (xRatio >= yRatio) {
       x = gestureState.dx
       y = 0
-    } else if (yRatio > xRatio) {
+    } else if (xRatio < yRatio) {
       x = 0
       y = gestureState.dy
     }
 
-    var top = (y > 0) ? y : 0;
-    var bottom = (y < 0) ? Math.abs(y) : 0;
-    var right = (x < 0) ? Math.abs(x) : 0;
-    var left = (x > 0) ? x : 0;
-
-    this.state.top.setValue(top);
-    this.state.bottom.setValue(bottom);
-    this.state.left.setValue(left);
-    this.state.right.setValue(right);
+    this.state.top.setValue((y > 0) ? y : 0);
+    this.state.bottom.setValue((y < 0) ? Math.abs(y) : 0);
+    this.state.right.setValue((x < 0) ? Math.abs(x) : 0);
+    this.state.left.setValue((x > 0) ? x : 0);
 
     this.state.x.setValue(x);
     this.state.y.setValue(y);
@@ -92,11 +87,7 @@ class Gustave extends Component {
 
   offScreen = false;
 
-  onPanResponderRelease(evt, gestureState) {
-    if(this.offScreen){
-      return;
-    }
-
+  getGestureDetails(gestureState) {
     var vx = gestureState.vx;
     var vy = gestureState.vy;
 
@@ -126,17 +117,23 @@ class Gustave extends Component {
         }
       }
 
-      Animated.parallel([
-        Animated.timing(this.state[axis], {
-          toValue: offset,
-          duration: 100
-        }),
-        Animated.timing(this.state[direction], {
-          toValue: (axis === 'x') ? this.state.width : this.state.height,
-          duration: 100
-        }),
-      ]).start(() => this.resetEnd());
+      return {
+        axis: axis,
+        direction: direction,
+        offset: offset
+      }
+    }
+  }
 
+  onPanResponderRelease(evt, gestureState) {
+    if(this.offScreen){
+      return;
+    }
+
+    var gestureDetails = this.getGestureDetails(gestureState)
+
+    if (gestureDetails){
+      this.carryCardAway(gestureDetails)
       this.offScreen = true
     }
 
@@ -146,6 +143,23 @@ class Gustave extends Component {
 
     this.resetMenus();
     this.resetCard()
+  }
+
+  carryCardAway(gestureDetails){
+    var axis = gestureDetails.axis;
+    var offset = gestureDetails.offset;
+    var direction = gestureDetails.direction;
+
+    Animated.parallel([
+      Animated.timing(this.state[axis], {
+        toValue: offset,
+        duration: 100
+      }),
+      Animated.timing(this.state[direction], {
+        toValue: (axis === 'x') ? this.state.width : this.state.height,
+        duration: 100
+      }),
+    ]).start(() => this.resetEnd());
   }
 
   resetEnd(){
@@ -202,49 +216,6 @@ class Gustave extends Component {
     ]).start();
   }
 
-  getTopStickyStyles() {
-    return {
-      opacity: this.state.opacity,
-      height: this.state.top,
-      width: this.state.width
-    }
-  }
-
-  getBottomStickyStyles() {
-    return {
-      opacity: this.state.opacity,
-      height: this.state.bottom,
-      width: this.state.width
-    }
-  }
-
-  getRightStickyStyles() {
-    return {
-      paddingTop: this.state.height / 2,
-      opacity: this.state.opacity,
-      width: this.state.right,
-      height: this.state.height
-    }
-  }
-
-  getLeftStickyStyles() {
-    return {
-      paddingTop: this.state.height / 2,
-      opacity: this.state.opacity,
-      width: this.state.left,
-      height: this.state.height
-    }
-  }
-
-  getCardStyles() {
-    return {
-      transform: [
-        {translateX: this.state.x},
-        {translateY: this.state.y}
-      ]
-    }
-  }
-
   fullHeight() {
     return {
       height: this.state.height
@@ -257,26 +228,32 @@ class Gustave extends Component {
     }
   }
 
+  getCardStyles() {
+    return {
+      transform: [
+        {translateX: this.state.x},
+        {translateY: this.state.y}
+      ]
+    }
+  }
 
   render() {
     return (
       <View style={[styles.container, this.fullHeight(), this.fullWidth()]} {...this._panResponder.panHandlers}>
-        <StickyMenu edge="top" />
-        <Animated.View style={[styles.stickyLeft, this.getLeftStickyStyles()]}>
-          <Text style={styles.label}>
-            Heck yea!
-          </Text>
-        </Animated.View>
-        <Animated.View style={[styles.stickyRight, this.getRightStickyStyles()]}>
-          <Text style={styles.label}>
-            Nah.
-          </Text>
-        </Animated.View>
-        <Animated.View style={[styles.stickyBottom, this.getBottomStickyStyles()]}>
-          <Text style={styles.label}>
-            Maybe later.
-          </Text>
-        </Animated.View>
+
+
+        <StickyMenu edge="top" change={this.state.top}>
+          Menu
+        </StickyMenu>
+        <StickyMenu edge="left" change={this.state.left}>
+          Yea!
+        </StickyMenu>
+        <StickyMenu edge="right" change={this.state.right}>
+          Nah.
+        </StickyMenu>
+        <StickyMenu edge="bottom" change={this.state.bottom}>
+          Maybe later.
+        </StickyMenu>
 
         <View style={styles.cardContainer}>
 

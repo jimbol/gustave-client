@@ -3,7 +3,6 @@ import React, {
   AppRegistry,
   Animated,
   Component,
-  PanResponder,
   StyleSheet,
   Text,
   View
@@ -14,16 +13,26 @@ import Dimensions from 'Dimensions';
 class StickyMenu extends Component {
   constructor(args) {
     super();
+    var windowDimensions = Dimensions.get('window');
+
     this.state = {
-      edge: args.edge // top, bottom, left, right
+      edge: args.edge, // top, bottom, left, right
+      opacity: 1,
+      height: windowDimensions.height,
+      width: windowDimensions.width,
+
+      top: args.change,
     }
   }
 
   getStyles() {
+    var vert = this.state.edge === 'left' || this.state.edge === 'right';
+
+    var change = this.state.top;
+
     return {
-      height: 150,
-      width: 420,
-      backgroundColor: '#009999'
+      height: (vert) ? this.state.height : change,
+      width:  (!vert) ? this.state.width : change,
     }
   }
 
@@ -31,7 +40,7 @@ class StickyMenu extends Component {
     return (
       <Animated.View style={[styles[this.state.edge], this.getStyles()]}>
         <Text style={styles.label}>
-          {this.state.edge}
+          {this.props.children}
         </Text>
       </Animated.View>
     );
