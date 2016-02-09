@@ -10,9 +10,8 @@ import React, {
 } from 'react-native';
 
 import Dimensions from 'Dimensions';
-import StickyMenu from './sticky-menu';
-
-import _ from 'lodash';
+import styles from './styles.js';
+import StickyMenu from './components/sticky-menu/';
 
 class Gustave extends Component {
   constructor() {
