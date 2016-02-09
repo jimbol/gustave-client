@@ -23,8 +23,6 @@ class Gustave extends Component {
       height: windowDimensions.height,
       width: windowDimensions.width,
 
-      opacity: new Animated.Value(1),
-
       x: new Animated.Value(0),
       y: new Animated.Value(0),
 
@@ -58,8 +56,6 @@ class Gustave extends Component {
     if(this.offScreen){
       return;
     }
-
-    this.state.opacity.setValue(1);
 
     var xRatio = Math.abs(gestureState.dx) / this.state.width;
     var yRatio = Math.abs(gestureState.dy) / this.state.height;
@@ -158,73 +154,48 @@ class Gustave extends Component {
         toValue: (axis === 'x') ? this.state.width : this.state.height,
         duration: 100
       }),
-    ]).start(() => this.resetEnd());
+    ]).start(() => this.resetCard());
   }
 
-  resetEnd(){
-    Animated.sequence([
-      Animated.delay(400),
-      Animated.parallel([
-        Animated.timing(this.state.x, {
-          toValue: 0,
-          duration: 200
-        }),
-        Animated.timing(this.state.y, {
-          toValue: 0,
-          duration: 200
-        }),
-      ])
-    ]).start(() => this.offScreen = false);
+  _resetValue = {
+    toValue: 0,
+    duration: 200
+  };
+
+  getXYResetAnimation(){
+    return [
+      Animated.timing(this.state.x, this._resetValue),
+      Animated.timing(this.state.y, this._resetValue)
+    ]
   }
 
   resetCard(){
-    Animated.parallel([
-      Animated.timing(this.state.x, {
-        toValue: 0,
-        duration: 200
-      }),
-      Animated.timing(this.state.y, {
-        toValue: 0,
-        duration: 200
-      }),
-    ]).start(() => this.offScreen = false);
+    var sequence = [];
+
+    if(this.offScreen){
+      sequence.push(Animated.delay(400));
+    }
+
+    sequence.push(Animated.parallel(this.getXYResetAnimation()))
+
+    Animated.sequence(sequence).start(() => this.offScreen = false);
   }
 
   resetMenus(){
     Animated.parallel([
-      Animated.timing(this.state.opacity, {
-        toValue: 0,
-        duration: 200
-      }),
-      Animated.timing(this.state.top, {
-        toValue: 0,
-        duration: 200
-      }),
-      Animated.timing(this.state.bottom, {
-        toValue: 0,
-        duration: 200
-      }),
-      Animated.timing(this.state.right, {
-        toValue: 0,
-        duration: 200
-      }),
-      Animated.timing(this.state.left, {
-        toValue: 0,
-        duration: 200
-      }),
+      Animated.timing(this.state.top, this._resetValue),
+      Animated.timing(this.state.bottom, this._resetValue),
+      Animated.timing(this.state.right, this._resetValue),
+      Animated.timing(this.state.left, this._resetValue),
     ]).start();
   }
 
   fullHeight() {
-    return {
-      height: this.state.height
-    }
+    return {height: this.state.height}
   }
 
   fullWidth() {
-    return {
-      width: this.state.width
-    }
+    return {width: this.state.width}
   }
 
   getCardStyles() {
@@ -255,8 +226,6 @@ class Gustave extends Component {
         </StickyMenu>
 
         <View style={styles.cardContainer}>
-
-
           <Animated.View style={[styles.card, this.getCardStyles(), this.fullHeight(), this.fullWidth()]}>
             <Text style={styles.subTitle}>
               Drinks with friends at
@@ -283,77 +252,5 @@ class Gustave extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#000',
-    marginTop: 20,
-  },
-  label: {
-    flex: 1,
-    textAlign:'center',
-    color: 'white',
-    fontSize: 24,
-    width: 300
-  },
-
-  // Stickies
-  stickyTop: {
-    flexDirection: 'row',
-    alignItems:'center',
-    position: 'absolute',
-    backgroundColor: 'gray',
-    overflow: 'hidden'
-  },
-  stickyLeft: {
-    position: 'absolute',
-    alignItems:'center',
-    backgroundColor: 'green',
-    overflow: 'hidden'
-  },
-  stickyRight: {
-    right: 0,
-    position: 'absolute',
-    alignItems:'center',
-    backgroundColor: 'red',
-    overflow: 'hidden'
-  },
-  stickyBottom: {
-    flexDirection: 'row',
-    alignItems:'center',
-    bottom: 0,
-    position: 'absolute',
-    backgroundColor: 'blue',
-    overflow: 'hidden'
-  },
-
-  // Card shit
-  cardContainer: {
-    flexDirection:'row'
-  },
-  card: {
-    position: 'absolute',
-    backgroundColor: '#EEE',
-  },
-  title: {
-    fontSize: 60,
-    padding: 20,
-    backgroundColor: '#8c0d26',
-    color: '#DDD'
-
-  },
-  subTitle: {
-    padding: 20,
-    fontSize: 20,
-    textAlign: 'left',
-  },
-  text: {
-    padding: 20,
-    paddingTop: 0,
-    fontSize: 12,
-    textAlign: 'left',
-    color: '#333'
-  },
-});
 
 AppRegistry.registerComponent('gustave', () => Gustave);

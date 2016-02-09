@@ -1,5 +1,5 @@
 'use strict';
-import React, {,
+import React, {
   StyleSheet
 } from 'react-native';
 
