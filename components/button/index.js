@@ -8,7 +8,7 @@ import React, {
 
 import styles from './styles';
 
-class Button extends Component {
+export default class Button extends Component {
 
   setNativeProps(nativeProps) {
     this._root.setNativeProps(nativeProps);
@@ -25,7 +25,3 @@ class Button extends Component {
     );
   }
 }
-
-module.exports = Button;
-
-AppRegistry.registerComponent('Button', () => Button);
