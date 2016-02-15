@@ -10,6 +10,9 @@
       ], 
       "place": {
         "name": "Cafe Mustache",
+        "photo": {
+          "uri": "http://epicureandculture.com/wp-content/uploads/2015/10/Mustache.jpg"
+        },
         "description": "Hip hangout offering coffee, local microbrews & light bites in chill quarters with an eclectic look.",
         "labels": [
           "cafe",
@@ -32,6 +35,9 @@
       ], 
       "place": {
         "name": "Scofflaw",
+        "photo": {
+          "uri": "http://media-cdn.tripadvisor.com/media/photo-s/06/46/ee/b4/scofflaw.jpg"
+        },
         "description": "Gin-centric cocktails, craft beers & pub grub served in a relaxed urban-rustic bar with cozy nooks.",
         "labels": [
           "high end cocktails",
@@ -53,6 +59,9 @@
       ], 
       "place": {
         "name": "Emporium Arcade Bar",
+        "photo": {
+          "uri": "https://img.grouponcdn.com/deal/kcicvt5sg5Hg78jY5nVd/Jv-4113x2468/v1/c700x420.jpg"
+        },        
         "description": "Decades of games, dozens of beers & 60-plus whiskeys in a classic tavern setting with a tin ceiling.",
         "labels": [
           "beer fridge",
@@ -73,6 +82,9 @@
         "limited edition" 
       ], 
       "place": {
+        "photo": {
+          "uri": "http://tpetersen.photographyblogsites.com/files/2012/11/4-berendt-rev-brew-interior-1024x682.jpg"
+        },        
         "name": "Revolution Brewing",
         "description": "Revolution Brewing is Chicago's new hometown craft brewery. Our brewpub in Logan Square is a bustling, neighborhood institution where friends and families meet to enjoy the freshest beer in town.",
         "labels": [
