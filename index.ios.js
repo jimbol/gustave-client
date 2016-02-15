@@ -34,14 +34,6 @@ class Gustave extends Component {
     recIndex: 0
   }
 
-  // Renders topic tags by collapsing event and place labels into a unique union
-  renderTags() {
-    let rec = this.props.recs[this.state.recIndex];
-    return _.union(rec.event.labels, rec.event.place.labels).map(tag =>
-      <Chip key={tag}>{tag}</Chip>
-    );
-  }
-
   // This is just test functionality
   nextRec() {
     if (this.state.recIndex < this.props.recs.length - 1) {
@@ -72,7 +64,10 @@ class Gustave extends Component {
           <View style={styles.divider} />
 
           <View style={styles.chipContainer}>
-            {this.renderTags()}
+            {/* Render unique topic tags from both even and place */}
+            {_.union(rec.event.labels, rec.event.place.labels).map(tag =>
+              <Chip key={tag}>{tag}</Chip>
+            )}
           </View>
 
           <TouchableHighlight onPress={this.nextRec.bind(this)}>
