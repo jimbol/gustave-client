@@ -18,14 +18,18 @@ export default class Recommendation extends Component {
         <Image
           style={styles.backgroundImage}
           source={{uri: this.props.rec.event.place.photo.uri}}>
+
           <Button onPress={this.props.onToggleDetail}>
             More Deets
           </Button>
+
         </Image>
 
-        <Text style={styles.title}>
-          {this.props.rec.event.name} @ {this.props.rec.event.place.name}
-        </Text>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>
+            {this.props.rec.event.name + ' @ \n' + this.props.rec.event.place.name}
+          </Text>
+        </View>
 
         <View style={styles.divider} />
 

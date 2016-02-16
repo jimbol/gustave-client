@@ -10,5 +10,6 @@ export default StyleSheet.create({
     position: 'absolute',
     bottom: 32,
     right: 32,
+    backgroundColor: '#4a0b49',
   },
 });

@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component, View, Text} from 'react-native';
+import React, {Component, View, Text, Image} from 'react-native';
 import styles from './styles';
 
 import Card from '../card';
@@ -15,31 +15,44 @@ export default class RecommendationDetail extends Component {
 
     return (
       <Card>
-        <Button buttonStyle={styles.backButton} onPress={this.props.onToggleDetail}>
-          Back
-        </Button>
+        <Image
+          style={styles.backgroundImage}
+          source={{uri: this.props.rec.event.place.photo.uri}}>
 
-        <Text style={styles.title}>
-          {event.name} @ {event.place.name}
-        </Text>
+          <Button onPress={this.props.onToggleDetail}>
+            Back
+          </Button>
+
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>
+              {this.props.rec.event.name + ' @ \n' + this.props.rec.event.place.name}
+            </Text>
+          </View>
+
+        </Image>
+
 
         <View style={styles.divider} />
-        <View>
-          <Text>{event.name}</Text>
+
+        <View style={styles.detail}>
+          <Text style={styles.subtitle}>{event.name}</Text>
           <Text>{event.description}</Text>
+           <View style={styles.chipContainer}>
+            {event.labels.map(tag => <Chip key={tag}>{tag}</Chip>)}
+          </View>
         </View>
-        <View style={styles.chipContainer}>
-          {event.labels.map(tag => <Chip key={tag}>{tag}</Chip>)}
-        </View>
+
+
 
 
         <View style={styles.divider} />
-        <View>
-          <Text>{event.place.name}</Text>
+
+        <View style={styles.detail}>
+          <Text style={styles.subtitle}>{event.place.name}</Text>
           <Text>{event.place.description}</Text>
-        </View>
-        <View style={styles.chipContainer}>
-          {event.place.labels.map(tag => <Chip key={tag}>{tag}</Chip>)}
+          <View style={styles.chipContainer}>
+            {event.place.labels.map(tag => <Chip key={tag}>{tag}</Chip>)}
+          </View>
         </View>
 
       </Card>

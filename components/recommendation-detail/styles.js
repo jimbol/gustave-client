@@ -4,28 +4,48 @@ import React, {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
 
-  backButton: {
-    alignSelf: 'flex-start',
+  backgroundImage: {
+    flex: 0,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
 
   divider: {
-    height: 1,
+    height: StyleSheet.hairlineWidth,
     backgroundColor: '#ddd',
     marginRight: 16,
     marginLeft: 16,
   },
 
-  title: {
+  titleContainer: {
     flex: 1,
-    fontSize: 26,
-    color: '#111',
+    backgroundColor: 'rgba(0,0,0,0)',
+    alignSelf: 'center',
+  },
+
+  title: {
+    fontSize: 18,
+    color: '#fff',
+    padding: 16,
+    textAlign: 'center',
+  },
+
+  detail: {
+    flex: 2,
     padding: 16,
   },
 
+  subtitle: {
+    fontSize: 16,
+    color: '#111',
+    paddingBottom: 8,
+  },
+
   chipContainer: {
-    padding: 16,
-    height: 220,
+    paddingTop: 16,
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    overflow: 'hidden',
   },
 });
