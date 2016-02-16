@@ -4,7 +4,11 @@ import React, {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
 
-  divider:{
+  backButton: {
+    alignSelf: 'flex-start',
+  },
+
+  divider: {
     height: 1,
     backgroundColor: '#ddd',
     marginRight: 16,

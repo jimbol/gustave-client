@@ -3,19 +3,8 @@
 import React, {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
-  container: {
-    alignSelf: 'flex-start',
-    backgroundColor: '#ffffff',
-  },
-  text: {
-    backgroundColor: '#4a0b49',
-    borderRadius: 3,
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: 'bold',
-    padding: 8,
-    paddingLeft: 16,
-    paddingRight: 16,
+  button: {
+    backgroundColor: '#ccc',
     shadowColor: "#000",
     shadowOffset: {
       height: 2,
@@ -23,5 +12,16 @@ export default StyleSheet.create({
     },
     shadowOpacity: .4,
     shadowRadius: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  buttonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
+    padding: 8,
+    paddingLeft: 16,
+    paddingRight: 16,
   },
 });

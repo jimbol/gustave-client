@@ -15,8 +15,7 @@ export default class RecommendationDetail extends Component {
 
     return (
       <Card>
-
-        <Button style={styles.showMeMore} onPress={this.props.onToggleDetail}>
+        <Button buttonStyle={styles.backButton} onPress={this.props.onToggleDetail}>
           Back
         </Button>
 

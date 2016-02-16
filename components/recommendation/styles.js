@@ -6,12 +6,8 @@ export default StyleSheet.create({
 
   backgroundImage: {
     height: 280,
-  },
-
-  showMeMore: {
-    top: 120,
-    left: 120,
-    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   divider:{

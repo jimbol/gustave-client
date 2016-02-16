@@ -14,14 +14,14 @@ export default class Recommendation extends Component {
 
     return (
       <Card>
+
         <Image
           style={styles.backgroundImage}
-          source={{uri: this.props.rec.event.place.photo.uri}}
-        />
-
-        <Button style={styles.showMeMore} onPress={this.props.onToggleDetail}>
-          More Deets
-        </Button>
+          source={{uri: this.props.rec.event.place.photo.uri}}>
+          <Button onPress={this.props.onToggleDetail}>
+            More Deets
+          </Button>
+        </Image>
 
         <Text style={styles.title}>
           {this.props.rec.event.name} @ {this.props.rec.event.place.name}

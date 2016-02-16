@@ -10,10 +10,17 @@ import React, {
 import styles from './styles';
 
 export default class Button extends Component {
+
+  static propTypes = {
+    buttonStyle: View.propTypes.style,
+    buttonTextStyle: Text.propTypes.style,
+    onPress: React.PropTypes.func,
+  }
+
   render() {
     return (
-      <TouchableHighlight {...this.props} style={[this.props.style, styles.container]}>
-        <Text style={styles.text}>
+      <TouchableHighlight onPress={this.props.onPress} style={[styles.button, this.props.buttonStyle]}>
+        <Text style={[styles.buttonText, this.props.buttonTextStyle]}>
           {this.props.children}
         </Text>
       </TouchableHighlight>

@@ -48,7 +48,7 @@ export default class RecommendationScene extends Component {
       <View style={[this.props.style, styles.scene]}>
         <RecommendationComponent rec={rec} onToggleDetail={this.toggleExpanded.bind(this)} />
 
-        <Button style={styles.commitButton} onPress={this.commitRec.bind(this)}>
+        <Button buttonStyle={styles.commitButton} onPress={this.commitRec.bind(this)}>
           I'M DOWN
         </Button>
       </View>
