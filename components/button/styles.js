@@ -8,7 +8,7 @@ export default StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   text: {
-    backgroundColor: '#33cc33',
+    backgroundColor: '#4a0b49',
     borderRadius: 3,
     color: '#fff',
     fontSize: 14,

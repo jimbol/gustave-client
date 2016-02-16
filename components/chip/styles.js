@@ -13,7 +13,7 @@ export default StyleSheet.create({
     marginBottom: 12,
     height: 32,
     borderRadius: 16,
-    backgroundColor: '#f3f3f3',
+    backgroundColor: '#620c3b',
     overflow: 'hidden',
   },
 
@@ -37,7 +37,7 @@ export default StyleSheet.create({
   chipText: {
     lineHeight: 16,
     fontSize: 16,
-    color: '#333',
+    color: '#e3e4d9',
     backgroundColor: 'rgba(0,0,0,0)',
   },
 
