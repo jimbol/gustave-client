@@ -18,8 +18,11 @@ import styles from './styles.js';
 import Button from './components/button';
 import Chip from './components/chip';
 import Card from './components/card';
+import FlipCard from './components/flip-card';
 
 import {data} from './data/mock.json';
+
+
 
 class Gustave extends Component {
 
@@ -45,36 +48,13 @@ class Gustave extends Component {
 
   // Main render method
   render() {
-
-    // This is how we control the current 
-    let rec = this.props.recs[this.state.recIndex];
     
     return (
       <View style={styles.container}>
-        <Card>
-          <Image
-            style={styles.backgroundImage}
-            source={{uri: rec.event.place.photo.uri}}
-          />
-
-          <Text style={styles.title}>
-            {rec.event.name} @ {rec.event.place.name}
-          </Text>
-
-          <View style={styles.divider} />
-
-          <View style={styles.chipContainer}>
-            {/* Render unique topic tags from both even and place */}
-            {_.union(rec.event.labels, rec.event.place.labels).map(tag =>
-              <Chip key={tag}>{tag}</Chip>
-            )}
-          </View>
-
-          <TouchableHighlight onPress={this.nextRec.bind(this)}>
-            <Button>I'M DOWN</Button>
-          </TouchableHighlight>
-
-        </Card>
+        <FlipCard rec={this.props.recs[this.state.recIndex]} />
+        <TouchableHighlight onPress={this.nextRec.bind(this)}>
+          <Button>I'M DOWN</Button>
+        </TouchableHighlight>
       </View>
     );
             // <Text style={styles.button}>
