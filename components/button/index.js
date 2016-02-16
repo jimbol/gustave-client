@@ -21,7 +21,6 @@ export default class Button extends Component {
           {this.props.children}
         </Text>
       </View>
-
     );
   }
 }

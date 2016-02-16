@@ -9,9 +9,13 @@ import styles from './styles';
 
 export default class Card extends Component {
 
+  setNativeProps(nativeProps) {
+    this._root.setNativeProps(nativeProps);
+  }
+
   render() {
     return (
-      <View style={styles.card}>
+      <View ref={component => this._root = component} {...this.props} style={styles.card}>
         {this.props.children}
       </View>
     );
