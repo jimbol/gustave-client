@@ -34,7 +34,7 @@ export default class RecommendationDetail extends Component {
 
         <View style={styles.divider} />
 
-        <View style={styles.detail}>
+        <View style={styles.event}>
           <Text style={styles.subtitle}>{event.name}</Text>
           <Text>{event.description}</Text>
            <View style={styles.chipContainer}>
@@ -44,8 +44,9 @@ export default class RecommendationDetail extends Component {
 
         <View style={styles.divider} />
 
-        <View style={styles.detail}>
+        <View style={styles.place}>
           <Text style={styles.subtitle}>{event.place.name}</Text>
+          <Text style={styles.address}>{event.place.address}</Text>
           <Text>{event.place.description}</Text>
           <View style={styles.chipContainer}>
             {event.place.labels.map(tag => <Chip key={tag} chipStyle={styles.chip} chipTextStyle={styles.chipText}>{tag}</Chip>)}

@@ -31,8 +31,13 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
 
-  detail: {
+  event: {
     flex: 2,
+    padding: 16,
+  },
+
+  place: {
+    flex: 3,
     padding: 16,
   },
 
@@ -40,6 +45,12 @@ export default StyleSheet.create({
     fontSize: 16,
     color: '#111',
     paddingBottom: 8,
+  },
+
+  address: {
+    fontSize: 12,
+    color: '#ccc',
+    paddingBottom: 4
   },
 
   chipContainer: {
