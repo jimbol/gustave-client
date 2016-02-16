@@ -13,10 +13,11 @@ export default StyleSheet.create({
       height: 2,
       width: 0
     },
-    borderRadius: 0,
+    borderRadius: 2,
     borderWidth: 0,
     borderColor: '#ddd',
     backgroundColor: '#fff',
+    overflow: 'hidden',
     flex: 1
   },
 
