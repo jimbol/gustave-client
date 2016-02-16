@@ -7,11 +7,7 @@ import React, {
 
 import styles from './styles';
 
-class Card extends Component {
-  constructor() {
-    super()
-  }
-
+export default class Card extends Component {
 
   render() {
     return (
@@ -21,7 +17,3 @@ class Card extends Component {
     );
   }
 }
-
-module.exports = Card;
-
-AppRegistry.registerComponent('Card', () => Card);

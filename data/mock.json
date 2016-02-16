@@ -1,0 +1,100 @@
+{
+  "data": [
+    { "event": {
+      "name": "Dead On TV",
+      "description": "Local Chicago favorite Dead on TV has stroked audiences all over the nation with their brand of explosive new-wave punk narcissism. Live music and self-referential antics start @ 9pm.",
+      "labels": [ 
+        "live music", 
+        "punk rock", 
+        "local bands" 
+      ], 
+      "place": {
+        "name": "Cafe Mustache",
+        "photo": {
+          "uri": "http://epicureandculture.com/wp-content/uploads/2015/10/Mustache.jpg"
+        },
+        "description": "Hip hangout offering coffee, local microbrews & light bites in chill quarters with an eclectic look.",
+        "labels": [
+          "cafe",
+          "microbrews",
+          "light bites",
+          "intimate stage"
+        ], 
+        "address": "2313 N Milwaukee Ave, Chicago, IL 60647",
+        "hours": "7AM–2AM"
+        }
+      }
+    },
+    { "event": {
+      "name": "Cookies and Cocktails",
+      "description": "Enjoy a menu of high-end gin cocktails plus chocolate chip cookies served at the stroke of midnight.",
+      "labels": [ 
+        "sweet tooth", 
+        "high end cocktails", 
+        "gin" 
+      ], 
+      "place": {
+        "name": "Scofflaw",
+        "photo": {
+          "uri": "http://media-cdn.tripadvisor.com/media/photo-s/06/46/ee/b4/scofflaw.jpg"
+        },
+        "description": "Gin-centric cocktails, craft beers & pub grub served in a relaxed urban-rustic bar with cozy nooks.",
+        "labels": [
+          "high end cocktails",
+          "fireplace bars",
+          "pub grub",
+          "gin"
+        ], 
+        "address": "3201 W Armitage Ave, Chicago, IL 60647",
+        "hours": "5PM–2AM"
+        }
+      }
+    },
+    { "event": {
+      "name": "Mortal Kombat Showdown",
+      "description": "Emporium just got MK 1, 2, and 3! Single-elimination tournament with boozey prizes and classic arcade bragging rights. Toasty!!! Registration starts @ 6pm. Tournament starts @ 7pm.",
+      "labels": [ 
+        "arcade", 
+        "tournament"
+      ], 
+      "place": {
+        "name": "Emporium Arcade Bar",
+        "photo": {
+          "uri": "https://img.grouponcdn.com/deal/kcicvt5sg5Hg78jY5nVd/Jv-4113x2468/v1/c700x420.jpg"
+        },        
+        "description": "Decades of games, dozens of beers & 60-plus whiskeys in a classic tavern setting with a tin ceiling.",
+        "labels": [
+          "beer fridge",
+          "arcade",
+          "whiskey",
+          "food truck"
+        ], 
+        "address": "1366 N Milwaukee Ave, Chicago, IL 60622",
+        "hours": "5PM–2AM"
+        }
+      }
+    },
+    { "event": {
+      "name": "New Beers",
+      "description": "Come grab a pint of Triple Fist! This seriously hoppy ale that was originally brewed in 2010 to celebrate our one-hundredth brewpub batch is released today at the brewpub. Imperial Pale Ale. 8.6 ABV/IBU 95.",
+      "labels": [ 
+        "craft beer", 
+        "limited edition" 
+      ], 
+      "place": {
+        "photo": {
+          "uri": "http://tpetersen.photographyblogsites.com/files/2012/11/4-berendt-rev-brew-interior-1024x682.jpg"
+        },        
+        "name": "Revolution Brewing",
+        "description": "Revolution Brewing is Chicago's new hometown craft brewery. Our brewpub in Logan Square is a bustling, neighborhood institution where friends and families meet to enjoy the freshest beer in town.",
+        "labels": [
+          "craft beer",
+          "gastropub"
+        ], 
+        "address": "2323 N Milwaukee Ave, Chicago, Illinois 60647",
+        "hours": "10am–1AM"
+        }
+      }
+    },
+  ]
+}

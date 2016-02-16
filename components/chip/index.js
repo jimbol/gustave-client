@@ -8,11 +8,7 @@ import React, {
 
 import styles from './styles';
 
-class Chip extends Component {
-  constructor() {
-    super()
-  }
-
+export default class Chip extends Component {
 
   render() {
     var chipStyles = [styles.chip];
@@ -39,6 +35,3 @@ class Chip extends Component {
   }
 }
 
-module.exports = Chip;
-
-AppRegistry.registerComponent('Chip', () => Chip);

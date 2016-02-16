@@ -7,8 +7,11 @@ import React, {
   StyleSheet,
   Image,
   Text,
-  View
+  View,
+  TouchableHighlight
 } from 'react-native';
+
+import _ from 'lodash';
 
 import Dimensions from 'Dimensions';
 import styles from './styles.js';
@@ -16,43 +19,60 @@ import Button from './components/button';
 import Chip from './components/chip';
 import Card from './components/card';
 
+import {data} from './data/mock.json';
+
 class Gustave extends Component {
-  constructor() {
-    super()
+
+  // Eventually this will be handled by Relay 
+  static defaultProps = {
+    recs: data
   }
 
+  // To switch the current recommendation being viewed
+  // just use setState({recIndex: <index>})
+  state = {
+    recIndex: 0
+  }
 
+  // This is just test functionality
+  nextRec() {
+    if (this.state.recIndex < this.props.recs.length - 1) {
+      this.setState({recIndex: this.state.recIndex + 1});
+    } else {
+      this.setState({recIndex: 0});
+    }
+  }
+
+  // Main render method
   render() {
 
-
+    // This is how we control the current 
+    let rec = this.props.recs[this.state.recIndex];
+    
     return (
       <View style={styles.container}>
         <Card>
           <Image
             style={styles.backgroundImage}
-            source={require('./assets/Mustache.jpg')}
+            source={{uri: rec.event.place.photo.uri}}
           />
 
           <Text style={styles.title}>
-            Comedy night at Cafe Mustache
+            {rec.event.name} @ {rec.event.place.name}
           </Text>
 
           <View style={styles.divider} />
 
-
           <View style={styles.chipContainer}>
-
-            <Chip icon='star'>Comedy</Chip>
-            <Chip>Kitchy</Chip>
-            <Chip>Dive Bar</Chip>
-            <Chip>Cheap Drinks</Chip>
-            <Chip icon='star'>Records</Chip>
-            <Chip>Coffee</Chip>
-
+            {/* Render unique topic tags from both even and place */}
+            {_.union(rec.event.labels, rec.event.place.labels).map(tag =>
+              <Chip key={tag}>{tag}</Chip>
+            )}
           </View>
 
-          <Button>I'M DOWN</Button>
-
+          <TouchableHighlight onPress={this.nextRec.bind(this)}>
+            <Button>I'M DOWN</Button>
+          </TouchableHighlight>
 
         </Card>
       </View>
