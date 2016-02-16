@@ -42,9 +42,6 @@ export default class RecommendationDetail extends Component {
           </View>
         </View>
 
-
-
-
         <View style={styles.divider} />
 
         <View style={styles.detail}>

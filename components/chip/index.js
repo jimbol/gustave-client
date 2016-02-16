@@ -19,7 +19,6 @@ export default class Chip extends Component {
     chipIcon: React.PropTypes.string,
   };
 
-
   render() {
     return (
       <View style={[styles.chip, this.props.chipIcon && styles.chipWithImage, this.props.chipStyle]}>
