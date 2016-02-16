@@ -1,9 +1,8 @@
 'use strict';
-import React, {
-  StyleSheet
-} from 'react-native';
 
-module.exports = StyleSheet.create({
+import React, {StyleSheet} from 'react-native';
+
+export default StyleSheet.create({
 
   chip: {
     flexDirection: 'row',
@@ -41,4 +40,5 @@ module.exports = StyleSheet.create({
     color: '#333',
     backgroundColor: 'rgba(0,0,0,0)',
   },
+
 });

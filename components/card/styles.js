@@ -1,12 +1,10 @@
 'use strict';
-import React, {
-  StyleSheet
-} from 'react-native';
 
-module.exports = StyleSheet.create({
+import React, {StyleSheet} from 'react-native';
+
+export default StyleSheet.create({
   card: {
     margin: 16,
-    marginTop: 36,
     flexDirection: 'column',
     shadowColor: "#000",
     shadowOpacity: .4,
@@ -15,9 +13,11 @@ module.exports = StyleSheet.create({
       height: 2,
       width: 0
     },
-    borderRadius: 3,
-    borderWidth: 1,
+    borderRadius: 0,
+    borderWidth: 0,
     borderColor: '#ddd',
     backgroundColor: '#fff',
+    flex: 1
   },
+
 });

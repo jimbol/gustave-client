@@ -1,4 +1,5 @@
 'use strict';
+
 import React, {
   AppRegistry,
   Component,
@@ -22,7 +23,6 @@ export default class Chip extends Component {
           &#9733;
         </Text>
     }
-
 
     return (
       <View style={chipStyles}>
