@@ -5,39 +5,36 @@ import React, {StyleSheet} from 'react-native';
 export default StyleSheet.create({
 
   chip: {
-    flexDirection: 'row',
+    flexDirection: 'row', 
     padding: 8,
-    paddingLeft: 12,
-    paddingRight: 12,
-    marginRight: 12,
-    marginBottom: 12,
-    height: 32,
+    paddingHorizontal: 12,
+    marginHorizontal: 6,
+    marginBottom: 6,
     borderRadius: 16,
-    backgroundColor: '#620c3b',
-    overflow: 'hidden',
+    backgroundColor: '#ccc',
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   chipWithImage: {
     paddingLeft: 8,
   },
 
-  chipStar: {
-    top: -8,
-    left: -8,
-    height: 32,
-    width: 32,
-    padding: 2,
-    paddingLeft: 3,
+  chipIcon: {
+    marginRight: 2,
     borderRadius: 15,
     backgroundColor: '#ffcc00',
-    fontSize: 26,
+  },
+
+  chipIconText: {
     color: '#fff0b3',
   },
 
   chipText: {
     lineHeight: 16,
     fontSize: 16,
-    color: '#e3e4d9',
+    color: '#111',
     backgroundColor: 'rgba(0,0,0,0)',
   },
 

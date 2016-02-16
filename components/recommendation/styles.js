@@ -36,6 +36,15 @@ export default StyleSheet.create({
     flex: 2,
     flexDirection: 'row',
     flexWrap: 'wrap',
+    justifyContent: 'space-around',
     overflow: 'hidden',
+  },
+
+  chip: {
+    backgroundColor: '#620c3b',
+  },
+
+  chipText: {
+    color: 'e3e4d9',
   },
 });

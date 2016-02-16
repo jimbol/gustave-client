@@ -34,7 +34,7 @@ export default class Recommendation extends Component {
         <View style={styles.divider} />
 
         <View style={styles.chipContainer}>
-          {labels.map(tag => <Chip key={tag}>{tag}</Chip>)}
+          {labels.map(tag => <Chip key={tag} chipStyle={styles.chip} chipTextStyle={styles.chipText} chipIcon={'\u2605'}>{tag}</Chip>)}
         </View>
 
       </Card>

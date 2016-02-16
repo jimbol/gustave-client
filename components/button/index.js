@@ -15,7 +15,7 @@ export default class Button extends Component {
     buttonStyle: View.propTypes.style,
     buttonTextStyle: Text.propTypes.style,
     onPress: React.PropTypes.func,
-  }
+  };
 
   render() {
     return (

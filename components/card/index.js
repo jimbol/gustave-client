@@ -8,7 +8,7 @@ export default class Card extends Component {
 
   static propTypes = {
     cardStyle: View.propTypes.style,
-  }
+  };
 
   render() {
     return (

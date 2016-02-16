@@ -48,4 +48,14 @@ export default StyleSheet.create({
     flexWrap: 'wrap',
     overflow: 'hidden',
   },
+
+  chip: {
+    backgroundColor: '#620c3b',
+  },
+
+  chipText: {
+    color: 'e3e4d9',
+    fontSize: 12,
+    lineHeight: 12,
+  },
 });

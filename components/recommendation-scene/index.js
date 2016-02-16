@@ -20,7 +20,7 @@ export default class RecommendationScene extends Component {
   getNextRecIndex() {
     if (this.state.recIndex >= this.props.recs.length - 1){
       return 0;
-    }else{
+    } else {
       return this.state.recIndex + 1;
     }
   }
