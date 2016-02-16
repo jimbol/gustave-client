@@ -12,6 +12,9 @@ import React, {
 
 import Dimensions from 'Dimensions';
 import styles from './styles.js';
+import Button from './components/button';
+import Chip from './components/chip';
+import Card from './components/card';
 
 class Gustave extends Component {
   constructor() {
@@ -24,45 +27,39 @@ class Gustave extends Component {
 
     return (
       <View style={styles.container}>
-        <View style={styles.card}>
+        <Card>
           <Image
             style={styles.backgroundImage}
             source={require('./assets/Mustache.jpg')}
           />
+
           <Text style={styles.title}>
             Comedy night at Cafe Mustache
           </Text>
+
           <View style={styles.divider} />
 
 
           <View style={styles.chipContainer}>
-            <View style={[styles.chip, styles.chipWithImage]}>
-              <Text style={styles.chipStar}>
-                &#9733;
-              </Text>
-              <Text style={styles.chipText}>
-                Comedy
-              </Text>
-            </View>
-            <View style={styles.chip}>
-              <Text style={styles.chipText}>
-                Kitchy
-              </Text>
-            </View>
-            <View style={styles.chip}>
-              <Text style={styles.chipText}>
-                Dive Bar
-              </Text>
-            </View>
-            <View style={styles.chip}>
-              <Text style={styles.chipText}>
-                Cheap Drinks
-              </Text>
-            </View>
+
+            <Chip icon='star'>Comedy</Chip>
+            <Chip>Kitchy</Chip>
+            <Chip>Dive Bar</Chip>
+            <Chip>Cheap Drinks</Chip>
+            <Chip icon='star'>Records</Chip>
+            <Chip>Coffee</Chip>
+
           </View>
-        </View>
+
+          <Button>I'M DOWN</Button>
+
+
+        </Card>
       </View>
     );
+            // <Text style={styles.button}>
+            //   I'M DOWN
+            // </Text>
   }
 }
 

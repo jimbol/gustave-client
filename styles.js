@@ -8,15 +8,17 @@ module.exports = StyleSheet.create({
     backgroundColor: '#3399ff',
     height: 680,
   },
+
+  // sort styles by reusable vs not
   card: {
     margin: 16,
     marginTop: 36,
     flexDirection: 'column',
     shadowColor: "#000",
-    shadowOpacity: .75,
-    shadowRadius: 3,
+    shadowOpacity: .4,
+    shadowRadius: 2,
     shadowOffset: {
-      height: 1,
+      height: 2,
       width: 0
     },
     borderRadius: 3,
@@ -24,6 +26,7 @@ module.exports = StyleSheet.create({
     borderColor: '#ddd',
     backgroundColor: '#fff',
   },
+
   divider:{
     height: 1,
     backgroundColor: '#ddd',
@@ -33,10 +36,9 @@ module.exports = StyleSheet.create({
 
   backgroundImage: {
     flex: 1,
-    height: 200,
+    height: 280,
     width: 341,
   },
-
 
   title: {
     flex: 1,
@@ -47,45 +49,10 @@ module.exports = StyleSheet.create({
 
   chipContainer: {
     padding: 16,
+    height: 220,
+
 
     flexDirection: 'row',
     flexWrap: 'wrap'
-  },
-
-  chip: {
-    flexDirection: 'row',
-    padding: 8,
-    paddingLeft: 12,
-    paddingRight: 12,
-    marginRight: 12,
-    marginBottom: 12,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: '#f3f3f3',
-    overflow: 'hidden',
-  },
-
-  chipWithImage: {
-    paddingLeft: 8,
-  },
-
-  chipStar: {
-    top: -8,
-    left: -8,
-    height: 32,
-    width: 32,
-    padding: 2,
-    paddingLeft: 3,
-    borderRadius: 15,
-    backgroundColor: '#ffcc00',
-    fontSize: 26,
-    color: '#fff0b3',
-  },
-
-  chipText: {
-    lineHeight: 16,
-    fontSize: 16,
-    color: '#333',
-    backgroundColor: 'rgba(0,0,0,0)',
   },
 });
