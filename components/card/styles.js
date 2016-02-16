@@ -21,4 +21,7 @@ export default StyleSheet.create({
     flex: 1
   },
 
+  cardLandscape: {
+    flexDirection: 'row',
+  }
 });
