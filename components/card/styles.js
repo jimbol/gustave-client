@@ -4,7 +4,7 @@ import React, {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   card: {
-    margin: 16,
+    margin: 8,
     flexDirection: 'column',
     shadowColor: "#000",
     shadowOpacity: .4,

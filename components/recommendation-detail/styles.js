@@ -54,7 +54,7 @@ export default StyleSheet.create({
   },
 
   chipText: {
-    color: 'e3e4d9',
+    color: '#e3e4d9',
     fontSize: 12,
     lineHeight: 12,
   },

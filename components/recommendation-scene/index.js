@@ -9,7 +9,7 @@ import Button from '../button';
 export default class RecommendationScene extends Component {
 
   state = {
-    recIndex: 0,
+    recIndex: 2,
     expanded: false
   };
 

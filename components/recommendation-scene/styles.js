@@ -9,7 +9,7 @@ export default StyleSheet.create({
   commitButton: {
     position: 'absolute',
     bottom: 32,
-    right: 32,
+    right: 16,
     backgroundColor: '#4a0b49',
   },
 });
