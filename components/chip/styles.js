@@ -31,12 +31,10 @@ export default StyleSheet.create({
 
   chipIconText: {
     color: '#fff0b3',
-    // lineHeight: 22,
     fontSize: 18,
   },
 
   chipText: {
-    // lineHeight: 14,
     fontSize: 12,
     color: '#111',
   },
