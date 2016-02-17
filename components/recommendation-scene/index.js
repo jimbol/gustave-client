@@ -14,7 +14,7 @@ export default class RecommendationScene extends Component {
   };
 
   nextRec() {
-    this.setState({recIndex: this.getNextRecIndex()});
+    this.setState({recIndex: this.getNextRecIndex(), expanded: false});
   }
 
   getNextRecIndex() {
@@ -27,7 +27,7 @@ export default class RecommendationScene extends Component {
 
   commitRec(){
     let rec = this.props.recs[this.state.recIndex];
-    this.props.onCommit(rec);
+    this.props.onCommit(this.props.navigator, rec);
   }
 
   toggleExpanded(){

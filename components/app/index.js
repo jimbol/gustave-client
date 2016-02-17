@@ -20,6 +20,7 @@ import {data} from '../../data/mock.json';
 import styles from './styles';
 
 import RecommendationScene from '../recommendation-scene';
+import CommitScene from '../commit-scene';
 
 export default class Gustave extends Component {
 
@@ -27,8 +28,8 @@ export default class Gustave extends Component {
     recs: data
   };
 
-  onCommit(recommendation){
-    console.log(recommendation);
+  onCommit(navigator, recommendation){
+    navigator.push({id: 'commit', rec: recommendation});
   }
 
   render() {
@@ -36,7 +37,11 @@ export default class Gustave extends Component {
       <Navigator 
         style={styles.scene}
         initialRoute={{id: 'rec'}}
-        renderScene={this._navigatorRenderScene.bind(this)} />
+        renderScene={this._navigatorRenderScene.bind(this)}
+        configureScene={(route, routeStack) => Navigator.SceneConfigs.FloatFromBottom} />
+      
+      // We can add a reference to a styled component here to serve as a navigation bar for all scenes. Perfect place for a bottom nav bar.
+
     );
   }
 
@@ -46,11 +51,10 @@ export default class Gustave extends Component {
         return (
           <RecommendationScene navigator={navigator} recs={this.props.recs} onCommit={this.onCommit.bind(this)} />
         );
+      case 'commit':
+        return (
+          <CommitScene navigator={navigator} rec={route.rec} onBack={()=> navigator.pop()}/>
+        );
     }
   }
-  // render() {
-  //   return (
-  //     <RecommendationScene recs={this.props.recs} style={styles.scene} onCommit={this.onCommit.bind(this)} />
-  //   );
-  // }
 }
