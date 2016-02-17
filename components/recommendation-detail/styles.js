@@ -5,7 +5,7 @@ import React, {StyleSheet} from 'react-native';
 export default StyleSheet.create({
 
   backgroundImage: {
-    flex: 0.1,
+    flex: 0.10,
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
@@ -47,7 +47,7 @@ export default StyleSheet.create({
     paddingBottom: 8,
   },
 
-  address: {
+  info: {
     fontSize: 12,
     color: '#ccc',
     paddingBottom: 4
