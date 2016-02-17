@@ -8,6 +8,18 @@ export default StyleSheet.create({
     backgroundColor: 'white',
   },
 
+  map: {
+    flex: 0.30,
+    margin: 16,
+    borderWidth: 1,
+    borderColor: '#000000',
+  },
+
+  other: {
+    flex: 0.70,
+    margin: 16,
+  },
+
   backButton: {
     alignSelf: 'flex-start',
   },
