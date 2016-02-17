@@ -8,7 +8,7 @@ export default StyleSheet.create({
     flexDirection: 'row', 
     paddingVertical: 8,
     paddingHorizontal: 12,
-    marginHorizontal: 6,
+    marginHorizontal: 3,
     marginBottom: 6,
     borderRadius: 16,
     backgroundColor: '#ccc',
