@@ -72,7 +72,7 @@
         "start": "2016-02-17T23:00:00Z",
         "end": "2016-02-18T04:00:00Z",
       },
-      "description": "Emporium just got MK1, 2 & 3! Single eliminaton tourney w/ boozey prizes and classic arcade bragging rights. Toasty!!!",
+      "description": "Emporium just got MK1, 2 & 3! Single eliminaton tourney w/ boozey prizes and classic arcade bragging rights. Toasty!!!\n\nRegistration starts @ 5pm.",
       "labels": [ 
         "arcade", 
         "tournament"
@@ -91,8 +91,8 @@
         ], 
         "address": "2363 N Milwaukee Ave, Chicago, IL 60647",
         "geo": {
-          "lat": 41.926348,
-          "lng": -87.699209
+          "lat": 41.9243532,
+          "lng": -87.6992166
         },
         "hours": "5PM–2AM"
         }
@@ -104,7 +104,7 @@
         "start": "2016-02-17T23:00:00Z",
         "end": "2016-02-18T04:00:00Z",
       },
-      "description": "Come grab a pint of Triple Fist! This seriously hoppy ale that was originally brewed in 2010 to celebrate our one-hundredth brewpub batch is released today at the brewpub. Imperial Pale Ale. 8.6 ABV/IBU 95.",
+      "description": "Come grab a pint of Triple Fist! This seriously hoppy ale that was originally brewed in 2010 to celebrate our one-hundredth brewpub batch is released today at the brewpub.\n\nImperial Pale Ale. 8.6 ABV/IBU 95.",
       "labels": [ 
         "craft beer", 
         "limited edition" 

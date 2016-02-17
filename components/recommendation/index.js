@@ -33,6 +33,9 @@ export default class Recommendation extends Component {
           <Text numberOfLines={2} style={styles.title}>
             {event.name + ' @ ' + place.name}
           </Text>
+          <Text numberOfLines={2} style={styles.preview}>
+            {event.description}
+          </Text>
         </View>
 
         <View style={styles.divider} />

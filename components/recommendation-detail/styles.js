@@ -32,12 +32,12 @@ export default StyleSheet.create({
   },
 
   event: {
-    flex: 0.35,
+    flex: 0.40,
     padding: 16,
   },
 
   place: {
-    flex: 0.55,
+    flex: 0.50,
     padding: 16,
   },
 
