@@ -38,7 +38,7 @@ export default class RecommendationDetail extends Component {
           <Text style={styles.subtitle}>{event.name}</Text>
           <Text>{event.description}</Text>
            <View style={styles.chipContainer}>
-            {event.labels.map(tag => <Chip key={tag} chipStyle={styles.chip} chipTextStyle={styles.chipText} chipIcon={'\u2605'}>{tag}</Chip>)}
+            {event.labels.map(tag => <Chip key={tag} chipStyle={styles.chip} chipTextStyle={styles.chipText} chipIconTextStyle={styles.chipIconText} chipIcon={'\u2605'}>{tag}</Chip>)}
           </View>
         </View>
 

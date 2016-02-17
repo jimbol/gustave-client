@@ -22,7 +22,7 @@ export default StyleSheet.create({
   },
 
   chipIcon: {
-    padding: 9,
+    padding: 6,
     margin: -9,
     marginRight: 2,
     borderRadius: 25,
@@ -31,6 +31,8 @@ export default StyleSheet.create({
 
   chipIconText: {
     color: '#fff0b3',
+    lineHeight: 24,
+    fontSize: 24,
   },
 
   chipText: {

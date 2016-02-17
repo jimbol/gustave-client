@@ -69,4 +69,10 @@ export default StyleSheet.create({
     fontSize: 12,
     lineHeight: 12,
   },
+
+  chipIconText: {
+    color: '#fff0b3',
+    lineHeight: 18,
+    fontSize: 18,
+  },
 });
