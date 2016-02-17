@@ -25,7 +25,7 @@ export default StyleSheet.create({
   },
 
   title: {
-    fontSize: 18,
+    fontSize: 16,
     color: '#fff',
     padding: 16,
     textAlign: 'center',
@@ -66,13 +66,11 @@ export default StyleSheet.create({
 
   chipText: {
     color: '#e3e4d9',
-    fontSize: 12,
-    lineHeight: 12,
+    fontSize: 10,
   },
 
   chipIconText: {
     color: '#fff0b3',
-    lineHeight: 18,
-    fontSize: 18,
+    fontSize: 16,
   },
 });

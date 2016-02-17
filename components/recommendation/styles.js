@@ -24,7 +24,7 @@ export default StyleSheet.create({
   },
 
   title: {
-    fontSize: 26,
+    fontSize: 22,
     color: '#111',
     padding: 16,
     textAlign: 'left',
