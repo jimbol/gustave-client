@@ -20,7 +20,7 @@ import {data} from '../../data/mock.json';
 import styles from './styles';
 
 import RecommendationScene from '../recommendation-scene';
-import CommitScene from '../commit-scene';
+import ConciergeScene from '../concierge-scene';
 
 export default class Gustave extends Component {
 
@@ -60,7 +60,7 @@ export default class Gustave extends Component {
         );
       case 'commit':
         return (
-          <CommitScene navigator={navigator} rec={route.rec} onBack={this.onBack.bind(this)}/>
+          <ConciergeScene navigator={navigator} rec={route.rec} onBack={this.onBack.bind(this)}/>
         );
     }
   }
