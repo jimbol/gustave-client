@@ -14,23 +14,27 @@ export default class Recommendation extends Component {
 
     return (
       <Card>
+
         <Image
           style={styles.backgroundImage}
-          source={{uri: this.props.rec.event.place.photo.uri}}
-        />
+          source={{uri: this.props.rec.event.place.photo.uri}}>
 
-        <Button style={styles.showMeMore} onPress={this.props.onToggleDetail}>
-          More Deets
-        </Button>
+          <Button onPress={this.props.onToggleDetail}>
+            More Deets
+          </Button>
 
-        <Text style={styles.title}>
-          {this.props.rec.event.name} @ {this.props.rec.event.place.name}
-        </Text>
+        </Image>
+
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>
+            {this.props.rec.event.name + ' @ ' + this.props.rec.event.place.name}
+          </Text>
+        </View>
 
         <View style={styles.divider} />
 
         <View style={styles.chipContainer}>
-          {labels.map(tag => <Chip key={tag}>{tag}</Chip>)}
+          {labels.map(tag => <Chip key={tag} chipStyle={styles.chip} chipTextStyle={styles.chipText} chipIcon={'\u2605'}>{tag}</Chip>)}
         </View>
 
       </Card>

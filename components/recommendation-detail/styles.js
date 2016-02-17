@@ -4,24 +4,69 @@ import React, {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
 
-  divider:{
-    height: 1,
+  backgroundImage: {
+    flex: 0,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+  },
+
+  divider: {
+    height: StyleSheet.hairlineWidth,
     backgroundColor: '#ddd',
     marginRight: 16,
     marginLeft: 16,
   },
 
-  title: {
+  titleContainer: {
     flex: 1,
-    fontSize: 26,
-    color: '#111',
+    backgroundColor: 'rgba(0,0,0,0)',
+    alignSelf: 'center',
+  },
+
+  title: {
+    fontSize: 18,
+    color: '#fff',
+    padding: 16,
+    textAlign: 'center',
+  },
+
+  event: {
+    flex: 2,
     padding: 16,
   },
 
-  chipContainer: {
+  place: {
+    flex: 3,
     padding: 16,
-    height: 220,
+  },
+
+  subtitle: {
+    fontSize: 16,
+    color: '#111',
+    paddingBottom: 8,
+  },
+
+  address: {
+    fontSize: 12,
+    color: '#ccc',
+    paddingBottom: 4
+  },
+
+  chipContainer: {
+    paddingTop: 16,
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    overflow: 'hidden',
+  },
+
+  chip: {
+    backgroundColor: '#620c3b',
+  },
+
+  chipText: {
+    color: '#e3e4d9',
+    fontSize: 12,
+    lineHeight: 12,
   },
 });

@@ -4,13 +4,11 @@ import React, {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   scene: {
-    flex: 1
+    flex: 1,
+    backgroundColor: 'white',
   },
 
-  commitButton: {
-    position: 'absolute',
-    bottom: 32,
-    right: 16,
-    backgroundColor: '#4a0b49',
+  backButton: {
+    alignSelf: 'flex-start',
   },
 });

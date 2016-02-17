@@ -21,6 +21,10 @@
           "intimate stage"
         ], 
         "address": "2313 N Milwaukee Ave, Chicago, IL 60647",
+        "geo": {
+          "lat": 41.923364,
+          "lng": -87.697749
+        },
         "hours": "7AM–2AM"
         }
       }
@@ -46,6 +50,10 @@
           "gin"
         ], 
         "address": "3201 W Armitage Ave, Chicago, IL 60647",
+        "geo": {
+          "lat": 41.917163,
+          "lng": -87.707253
+        },
         "hours": "5PM–2AM"
         }
       }
@@ -58,7 +66,7 @@
         "tournament"
       ], 
       "place": {
-        "name": "Emporium Arcade Bar",
+        "name": "Emporium Logan Square",
         "photo": {
           "uri": "https://img.grouponcdn.com/deal/kcicvt5sg5Hg78jY5nVd/Jv-4113x2468/v1/c700x420.jpg"
         },        
@@ -69,7 +77,11 @@
           "whiskey",
           "food truck"
         ], 
-        "address": "1366 N Milwaukee Ave, Chicago, IL 60622",
+        "address": "2363 N Milwaukee Ave, Chicago, IL 60647",
+        "geo": {
+          "lat": 41.926348,
+          "lng": -87.699209
+        },
         "hours": "5PM–2AM"
         }
       }
@@ -92,6 +104,10 @@
           "gastropub"
         ], 
         "address": "2323 N Milwaukee Ave, Chicago, Illinois 60647",
+        "geo": {
+          "lat": 41.923677,
+          "lng": -87.698078
+        },
         "hours": "10am–1AM"
         }
       }
