@@ -32,6 +32,10 @@ export default class Gustave extends Component {
     navigator.push({id: 'commit', rec: recommendation});
   }
 
+  onBack(navigator) {
+    navigator.pop();
+  }
+
   render() {
     return (
       <Navigator 
@@ -49,11 +53,14 @@ export default class Gustave extends Component {
     switch(route.id) {
       case 'rec':
         return (
-          <RecommendationScene navigator={navigator} recs={this.props.recs} onCommit={this.onCommit.bind(this)} />
+          <RecommendationScene 
+            navigator={navigator} 
+            recs={this.props.recs} 
+            onCommit={this.onCommit.bind(this)} />
         );
       case 'commit':
         return (
-          <CommitScene navigator={navigator} rec={route.rec} onBack={()=> navigator.pop()}/>
+          <CommitScene navigator={navigator} rec={route.rec} onBack={this.onBack.bind(this)}/>
         );
     }
   }
