@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component, View, Text, MapView} from 'react-native';
+import React, {Component, View, Text, Image, MapView} from 'react-native';
 import styles from './styles';
 import Button from '../button';
 import Card from '../card';
@@ -18,7 +18,7 @@ export default class ConciergeScene extends Component {
         this.setState({position: {lat: position.coords.latitude, lng: position.coords.longitude}});
       },
       (error) => console.error(error.message),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 10000}
     );
     this.watchID = navigator.geolocation.watchPosition((position) => {
       this.setState({position: {lat: position.coords.latitude, lng: position.coords.longitude}});
@@ -27,10 +27,6 @@ export default class ConciergeScene extends Component {
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID);
-  }
-
-  navBack() {
-    this.props.onBack(this.props.navigator);
   }
 
   render() {
@@ -49,27 +45,39 @@ export default class ConciergeScene extends Component {
 
     return (
       <View style={[this.props.style, styles.scene]}>
-        <Button buttonStyle={styles.backButton} onPress={this.navBack.bind(this)}>
-          Go Back
-        </Button>
+
+        <Image style={styles.backgroundImage} source={{uri: event.place.photo.uri}}>
+
+          <View style={styles.titleContainer}>
+            <Text numberOfLines={1} style={styles.title}>
+              {event.name + ' @ ' + place.name}
+            </Text>
+          </View>
+
+        </Image>
+
+
+
         <MapView 
           style={styles.map}
           showsUserLocation={true}
+          followUserLocation={false}
           region={region}
           annotations={annotations}
           />
 
+        {/* The onPress is only used to have a way back until the top menu is in. Then we'll have this button actually open an external maps app and get directions. */}
+        <Button onPress={() => this.props.onBack(this.props.navigator)}>Get Directions</Button>
+
         <View style={styles.other}>
-          <Text>This scene has access to the current event object and all data...</Text>
-          <Text>{event.name + ' ' + place.address}</Text>
-          <Text>We'll have to teach Gustave to do cool things!</Text>
-          <Text>Maybe he could display a map with our current position and the location, with a button to launch the maps application.</Text>
-          <Text>Maybe he could check reservations with OpenTable.</Text>
-          <Text>Maybe he could look for Groupons/1st-party coupons.</Text>
-          <Text>Maybe he could find tickets for sale for the event.</Text>
-          <Text>Maybe he could call you an Uber.</Text> 
-          <Text>Dickbutt.</Text> 
-        </View>            
+          <Text style={styles.otherExample}>Gustave will eventually do lots of other useful things through proprietary and 3rd-party technology & partnerships.</Text>
+            <Text style={styles.otherExample}>+ Summon a ride</Text>
+            <Text style={styles.otherExample}>+ Book a reservation</Text>
+            <Text style={styles.otherExample}>+ Reserve tickets</Text>
+            <Text style={styles.otherExample}>+ Find available discounts</Text> 
+            <Text style={styles.otherExample}>+ And more!</Text> 
+        </View> 
+
       </View>
     );
   }
