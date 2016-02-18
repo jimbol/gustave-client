@@ -8,7 +8,7 @@ export default StyleSheet.create({
     flexDirection: 'row', 
     paddingVertical: 8,
     paddingHorizontal: 12,
-    marginHorizontal: 6,
+    marginHorizontal: 3,
     marginBottom: 6,
     borderRadius: 16,
     backgroundColor: '#ccc',
@@ -22,7 +22,7 @@ export default StyleSheet.create({
   },
 
   chipIcon: {
-    padding: 9,
+    padding: 6,
     margin: -9,
     marginRight: 2,
     borderRadius: 25,
@@ -31,11 +31,11 @@ export default StyleSheet.create({
 
   chipIconText: {
     color: '#fff0b3',
+    fontSize: 18,
   },
 
   chipText: {
-    lineHeight: 16,
-    fontSize: 16,
+    fontSize: 12,
     color: '#111',
   },
 

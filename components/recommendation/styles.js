@@ -5,7 +5,7 @@ import React, {StyleSheet} from 'react-native';
 export default StyleSheet.create({
 
   backgroundImage: {
-    flex: 4,
+    flex: 0.60,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -18,23 +18,32 @@ export default StyleSheet.create({
   },
 
   titleContainer: {
-    flex: 2,
+    flex: 0,
     alignItems: 'flex-start',
     justifyContent: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    overflow: 'hidden',
   },
 
   title: {
-    fontSize: 26,
+    fontSize: 22,
     color: '#111',
-    padding: 16,
     textAlign: 'left',
   },
 
+  preview: {
+    fontSize: 12,
+    color: '#ccc',
+    paddingTop: 8
+  },
+
   chipContainer: {
-    padding: 16,
-    flex: 3,
+    flex: 0.40,
     flexDirection: 'row',
     flexWrap: 'wrap',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
     overflow: 'hidden',
   },
 

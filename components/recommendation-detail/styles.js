@@ -5,7 +5,7 @@ import React, {StyleSheet} from 'react-native';
 export default StyleSheet.create({
 
   backgroundImage: {
-    flex: 0,
+    flex: 0.10,
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
@@ -25,19 +25,19 @@ export default StyleSheet.create({
   },
 
   title: {
-    fontSize: 18,
+    fontSize: 16,
     color: '#fff',
     padding: 16,
     textAlign: 'center',
   },
 
   event: {
-    flex: 2,
+    flex: 0.40,
     padding: 16,
   },
 
   place: {
-    flex: 3,
+    flex: 0.50,
     padding: 16,
   },
 
@@ -47,7 +47,7 @@ export default StyleSheet.create({
     paddingBottom: 8,
   },
 
-  address: {
+  info: {
     fontSize: 12,
     color: '#ccc',
     paddingBottom: 4
@@ -66,7 +66,11 @@ export default StyleSheet.create({
 
   chipText: {
     color: '#e3e4d9',
-    fontSize: 12,
-    lineHeight: 12,
+    fontSize: 10,
+  },
+
+  chipIconText: {
+    color: '#fff0b3',
+    fontSize: 16,
   },
 });
