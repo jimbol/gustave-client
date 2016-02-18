@@ -18,7 +18,7 @@ export default class ConciergeScene extends Component {
         this.setState({position: {lat: position.coords.latitude, lng: position.coords.longitude}});
       },
       (error) => console.error(error.message),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 10000}
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
     this.watchID = navigator.geolocation.watchPosition((position) => {
       this.setState({position: {lat: position.coords.latitude, lng: position.coords.longitude}});
