@@ -14,14 +14,13 @@ export default StyleSheet.create({
     shadowRadius: 2,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
   },
 
   buttonText: {
     color: '#fff',
     fontSize: 14,
     fontWeight: 'bold',
-    padding: 8,
-    paddingLeft: 16,
-    paddingRight: 16,
   },
 });
