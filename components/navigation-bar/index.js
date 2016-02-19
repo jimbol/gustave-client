@@ -52,19 +52,31 @@ export var NavigationBarRouteMapper = {
       console.log('noop');
     }
 
-    let favoritesButton;
-    if(route.id !== 'favorites') {
-      favoritesButton = 
-        <TouchableOpacity onPress={onPressFavorites.bind(this)} style={styles.favoritesButton}>
-          <Text style={styles.favoritesText}>
+    // It has to be done this way because of the way NavigationBar layers views
+    if(route.id === 'favorites') {
+      return (
+      <View style={styles.rightAreaContainer}>
+        <TouchableOpacity style={styles.favoritesButton}>
+          <Text style={[styles.favoritesText, {opacity: 0}]}>
             Favs
           </Text>
-        </TouchableOpacity>;
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onPressMenu.bind(this)} style={styles.menuButton}>
+          <Text style={styles.menuText}>
+            Cog
+          </Text>
+        </TouchableOpacity>
+      </View>
+      ); 
     }
 
     return (
       <View style={styles.rightAreaContainer}>
-        {favoritesButton}
+        <TouchableOpacity onPress={onPressFavorites.bind(this)} style={styles.favoritesButton}>
+          <Text style={styles.favoritesText}>
+            Favs
+          </Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={onPressMenu.bind(this)} style={styles.menuButton}>
           <Text style={styles.menuText}>
             Cog
