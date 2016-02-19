@@ -17,7 +17,7 @@ export default StyleSheet.create({
   titleContainer: {
     flex: 1,
     alignSelf: 'stretch',
-    backgroundColor: 'rgba(0,0,0,0.25)',
+    backgroundColor: 'rgba(83, 70, 80, 0.75)',
   },
 
   title: {
@@ -26,12 +26,6 @@ export default StyleSheet.create({
     color: '#fff',
     padding: 16,
     textAlign: 'center',
-    textShadowColor: 'rgba(0,0,0,0.5)',
-    textShadowOffset: {
-      width: 1, 
-      height: 1,
-    },
-    textShadowRadius: 1,
   },
 
   map: {
