@@ -52,7 +52,8 @@ export default StyleSheet.create({
   info: {
     fontSize: 12,
     color: '#ccc',
-    paddingBottom: 4
+    paddingBottom: 4,
+    alignSelf: 'flex-end',
   },
 
   chipContainer: {

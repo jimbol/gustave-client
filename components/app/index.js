@@ -44,7 +44,11 @@ export default class Gustave extends Component {
   }
 
   onConfigureScene(route, routeStack){
-    return Navigator.SceneConfigs.FloatFromBottom
+    return {
+      ...Navigator.SceneConfigs.FloatFromBottom, 
+      // Overrides drag to dismiss gesture
+      gestures: null
+    };
   }
 
   render() {
@@ -92,8 +96,12 @@ export default class Gustave extends Component {
         );
 
       case 'favorites':
+        let favorites = this.props.recommendations;
         return (
-          <FavoritesScene style={styles.scene}/>
+          <FavoritesScene 
+            style={styles.scene} 
+            favorites={favorites}
+            viewDetail={this.onViewDetail.bind(this, navigator)} />
         );
     }
   }
