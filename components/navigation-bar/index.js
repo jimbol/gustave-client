@@ -56,11 +56,11 @@ export var NavigationBarRouteMapper = {
     if(route.id === 'favorites') {
       return (
       <View style={styles.rightAreaContainer}>
-        <TouchableOpacity style={styles.favoritesButton}>
+        <View style={styles.favoritesButton}>
           <Text style={[styles.favoritesText, {opacity: 0}]}>
             Favs
           </Text>
-        </TouchableOpacity>
+        </View>
         <TouchableOpacity onPress={onPressMenu.bind(this)} style={styles.menuButton}>
           <Text style={styles.menuText}>
             Cog
