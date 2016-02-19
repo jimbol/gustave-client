@@ -8,20 +8,17 @@ module.exports = StyleSheet.create({
     flexDirection: 'row',
     alignItems:'center',
     position: 'absolute',
-    backgroundColor: 'gray',
     overflow: 'hidden'
   },
   left: {
     position: 'absolute',
     alignItems:'center',
-    backgroundColor: 'green',
     overflow: 'hidden'
   },
   right: {
     right: 0,
     position: 'absolute',
     alignItems:'center',
-    backgroundColor: 'red',
     overflow: 'hidden'
   },
   bottom: {
@@ -29,7 +26,6 @@ module.exports = StyleSheet.create({
     alignItems:'center',
     bottom: 0,
     position: 'absolute',
-    backgroundColor: 'blue',
     overflow: 'hidden'
   }
 });

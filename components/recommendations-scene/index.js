@@ -5,12 +5,15 @@ import styles from './styles';
 import Recommendation from '../recommendation';
 import Button from '../button';
 import TouchResponder from '../touch-responder';
-import Edge from '../pull-menu/edge';
+import Edge from '../edge';
 
 export default class RecommendationsScene extends Component {
 
   state = {
-    index: 2
+    index: 2,
+    axis: 'y',
+    distance: new Animated.Value(0),
+    thickness: new Animated.Value(0),
   };
 
   constructor(){
@@ -55,6 +58,7 @@ export default class RecommendationsScene extends Component {
         });
 
         _this.state.distance.setValue(touchState.distance)
+        _this.state.thickness.setValue(Math.abs(touchState.distance));
       },
     });
 
@@ -66,7 +70,12 @@ export default class RecommendationsScene extends Component {
       toValue: 0,
       duration: 750
     }).start();
-  }
+
+    Animated.spring(this.state.thickness, {
+      toValue: 0,
+      duration: 750
+    }).start();
+  };
 
   cardTransform(){
     return {
@@ -77,11 +86,31 @@ export default class RecommendationsScene extends Component {
     }
   }
 
+  getEdgePosition(){
+    if(this.state.axis === 'y') {
+      return (this.state.distance > 0) ? 'top' : 'bottom'
+    } else {
+      return (this.state.distance > 0) ? 'left' : 'right'
+    }
+  }
+
   render() {
     let recommendation = this.getCurrentRecommendation();
 
+    var position = this.getEdgePosition();
+
     return (
       <View style={[this.props.style, styles.scene]} {...this.touchResponder.panHandlers}>
+
+        <Edge
+          containerWidth={420}
+          position={'top'}
+          thickness={this.state.thickness}>
+          <Text style={{padding: 10, color: '#fff'}}>
+            You found the secret message!
+          </Text>
+        </Edge>
+
         <Animated.View style={this.cardTransform()}>
           <Recommendation
             recommendation={recommendation}
