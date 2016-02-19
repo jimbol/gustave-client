@@ -3,7 +3,7 @@
 import React, {
   Component,
   Text,
-  TouchableHighlight,
+  TouchableOpacity,
   View,
   Navigator,
   StatusBar,
@@ -24,11 +24,11 @@ export var NavigationBarRouteMapper = {
     }
 
     return (
-      <TouchableHighlight onPress={onPressBack} style={styles.backButton}>
+      <TouchableOpacity onPress={onPressBack} style={styles.backButton}>
         <Text style={styles.backText}>
           Back
         </Text>
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
   },
 
@@ -49,12 +49,17 @@ export var NavigationBarRouteMapper = {
     }
 
     return (
-      <View>
-        <TouchableHighlight onPress={onPressFavorites.bind(this)} style={styles.favoritesButton}>
+      <View style={styles.rightAreaContainer}>
+        <TouchableOpacity onPress={onPressFavorites.bind(this)} style={styles.favoritesButton}>
           <Text style={styles.favoritesText}>
             Favs
           </Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onPressFavorites.bind(this)} style={styles.favoritesButton}>
+          <Text style={styles.favoritesText}>
+            Favs 2
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   },
