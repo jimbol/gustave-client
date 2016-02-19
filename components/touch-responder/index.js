@@ -34,15 +34,7 @@ export default class TouchResponder {
     };
 
     this.panResponder = PanResponder.create({
-      // Ask to be the responder:
-      onStartShouldSetPanResponder: passingFn,
-      onStartShouldSetPanResponderCapture: passingFn,
-      onMoveShouldSetPanResponder: passingFn,
       onMoveShouldSetPanResponderCapture: passingFn,
-      onPanResponderTerminationRequest: passingFn,
-      onShouldBlockNativeResponder: passingFn,
-      onPanResponderGrant: (evt, gestureState) => {},
-      onPanResponderTerminate: (evt, gestureState) => {},
 
       onPanResponderMove: (evt, gestureState) => this.onPanRespond(evt, gestureState, 'move'),
       onPanResponderRelease: (evt, gestureState) => this.onPanRespond(evt, gestureState, 'release'),
