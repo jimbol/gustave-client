@@ -87,7 +87,8 @@ export default class Gustave extends Component {
         return (
           <ConciergeScene
             style={styles.scene}
-            recommendation={route.recommendation} />
+            recommendation={route.recommendation}
+            navigationContext={navigator.navigationContext} />
         );
 
       case 'favorites':

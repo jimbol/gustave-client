@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {StyleSheet} from 'react-native';
+import React, {StyleSheet, Dimensions} from 'react-native';
 
 export default StyleSheet.create({
   scene: {
@@ -36,6 +36,17 @@ export default StyleSheet.create({
 
   map: {
     flex: 0.30,
+    overflow: 'hidden',
+  },
+
+  placeholderContainer: {
+    flex: 0.30,
+  },
+
+  placeholderImage: {
+    flex: 1,
+    height: null,
+    width: null,
   },
 
   other: {

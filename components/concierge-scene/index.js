@@ -8,10 +8,16 @@ import Card from '../card';
 export default class ConciergeScene extends Component {
 
   watchID = null;
+  focusSubscription = null;
 
   state = {
     position: null,
+    didFocus: false,
   };
+
+  onFocus() {
+    this.setState({didFocus: true});
+  }
 
   geoLocationOptions = {
     enableHighAccuracy: true,
@@ -20,6 +26,8 @@ export default class ConciergeScene extends Component {
   };
 
   componentDidMount() {
+    this.focusSubscription = this.props.navigationContext.addListener('didfocus', this.onFocus.bind(this));
+
     navigator.geolocation.getCurrentPosition(
       this.onReceiveCurrentPosition.bind(this),
       this.onGeoLocationError.bind(this),
@@ -31,6 +39,7 @@ export default class ConciergeScene extends Component {
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID);
+    this.focusSubscription.remove();
   }
 
   onReceiveCurrentPosition(position){
@@ -97,12 +106,20 @@ export default class ConciergeScene extends Component {
           </View>
         </Image>
 
-        <MapView
+        {this.state.didFocus ? 
+          <MapView
           style={styles.map}
           showsUserLocation={true}
           followUserLocation={false}
           region={region}
-          annotations={annotations} />
+          annotations={annotations} /> 
+        :
+          <View style={styles.placeholderContainer}>
+            <Image 
+              style={styles.placeholderImage}
+              source={require('../../assets/defaultMapView.png')} />
+          </View>
+        }
 
         <Button onPress={this.onGetDirections.bind(this)}>
           Get Directions
