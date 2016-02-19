@@ -19,7 +19,7 @@ export default class ConciergeScene extends Component {
     maximumAge: 1000
   };
 
-  componentWillMount() {
+  componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       this.onReceiveCurrentPosition.bind(this),
       this.onGeoLocationError.bind(this),

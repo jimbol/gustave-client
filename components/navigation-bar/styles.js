@@ -35,6 +35,15 @@ export default StyleSheet.create({
     color: '#fff',
   },
 
+  menuButton: {
+    padding: 12,
+  },
+
+  menuText: {
+    textAlign: 'center',
+    color: '#fff',
+  },
+
   settingsButton: {
     padding: 12,
   },

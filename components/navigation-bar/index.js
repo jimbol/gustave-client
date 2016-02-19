@@ -48,16 +48,26 @@ export var NavigationBarRouteMapper = {
       });
     }
 
-    return (
-      <View style={styles.rightAreaContainer}>
+    let onPressMenu = function() {
+      console.log('noop');
+    }
+
+    let favoritesButton;
+    if(route.id !== 'favorites') {
+      favoritesButton = 
         <TouchableOpacity onPress={onPressFavorites.bind(this)} style={styles.favoritesButton}>
           <Text style={styles.favoritesText}>
             Favs
           </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onPressFavorites.bind(this)} style={styles.favoritesButton}>
-          <Text style={styles.favoritesText}>
-            Favs 2
+        </TouchableOpacity>;
+    }
+
+    return (
+      <View style={styles.rightAreaContainer}>
+        {favoritesButton}
+        <TouchableOpacity onPress={onPressMenu.bind(this)} style={styles.menuButton}>
+          <Text style={styles.menuText}>
+            Cog
           </Text>
         </TouchableOpacity>
       </View>
