@@ -5,6 +5,7 @@ import React, {StyleSheet} from 'react-native';
 export default StyleSheet.create({
 
   backgroundImage: {
+    backgroundColor: '#000000',
     flex: 0.10,
     flexDirection: 'row',
     alignItems: 'flex-start',
@@ -26,7 +27,8 @@ export default StyleSheet.create({
 
   title: {
     fontSize: 16,
-    color: '#fff',
+    color: '#000',
+    fontWeight: 'bold',
     padding: 16,
     textAlign: 'center',
   },
