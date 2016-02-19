@@ -11,9 +11,10 @@ import Button from '../button';
 
 export default class Recommendation extends Component {
   render() {
-    
-    let place = this.props.rec.event.place;
-    let event = this.props.rec.event;
+
+    let rec = this.props.recommendation;
+    let event = rec.event;
+    let place = rec.event.place;
     let labels = _.union(event.labels, place.labels);
 
     return (
@@ -23,7 +24,7 @@ export default class Recommendation extends Component {
           style={styles.backgroundImage}
           source={{uri: place.photo.uri}}>
 
-          <Button onPress={this.props.onToggleDetail}>
+          <Button onPress={this.props.viewDetail}>
             More Deets
           </Button>
 

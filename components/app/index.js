@@ -1,66 +1,98 @@
 'use strict';
 
-/* Hierachy
-
-  Navigation
-  RecommendationScene
-    RecommendationPreview
-    RecommendationDetail
-    Button
-      -> CommitmentScene
-  CommitmentScene
-    Dickbutt
-
-*/
-
-import React, {Component, View, Navigator} from 'react-native';
+import React, {Component, Navigator, StatusBar, View} from 'react-native';
 import _ from 'lodash';
 
 import {data} from '../../data/mock.json';
 import styles from './styles';
 
-import RecommendationScene from '../recommendation-scene';
+import {NavigationBarRouteMapper, NavigationBarStyles} from '../navigation-bar';
+
+import RecommendationsScene from '../recommendations-scene';
+import RecommendationDetailScene from '../recommendation-detail-scene';
 import ConciergeScene from '../concierge-scene';
+import FavoritesScene from '../favorites-scene';
+
 
 export default class Gustave extends Component {
 
   static defaultProps = {
-    recs: data
+    recommendations: data,
   };
 
-  onCommit(navigator, recommendation){
-    navigator.push({id: 'commit', rec: recommendation});
+  initialRoute = {
+    id: 'recommendations',
+    name: 'Recommendations',
+  };
+
+  // Context: Navigator
+  onViewDetail(navigator, recommendation) {
+    navigator.push({
+      id: 'recommendation-detail',
+      name: 'Recommendation',
+      recommendation: recommendation,
+    });
   }
 
-  onBack(navigator) {
-    navigator.pop();
+  // Context: Navigator
+  onViewConcierge(navigator, recommendation) {
+    navigator.push({
+      id: 'concierge',
+      name: 'Concierge',
+      recommendation: recommendation,
+    });
+  }
+
+  onConfigureScene(route, routeStack){
+    return Navigator.SceneConfigs.FloatFromBottom
   }
 
   render() {
     return (
-      <Navigator 
-        style={styles.scene}
-        initialRoute={{id: 'rec'}}
-        renderScene={this._navigatorRenderScene.bind(this)}
-        configureScene={(route, routeStack) => Navigator.SceneConfigs.FloatFromBottom} />
-      
-      // We can add a reference to a styled component here to serve as a navigation bar for all scenes. Perfect place for a bottom nav bar.
-
+      <View style={styles.app}>
+        <StatusBar barStyle="light-content" />
+        <Navigator
+          initialRoute={this.initialRoute}
+          renderScene={this.renderScene.bind(this)}
+          configureScene={this.onConfigureScene.bind(this)}
+          navigationBar={
+            <Navigator.NavigationBar
+              style={NavigationBarStyles.navigationBar}
+              routeMapper={NavigationBarRouteMapper} />
+          } />
+      </View>
     );
   }
 
-  _navigatorRenderScene(route, navigator) {
+  renderScene(route, navigator) {
     switch(route.id) {
-      case 'rec':
+      case 'recommendations':
         return (
-          <RecommendationScene 
-            navigator={navigator} 
-            recs={this.props.recs} 
-            onCommit={this.onCommit.bind(this)} />
+          <RecommendationsScene
+            style={styles.scene}
+            recommendations={this.props.recommendations}
+            viewDetail={this.onViewDetail.bind(this, navigator)}
+            viewConcierge={this.onViewConcierge.bind(this, navigator)} />
         );
-      case 'commit':
+
+      case 'recommendation-detail':
         return (
-          <ConciergeScene navigator={navigator} rec={route.rec} onBack={this.onBack.bind(this)}/>
+          <RecommendationDetailScene
+            style={styles.scene}
+            recommendation={route.recommendation}
+            viewConcierge={navigator.onViewConcierge} />
+        );
+
+      case 'concierge':
+        return (
+          <ConciergeScene
+            style={styles.scene}
+            recommendation={route.recommendation} />
+        );
+
+      case 'favorites':
+        return (
+          <FavoritesScene style={styles.scene}/>
         );
     }
   }
