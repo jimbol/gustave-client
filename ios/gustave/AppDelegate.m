@@ -29,6 +29,8 @@
    * (you can get this by typing `ifconfig` into the terminal and selecting the
    * `inet` value under `en0:`) and make sure your computer and iOS device are
    * on the same Wi-Fi network.
+   
+   10.0.0.7
    */
 
   jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
