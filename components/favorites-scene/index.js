@@ -20,7 +20,7 @@ export default class FavoritesScene extends Component {
     return (
       <TouchableOpacity 
         onPress={() => this.props.viewDetail(recommendation)} 
-        key={recommendation.id || Math.random() * 100}>
+        key={recommendation.id}>
         <View style={styles.recommendation}>
           <View style={styles.recommendationTextContainer}>
             <Text numberOfLines={1} style={styles.recommendationTitle}>
