@@ -42,7 +42,9 @@ export default class FavoritesScene extends Component {
   render() {
     return (
       <ScrollView style={[this.props.style, styles.scene]}>
-        {this.props.favorites.map(favorite => this._getFavorite(favorite))}
+        {this.props.favorites
+          .sort((a, b) => moment(b.event.time.start).isBefore(a.event.time.start))
+          .map(favorite => this._getFavorite(favorite))}
       </ScrollView>
     );
   }
