@@ -40,8 +40,15 @@ export var NavigationBarRouteMapper = {
     );
   },
 
-  RightButton(route, navigator, index, navState) {
+  RightButton(route, navigator, index, navState) { 
+
+    let isFavoritesRoute = route.id === 'favorites';
+
     let onPressFavorites = function(){
+      if(isFavoritesRoute) {
+        return;
+      }
+
       navigator.push({
         id: 'favorites',
         name: 'Favorites',
@@ -52,27 +59,9 @@ export var NavigationBarRouteMapper = {
       console.log('noop');
     }
 
-    // It has to be done this way because of the way NavigationBar layers views
-    if(route.id === 'favorites') {
-      return (
-      <View style={styles.rightAreaContainer}>
-        <View style={styles.favoritesButton}>
-          <Text style={[styles.favoritesText, {opacity: 0}]}>
-            Favs
-          </Text>
-        </View>
-        <TouchableOpacity onPress={onPressMenu.bind(this)} style={styles.menuButton}>
-          <Text style={styles.menuText}>
-            Cog
-          </Text>
-        </TouchableOpacity>
-      </View>
-      ); 
-    }
-
     return (
       <View style={styles.rightAreaContainer}>
-        <TouchableOpacity onPress={onPressFavorites.bind(this)} style={styles.favoritesButton}>
+        <TouchableOpacity activeOpacity={isFavoritesRoute ? 1 : undefined } onPress={onPressFavorites.bind(this)} style={styles.favoritesButton}>
           <Text style={styles.favoritesText}>
             Favs
           </Text>
