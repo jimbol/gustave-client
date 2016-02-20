@@ -29,7 +29,7 @@ export default class FavoritesScene extends Component {
             <Text numberOfLines={2} style={styles.recommendationDescription}>
               {event.description}
             </Text>
-            <Text style={styles.info}>{start + ' - ' + end}</Text>
+            <Text style={styles.info}>{start}</Text>
           </View>
           <Image  
             style={styles.recommendationImage}

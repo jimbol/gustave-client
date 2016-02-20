@@ -52,7 +52,7 @@ export default class ConciergeScene extends Component {
   }
 
   onGeoLocationError(error){
-    console.error(error.message);
+    // console.error(error.message);
   }
 
   getMapRegion(position, place){
@@ -104,7 +104,7 @@ export default class ConciergeScene extends Component {
           </Text>
         </View>
 
-        {this.state.didFocus ? 
+        {this.state.didFocus && this.state.position ? 
           <MapView
           style={styles.map}
           showsUserLocation={true}
