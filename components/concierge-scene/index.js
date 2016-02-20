@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component, View, Text, Image, MapView} from 'react-native';
+import React, {Component, View, Text, Image, MapView, InteractionManager} from 'react-native';
 import styles from './styles';
 import Button from '../button';
 import Card from '../card';
@@ -8,16 +8,10 @@ import Card from '../card';
 export default class ConciergeScene extends Component {
 
   watchID = null;
-  focusSubscription = null;
 
   state = {
     position: null,
-    didFocus: false,
   };
-
-  onFocus() {
-    this.setState({didFocus: true});
-  }
 
   geoLocationOptions = {
     enableHighAccuracy: true,
@@ -26,20 +20,21 @@ export default class ConciergeScene extends Component {
   };
 
   componentDidMount() {
-    this.focusSubscription = this.props.navigationContext.addListener('didfocus', this.onFocus.bind(this));
 
-    navigator.geolocation.getCurrentPosition(
-      this.onReceiveCurrentPosition.bind(this),
-      this.onGeoLocationError.bind(this),
-      this.geoLocationOptions
-    );
+    InteractionManager.runAfterInteractions(() => {
+      navigator.geolocation.getCurrentPosition(
+        this.onReceiveCurrentPosition.bind(this),
+        this.onGeoLocationError.bind(this),
+        this.geoLocationOptions
+      );
 
-    this.watchID = navigator.geolocation.watchPosition(this.onReceiveCurrentPosition.bind(this));
+      this.watchID = navigator.geolocation.watchPosition(this.onReceiveCurrentPosition.bind(this));
+    });
   }
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID);
-    this.focusSubscription.remove();
+    // this.focusSubscription.remove();
   }
 
   onReceiveCurrentPosition(position){
@@ -104,7 +99,7 @@ export default class ConciergeScene extends Component {
           </Text>
         </View>
 
-        {this.state.didFocus && this.state.position ? 
+        {this.state.position ? 
           <MapView
           style={styles.map}
           showsUserLocation={true}
