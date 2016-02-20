@@ -49,9 +49,10 @@ export default class TouchResponder {
     var cb = this.touchLifeCycle.onMove;
     var isSwiping = false;
 
+    var absXVelocity = Math.abs(gestureState.vx);
+    var absYVelocity = Math.abs(gestureState.vy);
+
     if (this.railAxis == null){
-      var absXVelocity = Math.abs(gestureState.vx);
-      var absYVelocity = Math.abs(gestureState.vy);
 
       if(absXVelocity > absYVelocity) {
         this.railAxis = 'x';
@@ -63,9 +64,15 @@ export default class TouchResponder {
     if(this.railAxis === 'x') {
       var axis = 'x';
       var distance = gestureState.dx;
+
+      var x = gestureState.dx;
+      var y = 0;
     } else {
       var axis = 'y';
       var distance = gestureState.dy;
+
+      var x = 0
+      var y = gestureState.dy
     }
 
     if(absXVelocity > 1 || absYVelocity > 1) {
@@ -80,6 +87,10 @@ export default class TouchResponder {
     var touchState = {
       axis: this.railAxis,
       distance: distance,
+      top: (y > 0) ? y : 0,
+      bottom: (y < 0) ? Math.abs(y) : 0,
+      right: (x < 0) ? Math.abs(x) : 0,
+      left: (x > 0) ? x : 0,
     };
 
     if (evtType === 'release'){
