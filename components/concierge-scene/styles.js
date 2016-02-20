@@ -8,23 +8,15 @@ export default StyleSheet.create({
     backgroundColor: 'white',
   },
 
-  backgroundImage: {
-    flex: 0.10,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-  },
-
   titleContainer: {
-    flex: 1,
+    flex: 0,
     alignSelf: 'stretch',
-    backgroundColor: 'rgba(83, 70, 80, 0.75)',
+    backgroundColor: '#4a0b49',
   },
 
   title: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#fff',
-    padding: 16,
+    color: '#93818e',
+    paddingBottom: 12,
     textAlign: 'center',
   },
 

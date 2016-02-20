@@ -98,13 +98,11 @@ export default class ConciergeScene extends Component {
     return (
       <View style={[this.props.style, styles.scene]}>
 
-        <Image style={styles.backgroundImage} source={{uri: event.place.photo.uri}}>
-          <View style={styles.titleContainer}>
-            <Text numberOfLines={1} style={styles.title}>
-              {event.name + ' @ ' + place.name}
-            </Text>
-          </View>
-        </Image>
+        <View style={styles.titleContainer}>
+          <Text numberOfLines={1} style={styles.title}>
+            {event.name + ' @ ' + place.name}
+          </Text>
+        </View>
 
         {this.state.didFocus ? 
           <MapView
