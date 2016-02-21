@@ -15,6 +15,9 @@ export default class RecommendationsScene extends Component {
 
     // Card position values
     axis: 'y',
+
+    scale: new Animated.Value(1),
+    opacity: new Animated.Value(1),
     distance: new Animated.Value(0),
 
     // Edge thickness
@@ -57,7 +60,7 @@ export default class RecommendationsScene extends Component {
 
     var touchResponder = new TouchResponder({
       onSwipeRelease: this.swipeAway.bind(this),
-      onDragRelease: this.returnToOrigin.bind(this),
+      onDragRelease: this.returnToBaseline.bind(this),
       onMove: this.onMove.bind(this),
     });
 
@@ -87,35 +90,60 @@ export default class RecommendationsScene extends Component {
       var duration = Math.abs(touchState.distance) / Math.abs(gestureState.vx);
 
       Animated.parallel([
+
         // No easing needed here
         Animated.timing(this.state.distance, {
           toValue: offscreenDistance,
           duration: duration,
         }),
-        Animated.timing(this.state.left, this.resetHash),
-        Animated.timing(this.state.right, this.resetHash),
-      ]).start();
+
+        Animated.timing(this.state.left, this.resetToZero),
+        Animated.timing(this.state.right, this.resetToZero),
+
+      ]).start(function(){
+
+        // Reset the card view
+        this.state.scale.setValue(0.8);
+        this.state.opacity.setValue(0);
+        this.state.distance.setValue(0);
+        this.state.left.setValue(0);
+        this.state.right.setValue(0);
+
+        this.nextRec();
+        this.returnToBaseline();
+
+      }.bind(this));
     }
   };
 
-  resetHash = {
+  resetToOne = {
+    toValue: 1,
+    duration: 200
+  };
+
+  resetToZero = {
     toValue: 0,
     duration: 200
   };
 
-  returnToOrigin() {
+  returnToBaseline() {
     Animated.parallel([
-      Animated.spring(this.state.distance, this.resetHash),
-      Animated.spring(this.state.left, this.resetHash),
-      Animated.spring(this.state.right, this.resetHash),
+      Animated.spring(this.state.scale, this.resetToOne),
+      Animated.spring(this.state.opacity, this.resetToOne),
+
+      Animated.spring(this.state.distance, this.resetToZero),
+      Animated.spring(this.state.left, this.resetToZero),
+      Animated.spring(this.state.right, this.resetToZero),
     ]).start();
   }
 
   cardTransform(){
     return {
+      opacity: this.state.opacity,
       flex: 1,
       transform: [
         {translateX: (this.state.axis === 'x') ? this.state.distance : 0},
+        {scale: this.state.scale},
       ]
     }
   }
