@@ -14,7 +14,6 @@ import Edge from '../edge';
 // </DeckNavigator>
 
 
-
 export default class DeckNavigator extends Component {
 
   defaultProps = {
@@ -24,7 +23,7 @@ export default class DeckNavigator extends Component {
 
   state = {
     // Card position values
-    axis: 'y',
+    axis: 'x',
 
     scale: new Animated.Value(1),
     opacity: new Animated.Value(1),
@@ -51,9 +50,11 @@ export default class DeckNavigator extends Component {
 
   onMove(e, gestureState, touchState){
 
-    this.setState({
-      axis: touchState.axis,
-    });
+    if (touchState.axis !== this.state.axis) {
+      this.setState({
+        axis: touchState.axis,
+      });
+    }
 
     this.state.distance.setValue(touchState.distance)
     this.state.left.setValue(Math.abs(touchState.left));
@@ -137,6 +138,7 @@ export default class DeckNavigator extends Component {
   }
 
   render() {
+    console.log('render test');
     return (
       <View style={styles.deck}>
 
