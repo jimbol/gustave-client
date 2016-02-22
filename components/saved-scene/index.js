@@ -28,20 +28,27 @@ export default class SavedScene extends Component {
         <TouchableOpacity 
           onPress={() => this.props.viewRecommendation(recommendation)} 
           key={recommendation.id}>
-          <View style={styles.recommendation}>
+
+          <View style={styles.recommendationContainer}>
+
             <View style={styles.recommendationTextContainer}>
-              <Text numberOfLines={1} style={styles.recommendationTitle}>
-                {event.name + ' @ ' + place.name}
-              </Text>
-              <Text numberOfLines={2} style={styles.recommendationDescription}>
-                {event.description}
-              </Text>
-              <Text style={styles.info}>{start}</Text>
+              <View style={styles.recommendationText}>
+                <Text numberOfLines={1} style={styles.recommendationTitle}>
+                  {event.name + ' @ ' + place.name}
+                </Text>
+                <Text numberOfLines={2} style={styles.recommendationDescription}>
+                  {event.description}
+                </Text>
+                <Text style={styles.info}>{start}</Text>
+              </View>
             </View>
+
             <Image  
               style={styles.recommendationImage}
               source={{uri: place.photo.uri}}/>
+
           </View>
+          
         </TouchableOpacity>
         
       </Swipeable>

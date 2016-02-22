@@ -9,7 +9,7 @@ export default StyleSheet.create({
   },
 
   edgeContainer: {
-    flex: 1,
+    height: 100,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'red',
@@ -21,18 +21,22 @@ export default StyleSheet.create({
     textAlign: 'center'
   },
 
-  recommendation: {
+  recommendationContainer: {
     flex: 0,
     flexDirection: 'row',
-    alignItems: 'flex-end',
+  },
+
+  recommendationTextContainer: {
+    flex: 0.7,
     height: 100,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0,0,0,0.25)',
   },
 
-  recommendationTextContainer: {
-    flex: 0.7,
+  recommendationText: {
+    flex: 1,
     flexDirection: 'column',
+    justifyContent: 'flex-end',
     margin: 8
   },
 
