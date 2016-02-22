@@ -1,15 +1,21 @@
 'use strict';
 
-import React, {Component, View, Text} from 'react-native';
+import React, {Component, View, Text, Animated} from 'react-native';
 import styles from './styles';
 import Recommendation from '../recommendation';
 import Button from '../button';
+import DeckNavigator from './deck-navigator';
+import Dimensions from 'Dimensions';
 
 export default class RecommendationsScene extends Component {
 
   state = {
-    index: 2
+    index: 2,
   };
+
+  constructor(){
+    super();
+  }
 
   nextRec() {
     this.setState({index: this.getNextIndex()});
@@ -40,9 +46,14 @@ export default class RecommendationsScene extends Component {
 
     return (
       <View style={[this.props.style, styles.scene]}>
-        <Recommendation
-          recommendation={recommendation}
-          viewDetail={this.viewDetail.bind(this)} />
+
+        <DeckNavigator
+          onSwipeRight={this.nextRec.bind(this)}
+          onSwipeLeft={this.nextRec.bind(this)}>
+          <Recommendation
+            recommendation={recommendation}
+            viewDetail={this.viewDetail.bind(this)} />
+        </DeckNavigator>
 
         <Button
           buttonStyle={styles.commitButton}
