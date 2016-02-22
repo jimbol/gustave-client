@@ -11,7 +11,7 @@ export default class SavedScene extends Component {
     favorites: React.PropTypes.array,
   };
 
-  _getFavorite(recommendation) {
+  _renderSavedRec(recommendation) {
     let event = recommendation.event;
     let place = event.place;
     let start = moment(event.time.start).format('ddd MM/DD @ h:mm A');
@@ -42,9 +42,9 @@ export default class SavedScene extends Component {
   render() {
     return (
       <ScrollView style={[this.props.style, styles.scene]}>
-        {this.props.favorites
+        {this.props.savedRecommendations
           .sort((a, b) => moment(b.event.time.start).isBefore(a.event.time.start))
-          .map(favorite => this._getFavorite(favorite))}
+          .map(savedRec => this._renderSavedRec(savedRec))}
       </ScrollView>
     );
   }

@@ -99,7 +99,7 @@ export default class Gustave extends Component {
         return (
           <SavedScene 
             style={styles.scene} 
-            favorites={saved}
+            savedRecommendations={saved}
             viewDetail={this.onViewDetail.bind(this, navigator)} />
         );
     }
