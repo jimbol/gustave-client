@@ -83,11 +83,11 @@ export default class DeckNavigator extends Component {
         Animated.timing(this.state.left, this.resetToZero),
         Animated.timing(this.state.right, this.resetToZero),
 
-      ]).start(function(){
+      ]).start(function() {
 
-        if (this.state.left._value) {
+        if (this.state.left) {
           this.props.onSwipeLeft();
-        } else if (this.state.right._value) {
+        } else if (this.state.right) {
           this.props.onSwipeRight();
         }
 
