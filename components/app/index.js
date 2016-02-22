@@ -95,7 +95,7 @@ export default class Gustave extends Component {
         );
 
       case 'saved':
-        let saved = this.props.recommendations;
+        let saved = Array.from(this.props.recommendations);
         return (
           <SavedScene 
             style={styles.scene} 

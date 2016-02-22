@@ -7,7 +7,6 @@ import Button from '../button';
 import Card from '../card';
 import Swipeable from '../swipeable';
 import Recommendation from '../recommendation';
-// import DeckNavigator from './deck-navigator';
 
 
 export default class RecommendationsScene extends Component {
@@ -37,7 +36,6 @@ export default class RecommendationsScene extends Component {
   }
 
   render() {
-    let recommendation = this.getCurrentRecommendation();
 
     let leftEdge = <Text style={styles.edgeLabel}>Dismiss</Text>;
     let rightEdge = <Text style={styles.edgeLabel}>Save</Text>;
@@ -53,7 +51,7 @@ export default class RecommendationsScene extends Component {
 
           <Card>
             <Recommendation
-              recommendation={recommendation} />
+              recommendation={this.getCurrentRecommendation()} />
           </Card>
 
         </Swipeable>
