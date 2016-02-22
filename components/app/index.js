@@ -18,6 +18,7 @@ export default class Gustave extends Component {
 
   static defaultProps = {
     recommendations: data,
+    saved: [],
   };
 
   initialRoute = {
@@ -75,7 +76,6 @@ export default class Gustave extends Component {
           <RecommendationsScene
             style={styles.scene}
             recommendations={this.props.recommendations}
-            // viewDetail={this.onViewDetail.bind(this, navigator)}
             viewConcierge={this.onViewConcierge.bind(this, navigator)} />
         );
 
@@ -84,7 +84,6 @@ export default class Gustave extends Component {
           <RecommendationScene
             style={styles.scene}
             recommendation={route.recommendation}
-            // viewDetail={this.onViewDetail.bind(this, navigator)}
             viewConcierge={this.onViewConcierge.bind(this, navigator)} />
         );
 

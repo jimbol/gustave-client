@@ -83,7 +83,7 @@ export default class DeckNavigator extends Component {
         Animated.timing(this.state.left, this.resetToZero),
         Animated.timing(this.state.right, this.resetToZero),
 
-      ]).start(function() {
+      ]).start(() => {
 
         // Right offset indicates left swipe, and vice versa 
         if (touchState.right) {
@@ -101,7 +101,7 @@ export default class DeckNavigator extends Component {
 
         this.returnToBaseline();
 
-      }.bind(this));
+      });
     }
   };
 
@@ -138,7 +138,6 @@ export default class DeckNavigator extends Component {
   }
 
   render() {
-    console.log('render test');
     return (
       <View style={styles.deck}>
 
