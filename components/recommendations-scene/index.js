@@ -27,10 +27,6 @@ export default class RecommendationsScene extends Component {
     }
   }
 
-  viewDetail(){
-    this.props.viewDetail(this.getCurrentRecommendation());
-  }
-
   viewConcierge(){
     this.props.viewConcierge(this.getCurrentRecommendation());
   }
@@ -50,8 +46,7 @@ export default class RecommendationsScene extends Component {
           onSwipeLeft={this.nextRec.bind(this)}>
           <Card>
             <Recommendation
-              recommendation={recommendation}
-              viewDetail={this.viewDetail.bind(this)} />
+              recommendation={recommendation} />
           </Card>
         </DeckNavigator>
 

@@ -26,7 +26,7 @@ export default class Gustave extends Component {
   };
 
   // Context: Navigator
-  onViewDetail(navigator, recommendation) {
+  onViewRecommendation(navigator, recommendation) {
     navigator.push({
       id: 'recommendation',
       name: 'Recommendation',
@@ -75,7 +75,7 @@ export default class Gustave extends Component {
           <RecommendationsScene
             style={styles.scene}
             recommendations={this.props.recommendations}
-            viewDetail={this.onViewDetail.bind(this, navigator)}
+            // viewDetail={this.onViewDetail.bind(this, navigator)}
             viewConcierge={this.onViewConcierge.bind(this, navigator)} />
         );
 
@@ -84,7 +84,7 @@ export default class Gustave extends Component {
           <RecommendationScene
             style={styles.scene}
             recommendation={route.recommendation}
-            viewDetail={this.onViewDetail.bind(this, navigator)}
+            // viewDetail={this.onViewDetail.bind(this, navigator)}
             viewConcierge={this.onViewConcierge.bind(this, navigator)} />
         );
 
@@ -101,7 +101,7 @@ export default class Gustave extends Component {
           <SavedScene 
             style={styles.scene} 
             savedRecommendations={saved}
-            viewRecommendation={this.onViewDetail.bind(this, navigator)} />
+            viewRecommendation={this.onViewRecommendation.bind(this, navigator)} />
         );
     }
   }

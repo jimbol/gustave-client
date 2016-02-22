@@ -9,11 +9,6 @@ import Recommendation from '../recommendation';
 
 export default class RecommendationScene extends Component {
 
-
-  viewDetail() {
-    this.props.viewDetail(this.props.recommendation);
-  }
-
   viewConcierge() {
     this.props.viewConcierge(this.props.recommendation);
   }
@@ -25,8 +20,7 @@ export default class RecommendationScene extends Component {
       <View style={[this.props.style, styles.scene]}>
 
         <Recommendation
-          recommendation={recommendation}
-          viewDetail={this.viewDetail.bind(this)} />
+          recommendation={recommendation} />
 
         <Button
           buttonStyle={styles.commitButton}

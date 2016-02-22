@@ -9,6 +9,8 @@ import Chip from '../chip';
 import Button from '../button';
 
 export default class Recommendation extends Component {
+  
+
   render() {
 
     let rec = this.props.recommendation;
@@ -22,11 +24,6 @@ export default class Recommendation extends Component {
         <Image
           style={styles.backgroundImage}
           source={{uri: place.photo.uri}}>
-
-          <Button onPress={this.props.viewDetail}>
-            More Deets
-          </Button>
-
         </Image>
 
         <View style={styles.titleContainer}>
