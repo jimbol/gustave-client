@@ -70,7 +70,6 @@ export default class DeckNavigator extends Component {
 
       // Get the right speed for the swipe
       let duration = Math.abs(touchState.distance) / Math.abs(gestureState.vx);
-      let direction = (this.state.left._value) ? 'left' : 'right';
 
       Animated.parallel([
 
@@ -85,9 +84,10 @@ export default class DeckNavigator extends Component {
 
       ]).start(function() {
 
-        if (this.state.left) {
+        // Right offset indicates left swipe, and vice versa 
+        if (touchState.right) {
           this.props.onSwipeLeft();
-        } else if (this.state.right) {
+        } else if (touchState.left) {
           this.props.onSwipeRight();
         }
 
