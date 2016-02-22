@@ -4,30 +4,17 @@ import React, {Component, View, Text, Animated} from 'react-native';
 import styles from './styles';
 import Recommendation from '../recommendation';
 import Button from '../button';
-import TouchResponder from '../touch-responder';
-import Edge from '../edge';
+import DeckNavigator from './deck-navigator';
 import Dimensions from 'Dimensions';
 
 export default class RecommendationsScene extends Component {
 
   state = {
     index: 2,
-
-    // Card position values
-    axis: 'y',
-
-    scale: new Animated.Value(1),
-    opacity: new Animated.Value(1),
-    distance: new Animated.Value(0),
-
-    // Edge thickness
-    left: new Animated.Value(0),
-    right: new Animated.Value(0),
   };
 
   constructor(){
     super();
-    this.touchResponder = this.createTouchResponder()
   }
 
   nextRec() {
@@ -54,129 +41,19 @@ export default class RecommendationsScene extends Component {
     return this.props.recommendations[this.state.index];
   }
 
-  // Touchable
-  createTouchResponder(){
-    var _this = this;
-
-    var touchResponder = new TouchResponder({
-      onSwipeRelease: this.swipeAway.bind(this),
-      onDragRelease: this.returnToBaseline.bind(this),
-      onMove: this.onMove.bind(this),
-    });
-
-    return touchResponder;
-  }
-
-  onMove(e, gestureState, touchState){
-
-    this.setState({
-      axis: touchState.axis,
-    });
-
-    this.state.distance.setValue(touchState.distance)
-    this.state.left.setValue(Math.abs(touchState.left));
-    this.state.right.setValue(Math.abs(touchState.right));
-  }
-
-  width = Dimensions.get('window').width;
-
-  swipeAway(e, gestureState, touchState) {
-
-    // if axis is x and distnce is positive, animate right
-    if(touchState.axis === 'x'){
-      var offscreenDistance = (touchState.distance > 0) ? this.width : -this.width
-
-      // Get the right speed for the swipe
-      var duration = Math.abs(touchState.distance) / Math.abs(gestureState.vx);
-
-      Animated.parallel([
-
-        // No easing needed here
-        Animated.timing(this.state.distance, {
-          toValue: offscreenDistance,
-          duration: duration,
-        }),
-
-        Animated.timing(this.state.left, this.resetToZero),
-        Animated.timing(this.state.right, this.resetToZero),
-
-      ]).start(function(){
-
-        // Reset the card view
-        this.state.scale.setValue(0.8);
-        this.state.opacity.setValue(0);
-        this.state.distance.setValue(0);
-        this.state.left.setValue(0);
-        this.state.right.setValue(0);
-
-        this.nextRec();
-        this.returnToBaseline();
-
-      }.bind(this));
-    }
-  };
-
-  resetToOne = {
-    toValue: 1,
-    duration: 200
-  };
-
-  resetToZero = {
-    toValue: 0,
-    duration: 200
-  };
-
-  returnToBaseline() {
-    Animated.parallel([
-      Animated.spring(this.state.scale, this.resetToOne),
-      Animated.spring(this.state.opacity, this.resetToOne),
-
-      Animated.spring(this.state.distance, this.resetToZero),
-      Animated.spring(this.state.left, this.resetToZero),
-      Animated.spring(this.state.right, this.resetToZero),
-    ]).start();
-  }
-
-  cardTransform(){
-    return {
-      opacity: this.state.opacity,
-      flex: 1,
-      transform: [
-        {translateX: (this.state.axis === 'x') ? this.state.distance : 0},
-        {scale: this.state.scale},
-      ]
-    }
-  }
-
   render() {
     let recommendation = this.getCurrentRecommendation();
 
     return (
-      <View style={[this.props.style, styles.scene]} {...this.touchResponder.panHandlers}>
+      <View style={[this.props.style, styles.scene]}>
 
-        <Edge
-          containerHeight={600}
-          position={'right'}
-          thickness={this.state.right}>
-          <Text style={{padding: 10, color: '#fff', width: 150, textAlign: 'center'}}>
-            Warmer
-          </Text>
-        </Edge>
-
-        <Edge
-          containerHeight={600}
-          position={'left'}
-          thickness={this.state.left}>
-          <Text style={{padding: 10, color: '#fff', width: 150, textAlign: 'center'}}>
-            Colder
-          </Text>
-        </Edge>
-
-        <Animated.View style={this.cardTransform()}>
+        <DeckNavigator
+          onSwipeRight={this.nextRec.bind(this)}
+          onSwipeLeft={this.nextRec.bind(this)}>
           <Recommendation
             recommendation={recommendation}
             viewDetail={this.viewDetail.bind(this)} />
-        </Animated.View>
+        </DeckNavigator>
 
         <Button
           buttonStyle={styles.commitButton}
@@ -187,6 +64,4 @@ export default class RecommendationsScene extends Component {
       </View>
     );
   }
-
-
 }
