@@ -12,7 +12,7 @@ import DeckNavigator from './deck-navigator';
 export default class RecommendationsScene extends Component {
 
   state = {
-    index: 2,
+    index: 0,
   };
 
   nextRec() {

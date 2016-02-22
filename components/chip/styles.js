@@ -12,7 +12,6 @@ export default StyleSheet.create({
     marginBottom: 6,
     borderRadius: 16,
     backgroundColor: '#ccc',
-    alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
   },

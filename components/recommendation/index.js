@@ -9,7 +9,6 @@ import Chip from '../chip';
 import Button from '../button';
 
 export default class Recommendation extends Component {
-  
 
   render() {
 
@@ -38,7 +37,15 @@ export default class Recommendation extends Component {
         <View style={styles.divider} />
 
         <View style={styles.chipContainer}>
-          {labels.map(tag => <Chip key={tag} chipStyle={styles.chip} chipTextStyle={styles.chipText} chipIcon={'\u2605'}>{tag}</Chip>)}
+          {labels.map(tag => 
+            <Chip 
+              key={tag} 
+              chipStyle={styles.chip} 
+              chipTextStyle={styles.chipText} 
+              chipIcon={'\u2605'}>
+              {tag}
+            </Chip>)
+          }
         </View>
 
       </View>

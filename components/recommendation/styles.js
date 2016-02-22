@@ -46,6 +46,8 @@ export default StyleSheet.create({
     flex: 0.40,
     flexDirection: 'row',
     flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
     paddingHorizontal: 16,
     paddingVertical: 8,
     overflow: 'hidden',
