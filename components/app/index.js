@@ -11,7 +11,7 @@ import {NavigationBarRouteMapper, NavigationBarStyles} from '../navigation-bar';
 import RecommendationsScene from '../recommendations-scene';
 import RecommendationScene from '../recommendation-scene';
 import ConciergeScene from '../concierge-scene';
-import SavedScene from '../saved-scene';
+import SavedRecommendationsScene from '../saved-recommendations-scene';
 
 
 export default class Gustave extends Component {
@@ -97,7 +97,7 @@ export default class Gustave extends Component {
       case 'saved':
         let saved = Array.from(this.props.recommendations);
         return (
-          <SavedScene 
+          <SavedRecommendationsScene 
             style={styles.scene} 
             savedRecommendations={saved}
             viewRecommendation={this.onViewRecommendation.bind(this, navigator)} />

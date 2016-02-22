@@ -6,7 +6,7 @@ import styles from './styles';
 
 import Swipeable from '../swipeable';
 
-export default class SavedScene extends Component {
+export default class SavedRecommendationsScene extends Component {
 
   static propTypes = {
     savedRecommendations: React.PropTypes.array,
