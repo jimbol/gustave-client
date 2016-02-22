@@ -47,7 +47,25 @@ export default class Swipeable extends Component {
     onMove: this.onMove.bind(this),
   });
 
+  checkImplemented(e, gestureState, touchState) {
+
+    // Right offset indicates left swipe, and vice versa 
+    if (touchState.left && this.props.onSwipeRight) {
+      return true;
+    }
+
+    if (touchState.right && this.props.onSwipeLeft) {
+      return true;
+    }
+
+    return false;
+  }
+
   onMove(e, gestureState, touchState){
+
+    if(!this.checkImplemented(e, gestureState, touchState)) {
+      return null;
+    }
 
     if (touchState.axis !== this.state.axis) {
       this.setState({
@@ -61,6 +79,10 @@ export default class Swipeable extends Component {
   }
 
   swipeAway(e, gestureState, touchState) {
+
+    if(!this.checkImplemented(e, gestureState, touchState)) {
+      return null;
+    }
 
     let width = Dimensions.get('window').width;
 
@@ -114,6 +136,7 @@ export default class Swipeable extends Component {
     duration: 200
   };
 
+  // Spring might be causing problems
   returnToBaseline() {
     Animated.parallel([
       Animated.spring(this.state.scale, this.resetToOne),
