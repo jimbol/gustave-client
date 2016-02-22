@@ -5,7 +5,7 @@ import moment from 'moment';
 import styles from './styles';
 
 
-export default class FavoritesScene extends Component {
+export default class SavedScene extends Component {
 
   static propTypes = {
     favorites: React.PropTypes.array,

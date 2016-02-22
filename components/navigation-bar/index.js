@@ -42,16 +42,16 @@ export var NavigationBarRouteMapper = {
 
   RightButton(route, navigator, index, navState) { 
 
-    let isFavoritesRoute = route.id === 'favorites';
+    let isSavedRoute = route.id === 'saved';
 
-    let onPressFavorites = function(){
-      if(isFavoritesRoute) {
+    let onPressSaved = function(){
+      if(isSavedRoute) {
         return;
       }
 
       navigator.push({
-        id: 'favorites',
-        name: 'Favorites',
+        id: 'saved',
+        name: 'Saved',
       });
     }
 
@@ -61,9 +61,9 @@ export var NavigationBarRouteMapper = {
 
     return (
       <View style={styles.rightAreaContainer}>
-        <TouchableOpacity activeOpacity={isFavoritesRoute ? 1 : undefined } onPress={onPressFavorites.bind(this)} style={styles.favoritesButton}>
-          <Text style={styles.favoritesText}>
-            Favs
+        <TouchableOpacity activeOpacity={isSavedRoute ? 1 : undefined } onPress={onPressSaved.bind(this)} style={styles.savedButton}>
+          <Text style={styles.savedText}>
+            {'\u2605'}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={onPressMenu.bind(this)} style={styles.menuButton}>

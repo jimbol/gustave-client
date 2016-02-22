@@ -11,7 +11,7 @@ import {NavigationBarRouteMapper, NavigationBarStyles} from '../navigation-bar';
 import RecommendationsScene from '../recommendations-scene';
 import RecommendationDetailScene from '../recommendation-detail-scene';
 import ConciergeScene from '../concierge-scene';
-import FavoritesScene from '../favorites-scene';
+import SavedScene from '../saved-scene';
 
 
 export default class Gustave extends Component {
@@ -94,12 +94,12 @@ export default class Gustave extends Component {
             recommendation={route.recommendation} />
         );
 
-      case 'favorites':
-        let favorites = this.props.recommendations;
+      case 'saved':
+        let saved = this.props.recommendations;
         return (
-          <FavoritesScene 
+          <SavedScene 
             style={styles.scene} 
-            favorites={favorites}
+            favorites={saved}
             viewDetail={this.onViewDetail.bind(this, navigator)} />
         );
     }

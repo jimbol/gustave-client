@@ -26,13 +26,14 @@ export default StyleSheet.create({
     flexDirection: 'row',
   },
 
-  favoritesButton: {
+  savedButton: {
     padding: 12,
   },
 
-  favoritesText: {
+  savedText: {
     textAlign: 'center',
     color: '#fff',
+    fontSize: 16,
   },
 
   menuButton: {
