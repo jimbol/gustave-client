@@ -9,7 +9,7 @@ import styles from './styles';
 import {NavigationBarRouteMapper, NavigationBarStyles} from '../navigation-bar';
 
 import RecommendationsScene from '../recommendations-scene';
-import RecommendationDetailScene from '../recommendation-detail-scene';
+import RecommendationScene from '../recommendation-scene';
 import ConciergeScene from '../concierge-scene';
 import SavedScene from '../saved-scene';
 
@@ -28,7 +28,7 @@ export default class Gustave extends Component {
   // Context: Navigator
   onViewDetail(navigator, recommendation) {
     navigator.push({
-      id: 'recommendation-detail',
+      id: 'recommendation',
       name: 'Recommendation',
       recommendation: recommendation,
     });
@@ -79,12 +79,13 @@ export default class Gustave extends Component {
             viewConcierge={this.onViewConcierge.bind(this, navigator)} />
         );
 
-      case 'recommendation-detail':
+      case 'recommendation':
         return (
-          <RecommendationDetailScene
+          <RecommendationScene
             style={styles.scene}
             recommendation={route.recommendation}
-            viewConcierge={navigator.onViewConcierge} />
+            viewDetail={this.onViewDetail.bind(this, navigator)}
+            viewConcierge={this.onViewConcierge.bind(this, navigator)} />
         );
 
       case 'concierge':
@@ -100,7 +101,7 @@ export default class Gustave extends Component {
           <SavedScene 
             style={styles.scene} 
             savedRecommendations={saved}
-            viewDetail={this.onViewDetail.bind(this, navigator)} />
+            viewRecommendation={this.onViewDetail.bind(this, navigator)} />
         );
     }
   }

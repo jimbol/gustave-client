@@ -8,7 +8,7 @@ import styles from './styles';
 export default class SavedScene extends Component {
 
   static propTypes = {
-    favorites: React.PropTypes.array,
+    savedRecommendations: React.PropTypes.array,
   };
 
   _renderSavedRec(recommendation) {
@@ -19,7 +19,7 @@ export default class SavedScene extends Component {
 
     return (
       <TouchableOpacity 
-        onPress={() => this.props.viewDetail(recommendation)} 
+        onPress={() => this.props.viewRecommendation(recommendation)} 
         key={recommendation.id}>
         <View style={styles.recommendation}>
           <View style={styles.recommendationTextContainer}>
