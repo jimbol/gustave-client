@@ -2,20 +2,18 @@
 
 import React, {Component, View, Text, Animated} from 'react-native';
 import styles from './styles';
-import Recommendation from '../recommendation';
+
 import Button from '../button';
+import Card from '../card';
+import Recommendation from '../recommendation';
 import DeckNavigator from './deck-navigator';
-import Dimensions from 'Dimensions';
+
 
 export default class RecommendationsScene extends Component {
 
   state = {
     index: 2,
   };
-
-  constructor(){
-    super();
-  }
 
   nextRec() {
     this.setState({index: this.getNextIndex()});
@@ -50,9 +48,11 @@ export default class RecommendationsScene extends Component {
         <DeckNavigator
           onSwipeRight={this.nextRec.bind(this)}
           onSwipeLeft={this.nextRec.bind(this)}>
-          <Recommendation
-            recommendation={recommendation}
-            viewDetail={this.viewDetail.bind(this)} />
+          <Card>
+            <Recommendation
+              recommendation={recommendation}
+              viewDetail={this.viewDetail.bind(this)} />
+          </Card>
         </DeckNavigator>
 
         <Button

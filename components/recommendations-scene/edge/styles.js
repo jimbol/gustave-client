@@ -3,29 +3,33 @@ import React, {
   StyleSheet
 } from 'react-native';
 
-module.exports = StyleSheet.create({
+export default StyleSheet.create({
   top: {
+    position: 'absolute',
     flexDirection: 'row',
     alignItems:'center',
-    position: 'absolute',
+    justifyContent: 'center',
     overflow: 'hidden'
   },
   left: {
     position: 'absolute',
     alignItems:'center',
+    justifyContent: 'center',
     overflow: 'hidden'
   },
   right: {
     right: 0,
     position: 'absolute',
     alignItems:'center',
+    justifyContent: 'center',
     overflow: 'hidden'
   },
   bottom: {
-    flexDirection: 'row',
-    alignItems:'center',
     bottom: 0,
     position: 'absolute',
+    flexDirection: 'row',
+    alignItems:'center',
+    justifyContent: 'center',
     overflow: 'hidden'
   }
 });

@@ -8,42 +8,34 @@
 import React, {Component, Animated} from 'react-native';
 import _ from 'lodash';
 
-import * as styles from './styles';
+import styles from './styles';
 
 export default class Edge extends Component {
-  constructor(props) {
-    super(props);
 
-    // top, bottom, left, right
-    this.position = props.position;
-    this.containerHeight = props.containerHeight;
-    this.containerWidth = props.containerWidth;
+  static propTypes = {
+    containerHeight: React.PropTypes.number,
+    containerWidth: React.PropTypes.number,
+    position: React.PropTypes.oneOf(['top', 'bottom', 'left', 'right']).isRequired,
+  };
 
-    this.state = {
-      thickness: props.thickness,
-    }
-  }
-
-  createStyles(){
-    var position = this.position
+  createStyles() {
+    let height, width;
+    let position = this.props.position;
 
     if (position === 'top' || position === 'bottom') {
-      var height = this.state.thickness;
-      var width = this.containerWidth;
+      height = this.props.thickness;
+      width = this.props.containerWidth;
     } else {
-      var height = this.containerHeight;
-      var width = this.state.thickness;
+      height = this.props.containerHeight;
+      width = this.props.thickness;
     }
 
-    return {
-      height: height,
-      width: width,
-    };
+    return { height, width }; 
   }
 
   render() {
     return (
-      <Animated.View style={[styles[this.position], this.createStyles()]}>
+      <Animated.View style={[styles[this.props.position], this.createStyles()]}>
         {this.props.children}
       </Animated.View>
     );

@@ -1,10 +1,10 @@
 'use strict';
 
-import React, {Component, View, Text, Animated} from 'react-native';
+import React, {Component, View, Text, Animated, Dimensions} from 'react-native';
 import styles from './styles';
+
 import TouchResponder from '../touch-responder';
 import Edge from '../edge';
-import Dimensions from 'Dimensions';
 
 // USE:
 // <DeckNavigator
@@ -13,7 +13,14 @@ import Dimensions from 'Dimensions';
 //   <Recommendation />
 // </DeckNavigator>
 
+
+
 export default class DeckNavigator extends Component {
+
+  defaultProps = {
+    onSwipeLeft: () => {},
+    onSwipeRight: () => {},
+  };
 
   state = {
     // Card position values
@@ -28,20 +35,10 @@ export default class DeckNavigator extends Component {
     right: new Animated.Value(0),
   };
 
-  constructor(props){
-    super(props);
-
-    var noop = function(){};
-
-    this.onSwipeLeft = props.onSwipeLeft || noop;
-    this.onSwipeRight = props.onSwipeRight || noop;
-
-    this.touchResponder = this.createTouchResponder()
-  }
-
   // Touchable
+  touchResponder = this.createTouchResponder();
+
   createTouchResponder(){
-    var _this = this;
 
     var touchResponder = new TouchResponder({
       onSwipeRelease: this.swipeAway.bind(this),
@@ -63,17 +60,17 @@ export default class DeckNavigator extends Component {
     this.state.right.setValue(Math.abs(touchState.right));
   }
 
-  width = Dimensions.get('window').width;
-
   swipeAway(e, gestureState, touchState) {
+
+    let width = Dimensions.get('window').width;
 
     // if axis is x and distnce is positive, animate right
     if(touchState.axis === 'x'){
-      var offscreenDistance = (touchState.distance > 0) ? this.width : -this.width
+      let offscreenDistance = (touchState.distance > 0) ? width : -width
 
       // Get the right speed for the swipe
-      var duration = Math.abs(touchState.distance) / Math.abs(gestureState.vx);
-      var direction = (this.state.left._value) ? 'left' : 'right';
+      let duration = Math.abs(touchState.distance) / Math.abs(gestureState.vx);
+      let direction = (this.state.left._value) ? 'left' : 'right';
 
       Animated.parallel([
 
@@ -89,9 +86,9 @@ export default class DeckNavigator extends Component {
       ]).start(function(){
 
         if (this.state.left._value) {
-          this.onSwipeLeft();
+          this.props.onSwipeLeft();
         } else if (this.state.right._value) {
-          this.onSwipeRight();
+          this.props.onSwipeRight();
         }
 
         // Reset the card view
@@ -142,8 +139,9 @@ export default class DeckNavigator extends Component {
   render() {
     return (
       <View style={styles.deck}>
+
         <Edge
-          containerHeight={600}
+          containerHeight={600} 
           position={'right'}
           thickness={this.state.right}>
           <Text style={styles.label}>
@@ -152,7 +150,7 @@ export default class DeckNavigator extends Component {
         </Edge>
 
         <Edge
-          containerHeight={600}
+          containerHeight={600} 
           position={'left'}
           thickness={this.state.left}>
           <Text style={styles.label}>
@@ -163,6 +161,7 @@ export default class DeckNavigator extends Component {
         <Animated.View style={this.getDeckStyles()} {...this.touchResponder.panHandlers}>
           {this.props.children}
         </Animated.View>
+
       </View>
     );
   }
