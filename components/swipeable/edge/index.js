@@ -15,6 +15,10 @@ export default class Edge extends Component {
   static propTypes = {
     containerHeight: React.PropTypes.number,
     containerWidth: React.PropTypes.number,
+    thickness: React.PropTypes.oneOfType([
+      React.PropTypes.number,
+      React.PropTypes.instanceOf(Animated.Value),
+    ]).isRequired,
     position: React.PropTypes.oneOf(['top', 'bottom', 'left', 'right']).isRequired,
   };
 

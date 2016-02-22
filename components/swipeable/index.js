@@ -3,8 +3,8 @@
 import React, {Component, View, Text, Animated, Dimensions} from 'react-native';
 import styles from './styles';
 
-import TouchResponder from '../touch-responder';
-import Edge from '../edge';
+import TouchResponder from './touch-responder';
+import Edge from './edge';
 
 // USE:
 // <DeckNavigator
@@ -14,11 +14,13 @@ import Edge from '../edge';
 // </DeckNavigator>
 
 
-export default class DeckNavigator extends Component {
+export default class Swipeable extends Component {
 
-  defaultProps = {
-    onSwipeLeft: () => {},
-    onSwipeRight: () => {},
+  static propTypes = {
+    onSwipeLeft: React.PropTypes.func,
+    onSwipeRight: React.PropTypes.func,
+    leftSwipeEdge: React.PropTypes.node,
+    rightSwipeEdge: React.PropTypes.node,
   };
 
   state = {
@@ -32,21 +34,18 @@ export default class DeckNavigator extends Component {
     // Edge thickness
     left: new Animated.Value(0),
     right: new Animated.Value(0),
+
+    // Height for edges
+    edgeHeight: 0,
+    edgeWidth: 0,
   };
 
   // Touchable
-  touchResponder = this.createTouchResponder();
-
-  createTouchResponder(){
-
-    var touchResponder = new TouchResponder({
-      onSwipeRelease: this.swipeAway.bind(this),
-      onDragRelease: this.returnToBaseline.bind(this),
-      onMove: this.onMove.bind(this),
-    });
-
-    return touchResponder;
-  }
+  touchResponder = new TouchResponder({
+    onSwipeRelease: this.swipeAway.bind(this),
+    onDragRelease: this.returnToBaseline.bind(this),
+    onMove: this.onMove.bind(this),
+  });
 
   onMove(e, gestureState, touchState){
 
@@ -65,8 +64,8 @@ export default class DeckNavigator extends Component {
 
     let width = Dimensions.get('window').width;
 
-    // if axis is x and distnce is positive, animate right
-    if(touchState.axis === 'x'){
+    // if axis is x and distance is positive, animate right
+    if(touchState.axis === 'x') {
       let offscreenDistance = (touchState.distance > 0) ? width : -width
 
       // Get the right speed for the swipe
@@ -137,27 +136,34 @@ export default class DeckNavigator extends Component {
     }
   }
 
+  setEdgeHeight(event) {
+    let {x, y, width, height} = event.nativeEvent.layout;
+    if (height !== this.state.edgeHeight) {
+      this.setState({edgeHeight: height});
+    }
+  }
+
   render() {
     return (
-      <View style={styles.deck}>
+      <View onLayout={this.setEdgeHeight.bind(this)} style={styles.container}>
 
-        <Edge
-          containerHeight={600} 
-          position={'right'}
-          thickness={this.state.right}>
-          <Text style={styles.label}>
-            Colder
-          </Text>
-        </Edge>
+        {this.props.rightSwipeEdge && 
+          <Edge
+            containerHeight={this.state.edgeHeight} 
+            position={'left'}
+            thickness={this.state.left}>
+            {this.props.rightSwipeEdge}
+          </Edge>
+        }
 
-        <Edge
-          containerHeight={600} 
-          position={'left'}
-          thickness={this.state.left}>
-          <Text style={styles.label}>
-            Warmer
-          </Text>
-        </Edge>
+        {this.props.leftSwipeEdge && 
+          <Edge
+            containerHeight={this.state.edgeHeight} 
+            position={'right'}
+            thickness={this.state.right}>
+            {this.props.leftSwipeEdge}
+          </Edge>
+        }
 
         <Animated.View style={this.getDeckStyles()} {...this.touchResponder.panHandlers}>
           {this.props.children}

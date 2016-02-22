@@ -8,6 +8,12 @@ export default StyleSheet.create({
     backgroundColor: '#fff'
   },
 
+  edgeLabel: {
+    padding: 10,
+    width: 150,
+    textAlign: 'center'
+  },
+
   recommendation: {
     flex: 0,
     flexDirection: 'row',

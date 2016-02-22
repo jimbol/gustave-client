@@ -7,6 +7,13 @@ export default StyleSheet.create({
     flex: 1
   },
 
+  edgeLabel: {
+    padding: 10,
+    color: '#fff',
+    width: 150,
+    textAlign: 'center'
+  },
+
   commitButton: {
     position: 'absolute',
     bottom: 24,
