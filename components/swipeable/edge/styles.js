@@ -15,14 +15,14 @@ export default StyleSheet.create({
     position: 'absolute',
     alignItems:'center',
     justifyContent: 'center',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   right: {
     right: 0,
     position: 'absolute',
     alignItems:'center',
     justifyContent: 'center',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   // bottom: {
   //   bottom: 0,

@@ -18,7 +18,7 @@ export default class SavedScene extends Component {
     let start = moment(event.time.start).format('ddd MM/DD @ h:mm A');
     let end  = moment(event.time.end).format('ddd MM/DD @ h:mm A');
 
-    let leftEdge = <Text style={styles.edgeLabel}>Remove</Text>;
+    let leftEdge = <View style={styles.edgeContainer}><Text style={styles.edgeLabel}>Remove</Text></View>;
 
     return (
       <Swipeable

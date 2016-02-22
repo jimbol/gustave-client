@@ -37,7 +37,6 @@ export default class Swipeable extends Component {
 
     // Height for edges
     edgeHeight: 0,
-    edgeWidth: 0,
   };
 
   // Touchable
@@ -136,15 +135,15 @@ export default class Swipeable extends Component {
     duration: 200
   };
 
-  // Spring might be causing problems
+  // Spring was causing rendering problems, set to timing for now, revisit in future
   returnToBaseline() {
     Animated.parallel([
-      Animated.spring(this.state.scale, this.resetToOne),
-      Animated.spring(this.state.opacity, this.resetToOne),
+      Animated.timing(this.state.scale, this.resetToOne),
+      Animated.timing(this.state.opacity, this.resetToOne),
 
-      Animated.spring(this.state.distance, this.resetToZero),
-      Animated.spring(this.state.left, this.resetToZero),
-      Animated.spring(this.state.right, this.resetToZero),
+      Animated.timing(this.state.distance, this.resetToZero),
+      Animated.timing(this.state.left, this.resetToZero),
+      Animated.timing(this.state.right, this.resetToZero),
     ]).start();
   }
 

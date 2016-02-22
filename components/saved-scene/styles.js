@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {StyleSheet} from 'react-native';
+import React, {StyleSheet, Dimensions} from 'react-native';
 
 export default StyleSheet.create({
   scene: {
@@ -8,9 +8,16 @@ export default StyleSheet.create({
     backgroundColor: '#fff'
   },
 
+  edgeContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'red',
+    width: Dimensions.get('window').width,
+  },
+
   edgeLabel: {
     padding: 10,
-    width: 150,
     textAlign: 'center'
   },
 
