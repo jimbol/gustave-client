@@ -6,10 +6,11 @@ export default StyleSheet.create({
 
   container: {
     flex: 1,
+    flexDirection: 'column',
   },
 
   backgroundImage: {
-    flex: 0.60,
+    flex: 0.50,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -22,7 +23,7 @@ export default StyleSheet.create({
   },
 
   titleContainer: {
-    flex: 0,
+    flex: 0.25,
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingHorizontal: 16,
@@ -43,7 +44,7 @@ export default StyleSheet.create({
   },
 
   chipContainer: {
-    flex: 0.40,
+    flex: 0.25,
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
