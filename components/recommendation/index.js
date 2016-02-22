@@ -5,7 +5,6 @@ import styles from './styles';
 import _ from 'lodash';
 import moment from 'moment';
 
-import Card from '../card';
 import Chip from '../chip';
 import Button from '../button';
 
@@ -18,7 +17,7 @@ export default class Recommendation extends Component {
     let labels = _.union(event.labels, place.labels);
 
     return (
-      <Card>
+      <View style={styles.container}>
 
         <Image
           style={styles.backgroundImage}
@@ -45,7 +44,7 @@ export default class Recommendation extends Component {
           {labels.map(tag => <Chip key={tag} chipStyle={styles.chip} chipTextStyle={styles.chipText} chipIcon={'\u2605'}>{tag}</Chip>)}
         </View>
 
-      </Card>
+      </View>
     );
   }
 }

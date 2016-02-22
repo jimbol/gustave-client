@@ -4,6 +4,10 @@ import React, {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
 
+  container: {
+    flex: 1,
+  },
+
   backgroundImage: {
     flex: 0.60,
     alignItems: 'center',
