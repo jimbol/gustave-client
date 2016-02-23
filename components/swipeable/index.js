@@ -11,7 +11,6 @@ import React, {
 
 import styles from './styles';
 
-import TouchResponder from './touch-responder';
 import Edge from './edge';
 
 
@@ -21,6 +20,7 @@ const resetToZero = {
   toValue: 0,
   duration: 200
 };
+
 
 export default class Swipeable extends Component {
 
@@ -87,9 +87,6 @@ export default class Swipeable extends Component {
         // gestureState.d{x,y}
 
         this.state.offsetX.setValue(gestureState.dx);
-
-        // this.state.left.setValue(Math.abs(Math.max(gestureState.dx, 0)));
-        // this.state.right.setValue(Math.abs(Math.min(gestureState.dx, 0)));
       },
       // Swipe should only give up control upon release
       // Doesn't yet work with ScrollView b/c react-native hasn't implement support for this yet
@@ -170,8 +167,7 @@ export default class Swipeable extends Component {
     }
   }
 
-  render() {
-
+  createAnimationStyles() {
     let animationStyles = {
       flex: 1,
       opacity: this.state.isSwiping && 0.8 || 1,
@@ -180,7 +176,10 @@ export default class Swipeable extends Component {
       ],
     };
 
-    let setEd
+    return animationStyles;
+  }
+
+  render() {
 
     return (
       <View onLayout={this.setEdgeHeight.bind(this)} style={styles.container}>
@@ -203,7 +202,7 @@ export default class Swipeable extends Component {
           </Edge>
         }
 
-        <Animated.View style={animationStyles} {...this.panResponder.panHandlers}>
+        <Animated.View style={this.createAnimationStyles()} {...this.panResponder.panHandlers}>
           {this.props.children}
         </Animated.View>
 
