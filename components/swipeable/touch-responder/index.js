@@ -21,6 +21,12 @@ import Dimensions from 'Dimensions';
 // });
 
 
+/**
+ *  TODO:   
+ *    This should be configurable to respond in none, many, or all cardinal directions
+ */
+
+
 export default class TouchResponder {
 
 

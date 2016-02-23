@@ -1,5 +1,12 @@
 'use strict';
 
+/**
+ *
+ * This is just here for reference at this point. Delete the whole folder as soon as 
+ * recommendations are self-expanding
+ */
+
+
 import React, {Component, View, Text, Image} from 'react-native';
 import styles from './styles';
 import moment from 'moment';

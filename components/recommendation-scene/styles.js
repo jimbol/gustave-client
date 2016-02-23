@@ -4,14 +4,8 @@ import React, {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   scene: {
-    flex: 1
-  },
-
-  edgeLabel: {
-    padding: 10,
-    color: '#fff',
-    width: 150,
-    textAlign: 'center'
+    flex: 1,
+    backgroundColor: '#fff',
   },
 
   commitButton: {

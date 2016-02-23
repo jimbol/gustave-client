@@ -3,7 +3,7 @@
 import React, {
   Component,
   Text,
-  TouchableHighlight,
+  TouchableOpacity,
   View,
   Navigator,
   StatusBar,
@@ -24,11 +24,11 @@ export var NavigationBarRouteMapper = {
     }
 
     return (
-      <TouchableHighlight onPress={onPressBack} style={styles.backButton}>
+      <TouchableOpacity onPress={onPressBack} style={styles.backButton}>
         <Text style={styles.backText}>
           Back
         </Text>
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
   },
 
@@ -40,21 +40,37 @@ export var NavigationBarRouteMapper = {
     );
   },
 
-  RightButton(route, navigator, index, navState) {
-    let onPressFavorites = function(){
+  RightButton(route, navigator, index, navState) { 
+
+    let isSavedRoute = route.id === 'saved';
+
+    let onPressSaved = function(){
+      if(isSavedRoute) {
+        return;
+      }
+
       navigator.push({
-        id: 'favorites',
-        name: 'Favorites',
+        id: 'saved',
+        name: 'Saved',
       });
     }
 
+    let onPressMenu = function() {
+      console.log('noop');
+    }
+
     return (
-      <View>
-        <TouchableHighlight onPress={onPressFavorites.bind(this)} style={styles.favoritesButton}>
-          <Text style={styles.favoritesText}>
-            Favs
+      <View style={styles.rightAreaContainer}>
+        <TouchableOpacity activeOpacity={isSavedRoute ? 1 : undefined } onPress={onPressSaved.bind(this)} style={styles.savedButton}>
+          <Text style={styles.savedText}>
+            {'\u2605'}
           </Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onPressMenu.bind(this)} style={styles.menuButton}>
+          <Text style={styles.menuText}>
+            Cog
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   },

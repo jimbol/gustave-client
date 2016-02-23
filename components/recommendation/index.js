@@ -5,11 +5,11 @@ import styles from './styles';
 import _ from 'lodash';
 import moment from 'moment';
 
-import Card from '../card';
 import Chip from '../chip';
 import Button from '../button';
 
 export default class Recommendation extends Component {
+
   render() {
 
     let rec = this.props.recommendation;
@@ -18,16 +18,11 @@ export default class Recommendation extends Component {
     let labels = _.union(event.labels, place.labels);
 
     return (
-      <Card>
+      <View style={styles.container}>
 
         <Image
           style={styles.backgroundImage}
           source={{uri: place.photo.uri}}>
-
-          <Button onPress={this.props.viewDetail}>
-            More Deets
-          </Button>
-
         </Image>
 
         <View style={styles.titleContainer}>
@@ -42,10 +37,18 @@ export default class Recommendation extends Component {
         <View style={styles.divider} />
 
         <View style={styles.chipContainer}>
-          {labels.map(tag => <Chip key={tag} chipStyle={styles.chip} chipTextStyle={styles.chipText} chipIcon={'\u2605'}>{tag}</Chip>)}
+          {labels.map(tag => 
+            <Chip 
+              key={tag} 
+              chipStyle={styles.chip} 
+              chipTextStyle={styles.chipText} 
+              chipIcon={'\u2605'}>
+              {tag}
+            </Chip>)
+          }
         </View>
 
-      </Card>
+      </View>
     );
   }
 }

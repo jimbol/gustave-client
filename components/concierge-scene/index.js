@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component, View, Text, Image, MapView} from 'react-native';
+import React, {Component, View, Text, Image, MapView, InteractionManager} from 'react-native';
 import styles from './styles';
 import Button from '../button';
 import Card from '../card';
@@ -19,18 +19,22 @@ export default class ConciergeScene extends Component {
     maximumAge: 1000
   };
 
-  componentWillMount() {
-    navigator.geolocation.getCurrentPosition(
-      this.onReceiveCurrentPosition.bind(this),
-      this.onGeoLocationError.bind(this),
-      this.geoLocationOptions
-    );
+  componentDidMount() {
 
-    this.watchID = navigator.geolocation.watchPosition(this.onReceiveCurrentPosition.bind(this));
+    InteractionManager.runAfterInteractions(() => {
+      navigator.geolocation.getCurrentPosition(
+        this.onReceiveCurrentPosition.bind(this),
+        this.onGeoLocationError.bind(this),
+        this.geoLocationOptions
+      );
+
+      this.watchID = navigator.geolocation.watchPosition(this.onReceiveCurrentPosition.bind(this));
+    });
   }
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID);
+    // this.focusSubscription.remove();
   }
 
   onReceiveCurrentPosition(position){
@@ -43,7 +47,7 @@ export default class ConciergeScene extends Component {
   }
 
   onGeoLocationError(error){
-    console.error(error.message);
+    // console.error(error.message);
   }
 
   getMapRegion(position, place){
@@ -89,20 +93,26 @@ export default class ConciergeScene extends Component {
     return (
       <View style={[this.props.style, styles.scene]}>
 
-        <Image style={styles.backgroundImage} source={{uri: event.place.photo.uri}}>
-          <View style={styles.titleContainer}>
-            <Text numberOfLines={1} style={styles.title}>
-              {event.name + ' @ ' + place.name}
-            </Text>
-          </View>
-        </Image>
+        <View style={styles.titleContainer}>
+          <Text numberOfLines={1} style={styles.title}>
+            {event.name + ' @ ' + place.name}
+          </Text>
+        </View>
 
-        <MapView
+        {this.state.position ? 
+          <MapView
           style={styles.map}
           showsUserLocation={true}
           followUserLocation={false}
           region={region}
-          annotations={annotations} />
+          annotations={annotations} /> 
+        :
+          <View style={styles.placeholderContainer}>
+            <Image 
+              style={styles.placeholderImage}
+              source={require('../../assets/defaultMapView.png')} />
+          </View>
+        }
 
         <Button onPress={this.onGetDirections.bind(this)}>
           Get Directions

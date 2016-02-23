@@ -3,8 +3,7 @@
 import React, {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
-  scene: {
-    backgroundColor: '#fff'
+  container: {
+    flex: 1,
   },
-
 });

@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {StyleSheet} from 'react-native';
+import React, {StyleSheet, Dimensions} from 'react-native';
 
 export default StyleSheet.create({
   scene: {
@@ -8,34 +8,31 @@ export default StyleSheet.create({
     backgroundColor: 'white',
   },
 
-  backgroundImage: {
-    flex: 0.10,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-  },
-
   titleContainer: {
-    flex: 1,
+    flex: 0,
     alignSelf: 'stretch',
-    backgroundColor: 'rgba(0,0,0,0.25)',
+    backgroundColor: '#4a0b49',
   },
 
   title: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#fff',
-    padding: 16,
+    color: '#93818e',
+    paddingBottom: 12,
     textAlign: 'center',
-    textShadowColor: 'rgba(0,0,0,0.5)',
-    textShadowOffset: {
-      width: 1, 
-      height: 1,
-    },
-    textShadowRadius: 1,
   },
 
   map: {
     flex: 0.30,
+    overflow: 'hidden',
+  },
+
+  placeholderContainer: {
+    flex: 0.30,
+  },
+
+  placeholderImage: {
+    flex: 1,
+    height: null,
+    width: null,
   },
 
   other: {

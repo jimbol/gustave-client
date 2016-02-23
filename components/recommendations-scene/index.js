@@ -2,20 +2,18 @@
 
 import React, {Component, View, Text, Animated} from 'react-native';
 import styles from './styles';
-import Recommendation from '../recommendation';
+
 import Button from '../button';
-import DeckNavigator from './deck-navigator';
-import Dimensions from 'Dimensions';
+import Card from '../card';
+import Swipeable from '../swipeable';
+import Recommendation from '../recommendation';
+
 
 export default class RecommendationsScene extends Component {
 
   state = {
-    index: 2,
+    index: 0,
   };
-
-  constructor(){
-    super();
-  }
 
   nextRec() {
     this.setState({index: this.getNextIndex()});
@@ -29,10 +27,6 @@ export default class RecommendationsScene extends Component {
     }
   }
 
-  viewDetail(){
-    this.props.viewDetail(this.getCurrentRecommendation());
-  }
-
   viewConcierge(){
     this.props.viewConcierge(this.getCurrentRecommendation());
   }
@@ -42,18 +36,25 @@ export default class RecommendationsScene extends Component {
   }
 
   render() {
-    let recommendation = this.getCurrentRecommendation();
+
+    let leftEdge = <Text style={styles.edgeLabel}>Dismiss</Text>;
+    let rightEdge = <Text style={styles.edgeLabel}>Save</Text>;
 
     return (
       <View style={[this.props.style, styles.scene]}>
 
-        <DeckNavigator
+        <Swipeable
           onSwipeRight={this.nextRec.bind(this)}
-          onSwipeLeft={this.nextRec.bind(this)}>
-          <Recommendation
-            recommendation={recommendation}
-            viewDetail={this.viewDetail.bind(this)} />
-        </DeckNavigator>
+          rightSwipeEdge={rightEdge}
+          onSwipeLeft={this.nextRec.bind(this)}
+          leftSwipeEdge={leftEdge}>
+
+          <Card>
+            <Recommendation
+              recommendation={this.getCurrentRecommendation()} />
+          </Card>
+
+        </Swipeable>
 
         <Button
           buttonStyle={styles.commitButton}

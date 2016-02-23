@@ -9,15 +9,16 @@ import styles from './styles';
 import {NavigationBarRouteMapper, NavigationBarStyles} from '../navigation-bar';
 
 import RecommendationsScene from '../recommendations-scene';
-import RecommendationDetailScene from '../recommendation-detail-scene';
+import RecommendationScene from '../recommendation-scene';
 import ConciergeScene from '../concierge-scene';
-import FavoritesScene from '../favorites-scene';
+import SavedRecommendationsScene from '../saved-recommendations-scene';
 
 
 export default class Gustave extends Component {
 
   static defaultProps = {
     recommendations: data,
+    saved: [],
   };
 
   initialRoute = {
@@ -26,9 +27,9 @@ export default class Gustave extends Component {
   };
 
   // Context: Navigator
-  onViewDetail(navigator, recommendation) {
+  onViewRecommendation(navigator, recommendation) {
     navigator.push({
-      id: 'recommendation-detail',
+      id: 'recommendation',
       name: 'Recommendation',
       recommendation: recommendation,
     });
@@ -44,7 +45,11 @@ export default class Gustave extends Component {
   }
 
   onConfigureScene(route, routeStack){
-    return Navigator.SceneConfigs.FloatFromBottom
+    return {
+      ...Navigator.SceneConfigs.FloatFromBottom, 
+      // Overrides drag to dismiss gesture
+      gestures: null
+    };
   }
 
   render() {
@@ -71,16 +76,15 @@ export default class Gustave extends Component {
           <RecommendationsScene
             style={styles.scene}
             recommendations={this.props.recommendations}
-            viewDetail={this.onViewDetail.bind(this, navigator)}
             viewConcierge={this.onViewConcierge.bind(this, navigator)} />
         );
 
-      case 'recommendation-detail':
+      case 'recommendation':
         return (
-          <RecommendationDetailScene
+          <RecommendationScene
             style={styles.scene}
             recommendation={route.recommendation}
-            viewConcierge={navigator.onViewConcierge} />
+            viewConcierge={this.onViewConcierge.bind(this, navigator)} />
         );
 
       case 'concierge':
@@ -90,9 +94,13 @@ export default class Gustave extends Component {
             recommendation={route.recommendation} />
         );
 
-      case 'favorites':
+      case 'saved':
+        let saved = Array.from(this.props.recommendations);
         return (
-          <FavoritesScene style={styles.scene}/>
+          <SavedRecommendationsScene 
+            style={styles.scene} 
+            savedRecommendations={saved}
+            viewRecommendation={this.onViewRecommendation.bind(this, navigator)} />
         );
     }
   }
