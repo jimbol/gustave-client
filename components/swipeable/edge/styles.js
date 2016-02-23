@@ -4,13 +4,13 @@ import React, {
 } from 'react-native';
 
 export default StyleSheet.create({
-  // top: {
-  //   position: 'absolute',
-  //   flexDirection: 'row',
-  //   alignItems:'center',
-  //   justifyContent: 'center',
-  //   overflow: 'hidden'
-  // },
+  top: {
+    position: 'absolute',
+    flexDirection: 'row',
+    alignItems:'center',
+    justifyContent: 'center',
+    overflow: 'hidden'
+  },
   left: {
     position: 'absolute',
     alignItems:'center',
@@ -24,13 +24,13 @@ export default StyleSheet.create({
     justifyContent: 'center',
     overflow: 'hidden',
   },
-  // bottom: {
-  //   bottom: 0,
-  //   position: 'absolute',
-  //   flexDirection: 'row',
-  //   alignItems:'center',
-  //   justifyContent: 'center',
-  //   overflow: 'hidden'
-  // }
+  bottom: {
+    bottom: 0,
+    position: 'absolute',
+    flexDirection: 'row',
+    alignItems:'center',
+    justifyContent: 'center',
+    overflow: 'hidden'
+  }
 });
 
