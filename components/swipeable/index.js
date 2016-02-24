@@ -33,6 +33,8 @@ export default class Swipeable extends Component {
     rightSwipeEdge: React.PropTypes.node,
     onSwipeStart: React.PropTypes.func,
     onSwipeEnd: React.PropTypes.func,
+    stickyThreshold: React.PropTypes.number,
+    stickyOffset: React.PropTypes.number,
   };
 
   state = {
@@ -168,9 +170,25 @@ export default class Swipeable extends Component {
   }
 
   onRelease(event, gestureState) {
-    Animated.parallel([
-      Animated.timing(this.state.offsetX, resetToZero),
-    ]).start();
+
+    if (this.props.stickyThreshold) {
+      this.refs['swiped'].refs['node'].measure((ox, oy, width, height, px, py) => {
+
+        let shouldStick = Math.abs(ox) > width * this.props.stickyThreshold;
+
+        if (shouldStick) {
+          let offset = width - (Math.abs(this.props.stickyOffset) || 0);
+          offset = this.props.stickyOffset < 0 ? -offset : offset;
+
+          return Animated.timing(this.state.offsetX, {
+            ...resetToZero,
+            toValue: offset
+          }).start();
+        }     
+      });    
+    } 
+
+    Animated.timing(this.state.offsetX, resetToZero).start();
   }
 
   reset() {
