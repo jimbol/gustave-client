@@ -81,20 +81,20 @@ export default class RecommendationsScene extends Component {
     let rightEdge = <Text style={styles.edgeLabel}>Save</Text>;
 
     return (
-      <View style={[this.props.style, styles.scene]}>
+      <View style={[this.props.style, styles.scene, this.state.isSwiping && {paddingHorizontal: 8}]}>
 
-        <Swipeable
+        <Swipeable ref="swipeParent"
           onSwipeRight={this.nextRec.bind(this)}
           rightSwipeEdge={rightEdge}
           onSwipeLeft={this.nextRec.bind(this)}
-          leftSwipeEdge={leftEdge}>
+          leftSwipeEdge={leftEdge} >
 
           {/* Setting the key prop on the Card allows React to know that it's a new card
               and not just a change to the internal data. This is what the key prop is for. 
               It's often used for lists, which we do here to make sure that we get the mounting
               animation provided by Card. 
           */}
-          <Card key={this.state.index}> 
+          <Card key={this.state.index} > 
             <Recommendation
               recommendation={currentRecommendation} />
           </Card>

@@ -29,6 +29,8 @@ export default class Swipeable extends Component {
     onSwipeRight: React.PropTypes.func,
     leftSwipeEdge: React.PropTypes.node,
     rightSwipeEdge: React.PropTypes.node,
+    onSwipeStart: React.PropTypes.func,
+    onSwipeEnd: React.PropTypes.func,
   };
 
   state = {
@@ -73,6 +75,7 @@ export default class Swipeable extends Component {
         // The guesture has started. Show visual feedback so the user knows
         // what is happening!
         this.setState({isSwiping: true});
+        this.props.onSwipeStart && this.props.onSwipeStart();
 
         // This ensures that a dragged component stays put
         // We'll override this if we snap back upon release
@@ -97,6 +100,7 @@ export default class Swipeable extends Component {
         // responder. This typically means a gesture has succeeded
         if (this.state.isSwiping) {
           this.setState({isSwiping: false});
+          this.props.onSwipeEnd && this.props.onSwipeEnd();
         }
 
         if (gestureState.vx >= SWIPE_V_THRESHOLD) {
@@ -112,6 +116,7 @@ export default class Swipeable extends Component {
         // should be cancelled
         if (this.state.isSwiping) {
           this.setState({isSwiping: false});
+          this.props.onSwipeEnd && this.props.onSwipeEnd();
         }
 
         this.onRelease(evt, gestureState);
