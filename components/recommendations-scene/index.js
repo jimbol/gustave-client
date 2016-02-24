@@ -81,9 +81,9 @@ export default class RecommendationsScene extends Component {
     let rightEdge = <Text style={styles.edgeLabel}>Save</Text>;
 
     return (
-      <View style={[this.props.style, styles.scene, this.state.isSwiping && {paddingHorizontal: 8}]}>
+      <View style={[this.props.style, styles.scene]}>
 
-        <Swipeable ref="swipeParent"
+        <Swipeable
           onSwipeRight={this.nextRec.bind(this)}
           rightSwipeEdge={rightEdge}
           onSwipeLeft={this.nextRec.bind(this)}
