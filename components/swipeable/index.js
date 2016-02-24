@@ -5,6 +5,7 @@ import React, {
     View, 
     Text, 
     Animated, 
+    Easing,
     PanResponder, 
     Dimensions,
   } from 'react-native';
@@ -18,7 +19,8 @@ const SWIPE_V_THRESHOLD = 1;
 
 const resetToZero = {
   toValue: 0,
-  duration: 200
+  duration: 200,
+  easing: Easing.inOut(Easing.quad),
 };
 
 
@@ -157,7 +159,7 @@ export default class Swipeable extends Component {
 
   onRelease(event, gestureState) {
     Animated.parallel([
-      Animated.spring(this.state.offsetX, resetToZero),
+      Animated.timing(this.state.offsetX, resetToZero),
     ]).start();
   }
 
