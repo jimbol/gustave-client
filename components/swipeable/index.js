@@ -70,9 +70,9 @@ export default class Swipeable extends Component {
       // Ask to be the responder on move for an implemented swipe direction :
       onMoveShouldSetPanResponder: (evt, gestureState) => {
         return (Boolean(this.props.onSwipeLeft) && gestureState.dx < 0) 
-                || (Boolean(this.props.onSwipeRight) && gestureState.dx > 0
-                || (!this.props.onSwipeLeft && this._isStuck) &&  gestureState.dx < 0
-                || (!this.props.onRightSwipe && this._isStuck) && gestureState.dx > 0);
+                || (Boolean(this.props.onSwipeRight) && gestureState.dx > 0)
+                || ((this._isStuck && this.props.stickyOffset > 0) && gestureState.dx < 0)
+                || ((this._isStuck && this.props.stickyOffset < 0) && gestureState.dx > 0);
       },
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => false,
 
