@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component, View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
+import React, {Component, Dimensions, View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
 import moment from 'moment';
 import styles from './styles';
 
@@ -12,26 +12,38 @@ export default class SavedRecommendationsScene extends Component {
     savedRecommendations: React.PropTypes.array,
   };
 
+  removeRecommendation(recommendation) {
+    console.log(recommendation);
+  }
+
   _renderSavedRec(recommendation) {
     let event = recommendation.event;
     let place = event.place;
     let start = moment(event.time.start).format('ddd MM/DD @ h:mm A');
     let end  = moment(event.time.end).format('ddd MM/DD @ h:mm A');
 
-    let leftEdge = <View style={styles.edgeContainer}><Text style={styles.edgeLabel}>Remove</Text></View>;
+    let leftSwipeEdge =
+      <TouchableOpacity onPress={this.removeRecommendation.bind(this, recommendation)} style={styles.edgeContainer}>
+        <Text style={styles.edgeLabel}>Remove</Text>
+      </TouchableOpacity>;
+
+    let swipeableProps = {
+      onSwipeLeft: this.removeRecommendation.bind(this, recommendation),
+      leftSwipeEdge,
+      pinThresholdLeft: 0.3,
+      pinOffsetLeft: 100,
+    };
 
     return (
-      <Swipeable
-          onSwipeLeft={()=>{}}
-          leftSwipeEdge={leftEdge}
-          stickyThreshold={0.6}
-          stickyOffset={-100} >
+      <Swipeable {...swipeableProps} key={recommendation.id}>
 
-        <TouchableOpacity 
-          onPress={() => this.props.viewRecommendation(recommendation)} 
-          key={recommendation.id}>
+        <TouchableOpacity onPress={this.props.viewRecommendation.bind(null, recommendation)}>
 
           <View style={styles.recommendationContainer}>
+
+            <Image
+              style={styles.recommendationImage}
+              source={{uri: place.photo.uri}}/>
 
             <View style={styles.recommendationTextContainer}>
               <View style={styles.recommendationText}>
@@ -45,14 +57,10 @@ export default class SavedRecommendationsScene extends Component {
               </View>
             </View>
 
-            <Image  
-              style={styles.recommendationImage}
-              source={{uri: place.photo.uri}}/>
-
           </View>
-          
+
         </TouchableOpacity>
-        
+
       </Swipeable>
     );
   }

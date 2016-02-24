@@ -40,9 +40,9 @@ export var NavigationBarRouteMapper = {
     );
   },
 
-  RightButton(route, navigator, index, navState) { 
-
+  RightButton(route, navigator, index, navState) {
     let isSavedRoute = route.id === 'saved';
+    let savedIconOpacity = isSavedRoute ? 1 : undefined;
 
     let onPressSaved = function(){
       if(isSavedRoute) {
@@ -61,7 +61,7 @@ export var NavigationBarRouteMapper = {
 
     return (
       <View style={styles.rightAreaContainer}>
-        <TouchableOpacity activeOpacity={isSavedRoute ? 1 : undefined } onPress={onPressSaved.bind(this)} style={styles.savedButton}>
+        <TouchableOpacity onPress={onPressSaved.bind(this)} style={styles.savedButton} activeOpacity={savedIconOpacity}>
           <Text style={styles.savedText}>
             {'\u2605'}
           </Text>
