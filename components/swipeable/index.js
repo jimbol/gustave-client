@@ -54,7 +54,6 @@ export default class Swipeable extends Component {
     this.state.offsetX.removeListener(this._offsetXListener);
   }
 
-  _positionX = 0; // Used to make sure we only go off the edge when we're supposed to
   componentWillMount() {
 
     this._offsetXListener = this.state.offsetX.addListener(({value}) => {
@@ -94,10 +93,9 @@ export default class Swipeable extends Component {
         // after starting in an implemented one
         this.refs['swiped'].refs['node'].measure((ox, oy, width, height, px, py) => {
 
-          if ((Boolean(!this.props.onSwipeRight) && gestureState.dx > 0 && ox >= 0) 
-                || (Boolean(!this.props.onSwipeLeft) && gestureState.dx > 0 && ox <= 0)) {
-            this.state.offsetX.setOffset(0);
-            this.state.offsetX.setValue(0);
+          if ((!this.props.onSwipeRight && gestureState.dx > 0 && ox >= 0) 
+                || (!this.props.onSwipeLeft && gestureState.dx < 0 && ox <= 0)) {
+            this.reset();
           } else {
             this.state.offsetX.setValue(gestureState.dx);
           }
@@ -176,6 +174,7 @@ export default class Swipeable extends Component {
   }
 
   reset() {
+    this.state.offsetX.setOffset(0);
     this.state.offsetX.setValue(0);
   }
 
@@ -185,12 +184,6 @@ export default class Swipeable extends Component {
       this.setState({edgeHeight: height});
     }
   }
-
-  // setPositionX(event) {
-  //   console.log('called');
-  //   let {x, y, width, height} = event.nativeEvent.layout;
-  //   this._positionX = x;
-  // }
 
   createAnimationStyles() {
     let animationStyles = {
