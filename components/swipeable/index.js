@@ -69,9 +69,7 @@ export default class Swipeable extends Component {
       onMoveShouldSetPanResponder: (evt, gestureState) => {
         return (Boolean(this.props.onSwipeLeft) && gestureState.dx < 0) || (Boolean(this.props.onSwipeRight) && gestureState.dx > 0);
       },
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
-        return (Boolean(this.props.onSwipeLeft) && gestureState.dx < 0) || (Boolean(this.props.onSwipeRight) && gestureState.dx > 0);
-      },
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) => false,
 
       onPanResponderGrant: (evt, gestureState) => {
         // The guesture has started. Show visual feedback so the user knows
