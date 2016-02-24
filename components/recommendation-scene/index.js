@@ -19,8 +19,7 @@ export default class RecommendationScene extends Component {
     return (
       <View style={[this.props.style, styles.scene]}>
 
-        <Recommendation
-          recommendation={recommendation} />
+        <Recommendation recommendation={recommendation} />
 
         <Button
           buttonStyle={styles.commitButton}

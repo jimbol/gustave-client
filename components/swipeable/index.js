@@ -1,23 +1,23 @@
 'use strict';
 
 import React, {
-    Component, 
-    View, 
-    Text, 
-    Animated, 
-    Easing,
-    PanResponder, 
-    Dimensions,
-  } from 'react-native';
+  Component,
+  View,
+  Text,
+  Animated,
+  Easing,
+  PanResponder,
+  Dimensions,
+} from 'react-native';
 
 import styles from './styles';
-
 import Edge from './edge';
 
 
 const SWIPE_V_THRESHOLD = 1;
+const IS_SWIPING_OPACITY = 0.8;
 
-const resetToZero = {
+const RESET_TO_ZERO_PROPS = {
   toValue: 0,
   duration: 200,
   easing: Easing.inOut(Easing.quad),
@@ -33,8 +33,10 @@ export default class Swipeable extends Component {
     rightSwipeEdge: React.PropTypes.node,
     onSwipeStart: React.PropTypes.func,
     onSwipeEnd: React.PropTypes.func,
-    stickyThreshold: React.PropTypes.number,
-    stickyOffset: React.PropTypes.number,
+    pinThresholdLeft: React.PropTypes.number,
+    pinThresholdRight: React.PropTypes.number,
+    pinOffsetLeft: React.PropTypes.number,
+    pinOffsetRight: React.PropTypes.number,
     snapBack: React.PropTypes.bool,
   };
 
@@ -43,17 +45,10 @@ export default class Swipeable extends Component {
   };
 
   state = {
-    // Card position offset
     offsetX: new Animated.Value(0),
-
-    // Edge thickness
     left: new Animated.Value(0),
     right: new Animated.Value(0),
-
-    // Height for edges
     edgeHeight: 0,
-
-    // Is currently being swiped
     isSwiping: false,
   };
 
@@ -62,159 +57,155 @@ export default class Swipeable extends Component {
   }
 
   componentWillMount() {
-
     this._offsetXListener = this.state.offsetX.addListener(({value}) => {
       this.props.rightSwipeEdge && this.state.left.setValue(Math.abs(Math.max(value, 0)));
       this.props.leftSwipeEdge && this.state.right.setValue(Math.abs(Math.min(value, 0)));
     });
 
     this.panResponder = PanResponder.create({
-      // Do not ask to be the responder on touch
-      onStartShouldSetPanResponder: (evt, gestureState) => false,
-      onStartShouldSetPanResponderCapture: (evt, gestureState) => false,
-      // Ask to be the responder on move for an implemented swipe direction :
-      onMoveShouldSetPanResponder: (evt, gestureState) => {
-        return (Boolean(this.props.onSwipeLeft) && gestureState.dx < 0) 
-                || (Boolean(this.props.onSwipeRight) && gestureState.dx > 0)
-                || ((this._isStuck && this.props.stickyOffset > 0) && gestureState.dx < 0)
-                || ((this._isStuck && this.props.stickyOffset < 0) && gestureState.dx > 0);
-      },
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => false,
-
-      onPanResponderGrant: (evt, gestureState) => {
-        // The guesture has started. Show visual feedback so the user knows
-        // what is happening!
-        this.setState({isSwiping: true});
-        this.props.onSwipeStart && this.props.onSwipeStart();
-
-        // This ensures that a dragged component stays put
-        // We'll override this if we snap back upon release
-        this.state.offsetX.stopAnimation((value) => {
-          this.state.offsetX.setOffset(value);
-          this.state.offsetX.setValue(0);
-          this._lastOffsetX = value;
-        });
-
-        // gestureState.{x,y}0 will be set to zero now
-      },
-      onPanResponderMove: (evt, gestureState) => {
-        // The most recent move distance is gestureState.move{X,Y}
-        
-        // The accumulated gesture distance since becoming responder is
-        // gestureState.d{x,y}
-
-        // This makes sure that we don't swipe in an unimplemented direction
-        // after starting in an implemented one
-        if ((!this.props.onSwipeRight && this._lastOffsetX + gestureState.dx > 0) 
-              || (!this.props.onSwipeLeft && this._lastOffsetX + gestureState.dx < 0)) {
-          this.reset();
-        } else {
-          this.state.offsetX.setValue(gestureState.dx);
-        }
-
-      },
-      // Swipe should only give up control upon release
-      // Doesn't yet work with ScrollView b/c react-native hasn't implement support for this yet
-      // but leave it here so that it works eventually
-      onPanResponderTerminationRequest: (evt, gestureState) => false,
-      onPanResponderRelease: (evt, gestureState) => {
-        // The user has released all touches while this view is the
-        // responder. This typically means a gesture has succeeded
-
-        if (this.state.isSwiping) {
-          this.setState({isSwiping: false});
-          this.props.onSwipeEnd && this.props.onSwipeEnd();
-        }
-
-        if (gestureState.vx >= SWIPE_V_THRESHOLD) {
-          this.onSwipeRight(evt, gestureState);
-        } else if (gestureState.vx <= -SWIPE_V_THRESHOLD) {
-          this.onSwipeLeft(evt, gestureState);
-        } else {
-          this.onRelease(evt, gestureState);
-        }
-      },
-      onPanResponderTerminate: (evt, gestureState) => {
-        // Another component has become the responder, so this gesture
-        // should be cancelled
-
-        if (this.state.isSwiping) {
-          this.setState({isSwiping: false});
-          this.props.onSwipeEnd && this.props.onSwipeEnd();
-        }
-
-        this.onRelease(evt, gestureState);
-      },
-      onShouldBlockNativeResponder: (evt, gestureState) => {
-        // Returns whether this component should block native components from becoming the JS
-        // responder. Returns true by default. Is currently only supported on android.
-        return true;
-      },
+      onStartShouldSetPanResponder: () => false,
+      onStartShouldSetPanResponderCapture: () => false,
+      onMoveShouldSetPanResponder: this.getWantsControl.bind(this),
+      onMoveShouldSetPanResponderCapture: () => false,
+      onPanResponderGrant: this.onSwipeStart.bind(this),
+      onPanResponderMove: this.onSwipeStep.bind(this),
+      onPanResponderTerminationRequest: () => false,
+      onPanResponderRelease: this.onRelease.bind(this),
+      onPanResponderTerminate: this.onTerminate.bind(this),
+      onShouldBlockNativeResponder: () => true,
     });
+  }
+
+  getWantsControl(event, gestureState) {
+    let isSwipingLeft = gestureState.dx < 0;
+    let isSwipingRight = gestureState.dx > 0;
+
+    let hasLeftHandler = Boolean(this.props.onSwipeLeft);
+    let hasRightHandler = Boolean(this.props.onSwipeRight);
+
+    let doesPinLeft = this.props.pinOffsetLeft > 0;
+    let doesPinRight = this.props.pinOffsetRight > 0;
+
+    return (hasLeftHandler && isSwipingLeft)
+      || (hasRightHandler && isSwipingRight)
+      || (this._isStuck && doesPinLeft && isSwipingRight)
+      || (this._isStuck && doesPinRight && isSwipingLeft);
+  }
+
+  onSwipeStart(event, gestureState) {
+    this.setState({isSwiping: true});
+    this.props.onSwipeStart && this.props.onSwipeStart();
+
+    this.state.offsetX.stopAnimation((value) => {
+      this.state.offsetX.setOffset(value);
+      this.state.offsetX.setValue(0);
+      this._lastOffsetX = value;
+    });
+  }
+
+  onSwipeStep(event, gestureState) {
+    if (this.isViolatingSwipeability(gestureState)) {
+      this.reset();
+    } else {
+      this.state.offsetX.setValue(gestureState.dx);
+    }
+  }
+
+  isViolatingSwipeability(gestureState) {
+    let canHandleSwipeRight = Boolean(this.props.onSwipeRight);
+    let canHandleSwipeLeft = Boolean(this.props.onSwipeLeft);
+
+    if (canHandleSwipeLeft && canHandleSwipeRight)
+      return false;
+
+    let isAttempingToSwipeLeft = this._lastOffsetX + gestureState.dx < 0;
+
+    if (isAttempingToSwipeLeft && !canHandleSwipeLeft)
+      return true;
+
+    let isAttempingToSwipeRight = this._lastOffsetX + gestureState.dx > 0;
+
+    if (isAttempingToSwipeRight && !canHandleSwipeRight)
+      return true;
+
+    return false;
   }
 
   onSwipeLeft(event, gestureState) {
-    this.state.offsetX.flattenOffset(); // This makes sure we can reverse our swipe direction
-    this.state.offsetX.stopAnimation((offset) => {
-      let toValue = -Dimensions.get('window').width;
-      let duration = Math.abs(offset) / Math.abs(gestureState.vx);
-
-      Animated.timing(this.state.offsetX, {toValue, duration}).start(() => {
-        this.props.onSwipeLeft && this.props.onSwipeLeft();
-        this.reset();  
-      });        
-    });
+    this.onSwipe(-1, this.props.onSwipeLeft, event, gestureState);
   }
 
   onSwipeRight(event, gestureState) {
-    this.state.offsetX.flattenOffset(); // This makes sure we can reverse our swipe direction
+    this.onSwipe(1, this.props.onSwipeRight, event, gestureState);
+  }
+
+  onSwipe(directionCoef, onSwipeHook, event, gestureState) {
+    this.state.offsetX.flattenOffset();
     this.state.offsetX.stopAnimation((offset) => {
-      let toValue = Dimensions.get('window').width;
+      let toValue = Dimensions.get('window').width * directionCoef;
       let duration = Math.abs(offset) / Math.abs(gestureState.vx);
 
       Animated.timing(this.state.offsetX, {toValue, duration}).start(() => {
-        this.props.onSwipeRight && this.props.onSwipeRight(); 
-        this.reset(); 
-      });      
+        onSwipeHook && onSwipeHook();
+        this.reset();
+      });
     });
   }
 
   onRelease(event, gestureState) {
+    this.setState({isSwiping: false});
+    this.props.onSwipeEnd && this.props.onSwipeEnd();
 
+    if (gestureState.vx >= SWIPE_V_THRESHOLD) {
+      return this.onSwipeRight(event, gestureState);
+    } else if (gestureState.vx <= -SWIPE_V_THRESHOLD) {
+      return this.onSwipeLeft(event, gestureState);
+    }
 
+    if (this.getIsPinable()) {
+      this.handleStickiness();
 
-    if (!this._isStuck && this.props.stickyThreshold) {
-      this.refs['swiped'].refs['node'].measure((ox, oy, width, height, px, py) => {
+    } else if (this.props.snapBack) {
+      this.animatedResetToValue();
+    }
+  }
 
-        let shouldStick = Math.abs(ox) > width * this.props.stickyThreshold;
+  onTerminate(event, gestureState) {
+    if (this.state.isSwiping) {
+      this.setState({isSwiping: false});
+      this.props.onSwipeEnd && this.props.onSwipeEnd();
+    }
 
-        if (shouldStick) {
-          this._isStuck = true;
+    this.animatedResetToValue();
+  }
 
-          let offset = this.props.stickyOffset > 0 
-                      ? width - this.props.stickyOffset 
-                      : -width - this.props.stickyOffset;
+  getIsPinable() {
+    return Boolean(this.props.pinThresholdLeft) || Boolean(this.props.pinThresholdRight);
+  }
 
-          this.state.offsetX.flattenOffset();
-          return Animated.timing(this.state.offsetX, {
-            ...resetToZero,
-            toValue: offset
-          }).start();
-        }   
-      });    
-    } 
-
-    if (this.props.stickyThreshold) {
+  handleStickiness() {
+    if (this._isStuck) {
       this._isStuck = false;
-    }
+      this.animatedResetToValue();
 
-    if(!this.props.snapBack) {
-     return; // If snapBack is disabled, we don't want to reset
-    }
+    } else{
+      this.refs['swiped'].refs['node'].measure((ox, oy, width, height, px, py) => {
+        let pinThreshold = ox > 0 ? this.props.pinThresholdRight : this.props.pinThresholdLeft;
 
-    this.state.offsetX.flattenOffset();
-    Animated.timing(this.state.offsetX, resetToZero).start();
-    
+        let shouldStick = Math.abs(ox) > width * pinThreshold;
+
+        if (!shouldStick)
+          return this.animatedResetToValue();
+
+        this._isStuck = true;
+
+        let rightOffset = this.props.pinOffsetRight;
+        let leftOffset = -this.props.pinOffsetLeft;
+        let offset = ox > 0 ? rightOffset : leftOffset;
+
+        this.animatedResetToValue(offset);
+      });
+    }
   }
 
   reset() {
@@ -222,23 +213,27 @@ export default class Swipeable extends Component {
     this.state.offsetX.setValue(0);
   }
 
+  animatedResetToValue(toValue) {
+    toValue = toValue || RESET_TO_ZERO_PROPS.toValue;
+    this.state.offsetX.flattenOffset();
+    Animated.timing(this.state.offsetX, {...RESET_TO_ZERO_PROPS, toValue}).start();
+  }
+
   setEdgeHeight(event) {
-    let {x, y, width, height} = event.nativeEvent.layout;
-    if (height !== this.state.edgeHeight) {
-      this.setState({edgeHeight: height});
+    let {height: edgeHeight} = event.nativeEvent.layout;
+    if (edgeHeight !== this.state.edgeHeight) {
+      this.setState({edgeHeight});
     }
   }
 
   createAnimationStyles() {
-    let animationStyles = {
+    return {
       flex: 1,
-      opacity: this.state.isSwiping && 0.8 || 1,
+      opacity: this.state.isSwiping && IS_SWIPING_OPACITY || 1,
       transform: [
         {translateX: this.state.offsetX},
       ],
     };
-
-    return animationStyles;
   }
 
   render() {
@@ -246,18 +241,18 @@ export default class Swipeable extends Component {
     return (
       <View onLayout={this.setEdgeHeight.bind(this)} style={styles.container}>
 
-        {this.props.rightSwipeEdge && 
+        {this.props.rightSwipeEdge &&
           <Edge
-            containerHeight={this.state.edgeHeight} 
+            containerHeight={this.state.edgeHeight}
             position={'left'}
             thickness={this.state.left}>
             {this.props.rightSwipeEdge}
           </Edge>
         }
 
-        {this.props.leftSwipeEdge && 
+        {this.props.leftSwipeEdge &&
           <Edge
-            containerHeight={this.state.edgeHeight} 
+            containerHeight={this.state.edgeHeight}
             position={'right'}
             thickness={this.state.right}>
             {this.props.leftSwipeEdge}
