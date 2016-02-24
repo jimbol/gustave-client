@@ -24,7 +24,7 @@ export default class SavedRecommendationsScene extends Component {
       <Swipeable
           onSwipeLeft={()=>{}}
           leftSwipeEdge={leftEdge}
-          stickyThreshold={0.4}
+          stickyThreshold={0.6}
           stickyOffset={-100} >
 
         <TouchableOpacity 

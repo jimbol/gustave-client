@@ -35,6 +35,11 @@ export default class Swipeable extends Component {
     onSwipeEnd: React.PropTypes.func,
     stickyThreshold: React.PropTypes.number,
     stickyOffset: React.PropTypes.number,
+    snapBack: React.PropTypes.bool,
+  };
+
+  static defaultProps = {
+    snapBack: true,
   };
 
   state = {
@@ -176,6 +181,8 @@ export default class Swipeable extends Component {
 
   onRelease(event, gestureState) {
 
+
+
     if (!this._isStuck && this.props.stickyThreshold) {
       this.refs['swiped'].refs['node'].measure((ox, oy, width, height, px, py) => {
 
@@ -196,7 +203,15 @@ export default class Swipeable extends Component {
         }   
       });    
     } 
-    this.props.stickyThreshold && (this._isStuck = false);
+
+    if (this.props.stickyThreshold) {
+      this._isStuck = false;
+    }
+
+    if(!this.props.snapBack) {
+     return; // If snapBack is disabled, we don't want to reset
+    }
+
     this.state.offsetX.flattenOffset();
     Animated.timing(this.state.offsetX, resetToZero).start();
     
