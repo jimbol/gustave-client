@@ -79,7 +79,11 @@ export default class Swipeable extends Component {
 
         // This ensures that a dragged component stays put
         // We'll override this if we snap back upon release
-        this.state.offsetX.stopAnimation((offset) => this.state.offsetX.setOffset(offset));
+        this.state.offsetX.stopAnimation((value) => {
+          this.state.offsetX.setOffset(value);
+          this.state.offsetX.setValue(0);
+          this._lastOffsetX = value;
+        });
 
         // gestureState.{x,y}0 will be set to zero now
       },
@@ -91,17 +95,13 @@ export default class Swipeable extends Component {
 
         // This makes sure that we don't swipe in an unimplemented direction
         // after starting in an implemented one
-        this.refs['swiped'].refs['node'].measure((ox, oy, width, height, px, py) => {
+        if ((!this.props.onSwipeRight && this._lastOffsetX + gestureState.dx > 0) 
+              || (!this.props.onSwipeLeft && this._lastOffsetX + gestureState.dx < 0)) {
+          this.reset();
+        } else {
+          this.state.offsetX.setValue(gestureState.dx);
+        }
 
-          if ((!this.props.onSwipeRight && gestureState.dx > 0 && ox >= 0) 
-                || (!this.props.onSwipeLeft && gestureState.dx < 0 && ox <= 0)) {
-            this.reset();
-          } else {
-            this.state.offsetX.setValue(gestureState.dx);
-          }
-          
-        });
-        
       },
       // Swipe should only give up control upon release
       // Doesn't yet work with ScrollView b/c react-native hasn't implement support for this yet
@@ -110,6 +110,7 @@ export default class Swipeable extends Component {
       onPanResponderRelease: (evt, gestureState) => {
         // The user has released all touches while this view is the
         // responder. This typically means a gesture has succeeded
+
         if (this.state.isSwiping) {
           this.setState({isSwiping: false});
           this.props.onSwipeEnd && this.props.onSwipeEnd();
@@ -126,6 +127,7 @@ export default class Swipeable extends Component {
       onPanResponderTerminate: (evt, gestureState) => {
         // Another component has become the responder, so this gesture
         // should be cancelled
+
         if (this.state.isSwiping) {
           this.setState({isSwiping: false});
           this.props.onSwipeEnd && this.props.onSwipeEnd();
@@ -220,7 +222,7 @@ export default class Swipeable extends Component {
           </Edge>
         }
 
-        <Animated.View ref="swiped" style={this.createAnimationStyles()} {...this.panResponder.panHandlers}>
+        <Animated.View style={this.createAnimationStyles()} {...this.panResponder.panHandlers}>
           {this.props.children}
         </Animated.View>
 
