@@ -69,7 +69,10 @@ export default class Swipeable extends Component {
       onStartShouldSetPanResponderCapture: (evt, gestureState) => false,
       // Ask to be the responder on move for an implemented swipe direction :
       onMoveShouldSetPanResponder: (evt, gestureState) => {
-        return (Boolean(this.props.onSwipeLeft) && gestureState.dx < 0) || (Boolean(this.props.onSwipeRight) && gestureState.dx > 0);
+        return (Boolean(this.props.onSwipeLeft) && gestureState.dx < 0) 
+                || (Boolean(this.props.onSwipeRight) && gestureState.dx > 0
+                || (!this.props.onSwipeLeft && this._isStuck) &&  gestureState.dx < 0
+                || (!this.props.onRightSwipe && this._isStuck) && gestureState.dx > 0);
       },
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => false,
 
@@ -173,24 +176,30 @@ export default class Swipeable extends Component {
 
   onRelease(event, gestureState) {
 
-    if (this.props.stickyThreshold) {
+    if (!this._isStuck && this.props.stickyThreshold) {
       this.refs['swiped'].refs['node'].measure((ox, oy, width, height, px, py) => {
 
         let shouldStick = Math.abs(ox) > width * this.props.stickyThreshold;
 
         if (shouldStick) {
-          let offset = width - (Math.abs(this.props.stickyOffset) || 0);
-          offset = this.props.stickyOffset < 0 ? -offset : offset;
+          this._isStuck = true;
 
+          let offset = this.props.stickyOffset > 0 
+                      ? width - this.props.stickyOffset 
+                      : -width - this.props.stickyOffset;
+
+          this.state.offsetX.flattenOffset();
           return Animated.timing(this.state.offsetX, {
             ...resetToZero,
             toValue: offset
           }).start();
-        }     
+        }   
       });    
     } 
-
+    this.props.stickyThreshold && (this._isStuck = false);
+    this.state.offsetX.flattenOffset();
     Animated.timing(this.state.offsetX, resetToZero).start();
+    
   }
 
   reset() {
@@ -240,7 +249,7 @@ export default class Swipeable extends Component {
           </Edge>
         }
 
-        <Animated.View style={this.createAnimationStyles()} {...this.panResponder.panHandlers}>
+        <Animated.View ref="swiped" style={this.createAnimationStyles()} {...this.panResponder.panHandlers}>
           {this.props.children}
         </Animated.View>
 
