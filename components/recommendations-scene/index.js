@@ -11,91 +11,77 @@ import Recommendation from '../recommendation';
 
 export default class RecommendationsScene extends Component {
 
-  state = {
-    index: 0,
+  static propTypes = {
+    requestMore: React.PropTypes.func,
+    isLoadingMore: React.PropTypes.bool,
   };
 
+  componentWillMount() {
+    this.setFirstAsCurrent()
+  }
+
   componentWillReceiveProps(nextProps) {
-    // We can use this for any prep work when recommendations change
-
-    /* From FB:
-      Invoked when a component is receiving new props. This method is not called for the
-      initial render.
-
-      Use this as an opportunity to react to a prop transition before render() is called by
-      updating the state using this.setState(). The old props can be accessed via this.props.
-      Calling this.setState() within this function will not trigger an additional render.
-    */
+    if (Boolean(nextProps.recommendations))
+      this.setState({recommendation: nextProps.recommendations[0]});
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    // We can use this to prevent a rerender until the next swipe when we receive new props
-
-    /* From FB:
-      Invoked before rendering when new props or state are being received. This method is
-      not called for the initial render or when forceUpdate is used.
-
-      If shouldComponentUpdate returns false, then render() will be completely skipped
-      until the next state change. In addition, componentWillUpdate and componentDidUpdate
-      will not be called.
-
-      By default, shouldComponentUpdate always returns true to prevent subtle bugs when state
-      is mutated in place, but if you are careful to always treat state as immutable and to
-      read only from props and state in render() then you can override shouldComponentUpdate
-      with an implementation that compares the old props and state to their replacements.
-    */
-
-    if (nextState !== this.state) {
-      return true;
-    }
-
-    return false;
+  didSwipeLeft() {
+    this.nextRec();
   }
 
+  didSwipeRight() {
+    this.props.saveRecommendation(this.state.recommendation);
+    this.nextRec();
+  }
 
   nextRec() {
-    this.setState({index: this.getNextIndex()});
+    this.props.recommendations.shift();
+
+    if (!this.props.recommendations.length) {
+      this.props.requestMore();
+    } else {
+      this.setFirstAsCurrent()
+    }
   }
 
-  getNextIndex() {
-    if (this.state.index >= this.props.recommendations.length - 1){
-      return 0;
-    } else {
-      return this.state.index + 1;
-    }
+  setFirstAsCurrent() {
+    if(Boolean(this.props.recommendations))
+      this.setState({recommendation: this.props.recommendations[0]});
   }
 
   viewConcierge(){
-    this.props.viewConcierge(this.getCurrentRecommendation());
-  }
-
-  getCurrentRecommendation(){
-    return this.props.recommendations[this.state.index];
+    this.props.viewConcierge(this.state.recommendation);
   }
 
   render() {
-
-    let currentRecommendation = this.getCurrentRecommendation();
+    let currentRecommendation = this.state.recommendation;
 
     let leftEdge = <Text style={styles.edgeLabel}>Dismiss</Text>;
     let rightEdge = <Text style={styles.edgeLabel}>Save</Text>;
+
+    if (!currentRecommendation) {
+      return (
+        <View style={[this.props.style, styles.scene]}>
+          { (this.props.isLoadingMore) ?
+            <Text>Loading More...</Text>
+            :
+            <Text>You are shit out of luck.</Text>
+          }
+        </View>
+      );
+    }
 
     return (
       <View style={[this.props.style, styles.scene]}>
 
         <Swipeable
-          onSwipeRight={this.nextRec.bind(this)}
+          onSwipeRight={this.didSwipeRight.bind(this)}
           rightSwipeEdge={rightEdge}
-          onSwipeLeft={this.nextRec.bind(this)}
+          onSwipeLeft={this.didSwipeLeft.bind(this)}
           leftSwipeEdge={leftEdge} >
 
-          {/* Setting the key prop on the Card allows React to know that it's a new card
-              and not just a change to the internal data. This is what the key prop is for.
-              It's often used for lists, which we do here to make sure that we get the mounting
-              animation provided by Card.
-          */}
-          <Card key={this.state.index} >
-            <Recommendation recommendation={currentRecommendation} />
+          <Card key={currentRecommendation.id} >
+              <Recommendation recommendation={currentRecommendation} />
           </Card>
 
         </Swipeable>
