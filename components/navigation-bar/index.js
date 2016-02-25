@@ -13,7 +13,7 @@ import React, {
 
 import styles from './styles';
 
-export var NavigationBarStyles = styles;
+export {styles as NavigationBarStyles};
 
 export var NavigationBarRouteMapper = {
   LeftButton(route, navigator, index, navState) {
