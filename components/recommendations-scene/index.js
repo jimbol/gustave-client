@@ -12,41 +12,48 @@ import Recommendation from '../recommendation';
 export default class RecommendationsScene extends Component {
 
   static propTypes = {
+    recommendations: React.PropTypes.arrayOf(React.PropTypes.object),
     requestMore: React.PropTypes.func,
+    saveRecommendation: React.PropTypes.func,
+    dismissRecommendation: React.PropTypes.func,
     isLoadingMore: React.PropTypes.bool,
   };
 
+  static defaultProps = {
+    recommendations: [],
+  };
+
+  state = {
+    recommendation: null,
+  };
+
   componentWillMount() {
-    this.setFirstAsCurrent()
+    this.syncRec();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (Boolean(nextProps.recommendations))
-      this.setState({recommendation: nextProps.recommendations[0]});
+    if (!this.state.recommendation && Boolean(nextProps.recommendations)) 
+      this.syncRec(nextProps);
   }
 
   didSwipeLeft() {
-    this.nextRec();
+    this.props.dismissRecommendation(this.state.recommendation);
+    this.syncRec();
   }
 
   didSwipeRight() {
     this.props.saveRecommendation(this.state.recommendation);
-    this.nextRec();
+    this.syncRec();
   }
 
-  nextRec() {
-    this.props.recommendations.shift();
+  // Intentional deviation from React pattern b/c we need manual control 
+  syncRec(nextProps) {
+    let props = nextProps || this.props;
 
-    if (!this.props.recommendations.length) {
-      this.props.requestMore();
-    } else {
-      this.setFirstAsCurrent()
-    }
-  }
+    this.setState({recommendation: props.recommendations[0]});
 
-  setFirstAsCurrent() {
-    if(Boolean(this.props.recommendations))
-      this.setState({recommendation: this.props.recommendations[0]});
+    // if(!this.props.recommendations.length)
+    //   this.props.requestMore();
   }
 
   viewConcierge(){
@@ -54,7 +61,7 @@ export default class RecommendationsScene extends Component {
   }
 
   render() {
-    let currentRecommendation = this.state.recommendation;
+    let currentRecommendation = this.state.recommendation || this.state.testRec;
 
     let leftEdge = <Text style={styles.edgeLabel}>Dismiss</Text>;
     let rightEdge = <Text style={styles.edgeLabel}>Save</Text>;
