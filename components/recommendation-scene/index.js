@@ -10,7 +10,7 @@ import Recommendation from '../recommendation';
 export default class RecommendationScene extends Component {
 
   viewConcierge() {
-    this.props.viewConcierge(this.props.recommendation);
+    this.props.viewConcierge(this.props.recommendation.id);
   }
 
   render() {

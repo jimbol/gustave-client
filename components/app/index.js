@@ -3,7 +3,7 @@
 import React, {Component, Navigator, StatusBar, View} from 'react-native';
 import _ from 'lodash';
 
-import {data} from '../../data/mock.json';
+import * as database from '../../data';
 import styles from './styles';
 
 import {NavigationBarRouteMapper, NavigationBarStyles} from '../navigation-bar';
@@ -17,9 +17,9 @@ import SavedRecommendationsScene from '../saved-recommendations-scene';
 export default class Gustave extends Component {
 
   state = {
-    recommendations: Array.from(data),
-    saved: [],
     isLoadingMore: false,
+    justSaved: false,
+    user: database.getUser(1),
   };
 
   initialRoute = {
@@ -27,56 +27,44 @@ export default class Gustave extends Component {
     name: 'Recommendations',
   };
 
-  // Temporary to simulate mutation + optimistic update
+  // Temporary for demo only
   checkNeedMoreRecs() {
-    if (this.state.recommendations.length) return;
-
-    let newRecs = Array.from(data);
-    let unsavedNewRecs = _.difference(newRecs, this.state.saved);
+    if (database.getUserRecommendations(this.state.user.id).length) return;
 
     this.setState({isLoadingMore: true});
+    this.state.user.dismissed = [];
 
-    setTimeout(() => {
-      this.setState({
-        recommendations: unsavedNewRecs,
-        isLoadingMore: false,
-      });
-    }, 2000);
+    setTimeout(() => this.setState({isLoadingMore: false}), 2000);
   }
 
-  onViewRecommendation(navigator, recommendation) {
+  onViewRecommendation(navigator, recommendationId) {
     navigator.push({
       id: 'recommendation',
       name: 'Recommendation',
-      recommendation: recommendation,
+      recommendationId,
     });
   }
 
-  onSaveRecommendation(recommendation) {
-    let saved = this.state.saved.concat([recommendation]);
-    let recommendations = this.state.recommendations.filter(rec => recommendation.id !== rec.id);
-    this.setState({
-      saved,
-      justSaved: true,
-      recommendations,
-    });
+  onSaveRecommendation(recommendationId) {
+    database.saveUserRecommendation(this.state.user.id, recommendationId);
+    this.setState({justSaved: true});
     this.setState({justSaved: false});
 
     this.checkNeedMoreRecs(); // Temp
   }
 
-  onDismissRecommendation(recommendation) {
-    let recommendations = this.state.recommendations.filter(rec => recommendation.id !== rec.id);
-    this.setState({recommendations});
+  onDismissRecommendation(recommendationId) {
+    database.dismissUserRecommendation(this.state.user.id, recommendationId);
+    this.forceUpdate();
 
     this.checkNeedMoreRecs(); // Temp
   }
 
-  onViewConcierge(navigator, recommendation) {
+  onViewConcierge(navigator, recommendationId) {
     navigator.push({
       id: 'concierge',
       name: 'Concierge',
-      recommendation: recommendation,
+      recommendationId,
     });
   }
 
@@ -113,7 +101,7 @@ export default class Gustave extends Component {
           <RecommendationsScene
             style={styles.scene}
             isLoadingMore={this.state.isLoadingMore}
-            recommendations={this.state.recommendations}
+            nextRecommendation={database.getUserRecommendations(this.state.user.id)[0]}
             dismissRecommendation={this.onDismissRecommendation.bind(this)}
             saveRecommendation={this.onSaveRecommendation.bind(this)}
             viewConcierge={this.onViewConcierge.bind(this, navigator)} />
@@ -123,7 +111,7 @@ export default class Gustave extends Component {
         return (
           <RecommendationScene
             style={styles.scene}
-            recommendation={route.recommendation}
+            recommendation={database.getUserRecommendation(route.recommendationId)}
             viewConcierge={this.onViewConcierge.bind(this, navigator)} />
         );
 
@@ -131,14 +119,14 @@ export default class Gustave extends Component {
         return (
           <ConciergeScene
             style={styles.scene}
-            recommendation={route.recommendation} />
+            recommendation={database.getUserRecommendation(route.recommendationId)} />
         );
 
       case 'saved':
         return (
           <SavedRecommendationsScene
             style={styles.scene}
-            savedRecommendations={this.state.saved}
+            savedRecommendations={database.getUserSavedRecommendations(this.state.user.id)}
             viewRecommendation={this.onViewRecommendation.bind(this, navigator)} />
         );
     }

@@ -86,9 +86,9 @@ export default class ConciergeScene extends Component {
 
   render() {
     let event = this.props.recommendation.event;
-    let place = event.place;
-    let region = this.getMapRegion(this.state.position, event.place);
-    let annotations = this.getMapAnnotations(event.place);
+    let place = this.props.recommendation.place;
+    let region = this.getMapRegion(this.state.position, place);
+    let annotations = this.getMapAnnotations(place);
 
     return (
       <View style={[this.props.style, styles.scene]}>
