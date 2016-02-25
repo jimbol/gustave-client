@@ -27,7 +27,10 @@ export default class Gustave extends Component {
     name: 'Recommendations',
   };
 
-  onRequestMore() {
+  // Temporary to simulate mutation + optimistic update
+  checkNeedMoreRecs() {
+    if (this.state.recommendations.length) return;
+
     let newRecs = Array.from(data);
     let unsavedNewRecs = _.difference(newRecs, this.state.saved);
 
@@ -51,11 +54,22 @@ export default class Gustave extends Component {
 
   onSaveRecommendation(recommendation) {
     let saved = this.state.saved.concat([recommendation]);
+    let recommendations = this.state.recommendations.filter(rec => recommendation.id !== rec.id);
     this.setState({
       saved,
-      justSaved: true
+      justSaved: true,
+      recommendations,
     });
     this.setState({justSaved: false});
+
+    this.checkNeedMoreRecs(); // Temp
+  }
+
+  onDismissRecommendation(recommendation) {
+    let recommendations = this.state.recommendations.filter(rec => recommendation.id !== rec.id);
+    this.setState({recommendations});
+
+    this.checkNeedMoreRecs(); // Temp
   }
 
   onViewConcierge(navigator, recommendation) {
@@ -98,9 +112,9 @@ export default class Gustave extends Component {
         return (
           <RecommendationsScene
             style={styles.scene}
-            requestMore={this.onRequestMore.bind(this)}
             isLoadingMore={this.state.isLoadingMore}
             recommendations={this.state.recommendations}
+            dismissRecommendation={this.onDismissRecommendation.bind(this)}
             saveRecommendation={this.onSaveRecommendation.bind(this)}
             viewConcierge={this.onViewConcierge.bind(this, navigator)} />
         );

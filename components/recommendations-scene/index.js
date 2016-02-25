@@ -12,41 +12,44 @@ import Recommendation from '../recommendation';
 export default class RecommendationsScene extends Component {
 
   static propTypes = {
-    requestMore: React.PropTypes.func,
-    isLoadingMore: React.PropTypes.bool,
+    recommendations: React.PropTypes.arrayOf(React.PropTypes.object),
+    saveRecommendation: React.PropTypes.func,
+    dismissRecommendation: React.PropTypes.func,
+    isLoadingMore: React.PropTypes.bool, // Will prob be replaced with call to this.props.relay.hasOptimisticUpdate
+  };
+
+  static defaultProps = {
+    recommendations: [],
+  };
+
+  state = {
+    recommendation: null,
   };
 
   componentWillMount() {
-    this.setFirstAsCurrent()
+    this.syncRec();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (Boolean(nextProps.recommendations))
-      this.setState({recommendation: nextProps.recommendations[0]});
+    if (!this.state.recommendation && Boolean(nextProps.recommendations)) 
+      this.syncRec(nextProps);
   }
 
   didSwipeLeft() {
-    this.nextRec();
+    this.props.dismissRecommendation(this.state.recommendation);
+    this.syncRec();
   }
 
   didSwipeRight() {
     this.props.saveRecommendation(this.state.recommendation);
-    this.nextRec();
+    this.syncRec();
   }
 
-  nextRec() {
-    this.props.recommendations.shift();
+  // Intentional deviation from React pattern b/c we need manual control 
+  syncRec(nextProps) {
+    let props = nextProps || this.props;
 
-    if (!this.props.recommendations.length) {
-      this.props.requestMore();
-    } else {
-      this.setFirstAsCurrent()
-    }
-  }
-
-  setFirstAsCurrent() {
-    if(Boolean(this.props.recommendations))
-      this.setState({recommendation: this.props.recommendations[0]});
+    this.setState({recommendation: props.recommendations[0]});
   }
 
   viewConcierge(){
@@ -61,11 +64,11 @@ export default class RecommendationsScene extends Component {
 
     if (!currentRecommendation) {
       return (
-        <View style={[this.props.style, styles.scene]}>
+        <View style={[this.props.style, styles.scene, styles.empty]}>
           { (this.props.isLoadingMore) ?
-            <Text>Loading More...</Text>
+            <Text style={styles.emptyText}>Loading recommendations...</Text>
             :
-            <Text>You are shit out of luck.</Text>
+            <Text style={styles.emptyText}>No recommendations available.</Text>
           }
         </View>
       );
