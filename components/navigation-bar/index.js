@@ -7,6 +7,8 @@ import React, {
   View,
   Navigator,
   StatusBar,
+  Animated,
+  Easing,
 } from 'react-native';
 
 import styles from './styles';
@@ -40,7 +42,10 @@ export var NavigationBarRouteMapper = {
     );
   },
 
+  savedScale: new Animated.Value(1),
+
   RightButton(route, navigator, index, navState) {
+
     let isSavedRoute = route.id === 'saved';
     let savedIconOpacity = isSavedRoute ? 1 : undefined;
 
@@ -59,12 +64,41 @@ export var NavigationBarRouteMapper = {
       console.log('noop');
     }
 
+    let savedStyles = {
+      transform: [{scale: this.savedScale}]
+    };
+
+    if (navigator.props.justSaved) {
+      Animated.sequence([
+        Animated.timing(this.savedScale, {
+          toValue: 1.2,
+          duration: 200,
+          easing: Easing.inOut(Easing.quad)
+        }),
+        Animated.timing(this.savedScale, {
+          toValue: 1,
+          duration: 400,
+          easing: Easing.inOut(Easing.quad)
+        }),
+        Animated.timing(this.savedScale, {
+          toValue: 1.2,
+          duration: 200,
+          easing: Easing.inOut(Easing.quad)
+        }),
+        Animated.timing(this.savedScale, {
+          toValue: 1,
+          duration: 400,
+          easing: Easing.inOut(Easing.quad)
+        }),
+      ]).start()
+    }
+
     return (
       <View style={styles.rightAreaContainer}>
         <TouchableOpacity onPress={onPressSaved.bind(this)} style={styles.savedButton} activeOpacity={savedIconOpacity}>
-          <Text style={styles.savedText}>
+          <Animated.Text style={[styles.savedText, savedStyles]}>
             {'\u2605'}
-          </Text>
+          </Animated.Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={onPressMenu.bind(this)} style={styles.menuButton}>
           <Text style={styles.menuText}>

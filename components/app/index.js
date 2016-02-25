@@ -16,9 +16,10 @@ import SavedRecommendationsScene from '../saved-recommendations-scene';
 
 export default class Gustave extends Component {
 
-  static defaultProps = {
-    recommendations: data,
+  state = {
+    recommendations: Array.from(data),
     saved: [],
+    isLoadingMore: false,
   };
 
   initialRoute = {
@@ -26,7 +27,20 @@ export default class Gustave extends Component {
     name: 'Recommendations',
   };
 
-  // Context: Navigator
+  onRequestMore() {
+    let newRecs = Array.from(data);
+    let unsavedNewRecs = _.difference(newRecs, this.state.saved);
+
+    this.setState({isLoadingMore: true});
+
+    setTimeout(() => {
+      this.setState({
+        recommendations: unsavedNewRecs,
+        isLoadingMore: false,
+      });
+    }, 2000);
+  }
+
   onViewRecommendation(navigator, recommendation) {
     navigator.push({
       id: 'recommendation',
@@ -35,7 +49,15 @@ export default class Gustave extends Component {
     });
   }
 
-  // Context: Navigator
+  onSaveRecommendation(recommendation) {
+    let saved = this.state.saved.concat([recommendation]);
+    this.setState({
+      saved,
+      justSaved: true
+    });
+    this.setState({justSaved: false});
+  }
+
   onViewConcierge(navigator, recommendation) {
     navigator.push({
       id: 'concierge',
@@ -46,7 +68,7 @@ export default class Gustave extends Component {
 
   onConfigureScene(route, routeStack){
     return {
-      ...Navigator.SceneConfigs.FloatFromBottom, 
+      ...Navigator.SceneConfigs.FloatFromBottom,
       // Overrides drag to dismiss gesture
       gestures: null
     };
@@ -56,7 +78,8 @@ export default class Gustave extends Component {
     return (
       <View style={styles.app}>
         <StatusBar barStyle="light-content" />
-        <Navigator
+        <Navigator ref="navigator"
+          justSaved={this.state.justSaved}
           initialRoute={this.initialRoute}
           renderScene={this.renderScene.bind(this)}
           configureScene={this.onConfigureScene.bind(this)}
@@ -75,7 +98,10 @@ export default class Gustave extends Component {
         return (
           <RecommendationsScene
             style={styles.scene}
-            recommendations={this.props.recommendations}
+            requestMore={this.onRequestMore.bind(this)}
+            isLoadingMore={this.state.isLoadingMore}
+            recommendations={this.state.recommendations}
+            saveRecommendation={this.onSaveRecommendation.bind(this)}
             viewConcierge={this.onViewConcierge.bind(this, navigator)} />
         );
 
@@ -95,11 +121,10 @@ export default class Gustave extends Component {
         );
 
       case 'saved':
-        let saved = Array.from(this.props.recommendations);
         return (
-          <SavedRecommendationsScene 
-            style={styles.scene} 
-            savedRecommendations={saved}
+          <SavedRecommendationsScene
+            style={styles.scene}
+            savedRecommendations={this.state.saved}
             viewRecommendation={this.onViewRecommendation.bind(this, navigator)} />
         );
     }
