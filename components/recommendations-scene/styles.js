@@ -7,6 +7,16 @@ export default StyleSheet.create({
     flex: 1,
   },
 
+  empty: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  emptyText: {
+    color: '#fff',
+    textAlign: 'center',
+  },
+
   edgeLabel: {
     padding: 10,
     color: '#fff',

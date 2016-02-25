@@ -13,10 +13,9 @@ export default class RecommendationsScene extends Component {
 
   static propTypes = {
     recommendations: React.PropTypes.arrayOf(React.PropTypes.object),
-    requestMore: React.PropTypes.func,
     saveRecommendation: React.PropTypes.func,
     dismissRecommendation: React.PropTypes.func,
-    isLoadingMore: React.PropTypes.bool,
+    isLoadingMore: React.PropTypes.bool, // Will prob be replaced with call to this.props.relay.hasOptimisticUpdate
   };
 
   static defaultProps = {
@@ -51,9 +50,6 @@ export default class RecommendationsScene extends Component {
     let props = nextProps || this.props;
 
     this.setState({recommendation: props.recommendations[0]});
-
-    // if(!this.props.recommendations.length)
-    //   this.props.requestMore();
   }
 
   viewConcierge(){
@@ -61,18 +57,18 @@ export default class RecommendationsScene extends Component {
   }
 
   render() {
-    let currentRecommendation = this.state.recommendation || this.state.testRec;
+    let currentRecommendation = this.state.recommendation;
 
     let leftEdge = <Text style={styles.edgeLabel}>Dismiss</Text>;
     let rightEdge = <Text style={styles.edgeLabel}>Save</Text>;
 
     if (!currentRecommendation) {
       return (
-        <View style={[this.props.style, styles.scene]}>
+        <View style={[this.props.style, styles.scene, styles.empty]}>
           { (this.props.isLoadingMore) ?
-            <Text>Loading More...</Text>
+            <Text style={styles.emptyText}>Loading recommendations...</Text>
             :
-            <Text>You are shit out of luck.</Text>
+            <Text style={styles.emptyText}>No recommendations available.</Text>
           }
         </View>
       );
