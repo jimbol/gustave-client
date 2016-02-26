@@ -127,6 +127,7 @@ export default class Gustave extends Component {
           <SavedRecommendationsScene
             style={styles.scene}
             savedRecommendations={database.getUserSavedRecommendations(this.state.user.id)}
+            removeSavedRecommendation={this.onDismissRecommendation.bind(this)}
             viewRecommendation={this.onViewRecommendation.bind(this, navigator)} />
         );
     }

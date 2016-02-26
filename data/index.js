@@ -198,7 +198,7 @@ export function dismissUserRecommendation(userId, recommendationId) {
   if (!user.dismissed.includes(recommendationId))
     user.dismissed.push(recommendationId);
 
-  // user.recommendations = user.recommendations.filter(eventId => eventId !== recommendationId);
+  user.saved = user.saved.filter(eventId => eventId !== recommendationId);
 }
 
 export function saveUserRecommendation(userId, recommendationId) {
@@ -206,8 +206,6 @@ export function saveUserRecommendation(userId, recommendationId) {
 
   if (!user.saved.includes(recommendationId))
     user.saved.push(recommendationId);
-
-  // user.recommendations = user.recommendations.filter(eventId => eventId !== recommendationId);
 }
 
 export function getUserRecommendations(userId) {

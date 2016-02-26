@@ -10,10 +10,11 @@ export default class SavedRecommendationsScene extends Component {
 
   static propTypes = {
     savedRecommendations: React.PropTypes.arrayOf(React.PropTypes.object),
+    removeSavedRecommendation: React.PropTypes.func,
   };
 
   removeRecommendation(recommendation) {
-    console.log(recommendation);
+    this.props.removeSavedRecommendation(recommendation.id);
   }
 
   _renderSavedRec(recommendation) {
