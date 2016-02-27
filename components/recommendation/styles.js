@@ -11,8 +11,8 @@ export default StyleSheet.create({
 
   backgroundImage: {
     flex: 0.50,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'stretch',
+    justifyContent: 'flex-end',
   },
 
   divider: {
@@ -22,35 +22,61 @@ export default StyleSheet.create({
     marginLeft: 16,
   },
 
-  titleContainer: {
-    flex: 0.25,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
+  eventName: {
+    backgroundColor: 'rgba(98,12,59,.25)',
+    fontSize: 28,
+    color: '#fff',
+    fontWeight: '400',
+
+    paddingHorizontal: 16,
+  },
+
+  location: {
+    backgroundColor: 'rgba(98,12,59,.25)',
+    fontWeight: '500',
+    fontSize: 36,
+    textAlign: 'left',
+    color: '#fff',
+
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+  },
+
+  description: {
     paddingHorizontal: 16,
     paddingVertical: 8,
+    paddingBottom: 16,
     overflow: 'hidden',
   },
 
-  title: {
-    fontSize: 22,
-    color: '#111',
-    textAlign: 'left',
+  fader: {
+    flex: 1,
+    backgroundColor: 'rgba(98,12,59,.25)'
+  },
+
+  info: {
+    backgroundColor: 'rgba(0,0,0,0)',
+    color: '#fff',
+    position: 'absolute',
+    top: 16,
+    right: 16,
+    opacity: .85,
   },
 
   preview: {
-    fontSize: 12,
-    color: '#ccc',
+    fontSize: 14,
+    color: '#666',
     paddingTop: 8
   },
 
   chipContainer: {
-    flex: 0.25,
+    flex: 0.5,
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingVertical: 16,
     overflow: 'hidden',
   },
 
