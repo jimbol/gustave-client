@@ -14,7 +14,7 @@ export default class Recommendation extends Component {
 
     let rec = this.props.recommendation;
     let event = rec.event;
-    let place = rec.event.place;
+    let place = rec.place;
     let labels = _.union(event.labels, place.labels);
 
     return (

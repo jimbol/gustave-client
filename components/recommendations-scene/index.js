@@ -12,18 +12,18 @@ import Recommendation from '../recommendation';
 export default class RecommendationsScene extends Component {
 
   static propTypes = {
-    recommendations: React.PropTypes.arrayOf(React.PropTypes.object),
+    nextRecommendation: React.PropTypes.object,
     saveRecommendation: React.PropTypes.func,
     dismissRecommendation: React.PropTypes.func,
     isLoadingMore: React.PropTypes.bool, // Will prob be replaced with call to this.props.relay.hasOptimisticUpdate
   };
 
   static defaultProps = {
-    recommendations: [],
+    nextRecommendations: null,
   };
 
   state = {
-    recommendation: null,
+    currentRecommendation: null,
   };
 
   componentWillMount() {
@@ -31,62 +31,58 @@ export default class RecommendationsScene extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.state.recommendation && Boolean(nextProps.recommendations)) 
+    if (!this.state.currentRecommendation) 
       this.syncRec(nextProps);
   }
 
   didSwipeLeft() {
-    this.props.dismissRecommendation(this.state.recommendation);
+    this.props.dismissRecommendation(this.state.currentRecommendation.id);
     this.syncRec();
   }
 
   didSwipeRight() {
-    this.props.saveRecommendation(this.state.recommendation);
+    this.props.saveRecommendation(this.state.currentRecommendation.id);
     this.syncRec();
   }
 
   // Intentional deviation from React pattern b/c we need manual control 
   syncRec(nextProps) {
     let props = nextProps || this.props;
-
-    this.setState({recommendation: props.recommendations[0]});
+    this.setState({currentRecommendation: props.nextRecommendation});
   }
 
-  viewConcierge(){
-    this.props.viewConcierge(this.state.recommendation);
+  viewConcierge() {
+    this.props.viewConcierge(this.state.currentRecommendation.id);
   }
 
   render() {
-    let currentRecommendation = this.state.recommendation;
+    let currentRecommendation = this.state.currentRecommendation;
 
-    let leftEdge = <Text style={styles.edgeLabel}>Dismiss</Text>;
-    let rightEdge = <Text style={styles.edgeLabel}>Save</Text>;
+    let leftSwipeEdge = <Text style={styles.edgeLabel}>Dismiss</Text>;
+    let rightSwipeEdge = <Text style={styles.edgeLabel}>Save</Text>;
 
-    if (!currentRecommendation) {
-      return (
-        <View style={[this.props.style, styles.scene, styles.empty]}>
-          { (this.props.isLoadingMore) ?
-            <Text style={styles.emptyText}>Loading recommendations...</Text>
-            :
-            <Text style={styles.emptyText}>No recommendations available.</Text>
-          }
-        </View>
-      );
-    }
+    let emptyState = this.props.isLoadingMore ? 
+      <Text style={styles.emptyText}>Loading recommendations...</Text> :
+      <Text style={styles.emptyText}>No recommendations available.</Text> ;
+
+    let swipeableProps = {
+      onSwipeRight: this.didSwipeRight.bind(this),
+      rightSwipeEdge,
+      onSwipeLeft: this.didSwipeLeft.bind(this),
+      leftSwipeEdge,
+    };
 
     return (
+      !currentRecommendation ? 
+      /* Empty view */
+      <View style={[this.props.style, styles.scene, styles.empty]}>{emptyState}</View> :
+      
+      /* Default view */
       <View style={[this.props.style, styles.scene]}>
-
-        <Swipeable
-          onSwipeRight={this.didSwipeRight.bind(this)}
-          rightSwipeEdge={rightEdge}
-          onSwipeLeft={this.didSwipeLeft.bind(this)}
-          leftSwipeEdge={leftEdge} >
-
-          <Card key={currentRecommendation.id} >
-              <Recommendation recommendation={currentRecommendation} />
+        <Swipeable {...swipeableProps}>
+          <Card key={currentRecommendation.id}>
+            <Recommendation recommendation={currentRecommendation} />
           </Card>
-
         </Swipeable>
 
         <Button
@@ -96,6 +92,7 @@ export default class RecommendationsScene extends Component {
           G!
         </Button>
       </View>
+     
     );
   }
 }

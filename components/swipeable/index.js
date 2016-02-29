@@ -77,8 +77,14 @@ export default class Swipeable extends Component {
   }
 
   getWantsControl(event, gestureState) {
-    let isSwipingLeft = gestureState.dx < 0;
+    let isSwipingUpDown = Math.abs(gestureState.dy) > Math.abs(gestureState.dx) 
+                        || Math.abs(gestureState.vy) > Math.abs(gestureState.vx);
+
+    if (isSwipingUpDown) return false;
+
+    let isSwipingLeft = gestureState.dx < 0 ;
     let isSwipingRight = gestureState.dx > 0;
+
 
     let hasLeftHandler = Boolean(this.props.onSwipeLeft);
     let hasRightHandler = Boolean(this.props.onSwipeRight);

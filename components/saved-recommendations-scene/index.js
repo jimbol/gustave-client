@@ -9,16 +9,17 @@ import Swipeable from '../swipeable';
 export default class SavedRecommendationsScene extends Component {
 
   static propTypes = {
-    savedRecommendations: React.PropTypes.array,
+    savedRecommendations: React.PropTypes.arrayOf(React.PropTypes.object),
+    removeSavedRecommendation: React.PropTypes.func,
   };
 
   removeRecommendation(recommendation) {
-    console.log(recommendation);
+    this.props.removeSavedRecommendation(recommendation.id);
   }
 
   _renderSavedRec(recommendation) {
     let event = recommendation.event;
-    let place = event.place;
+    let place = recommendation.place;
     let start = moment(event.time.start).format('ddd MM/DD @ h:mm A');
     let end  = moment(event.time.end).format('ddd MM/DD @ h:mm A');
 
@@ -37,7 +38,7 @@ export default class SavedRecommendationsScene extends Component {
     return (
       <Swipeable {...swipeableProps} key={recommendation.id}>
 
-        <TouchableOpacity onPress={this.props.viewRecommendation.bind(null, recommendation)}>
+        <TouchableOpacity onPress={this.props.viewRecommendation.bind(null, recommendation.id)}>
 
           <View style={styles.recommendationContainer}>
 
