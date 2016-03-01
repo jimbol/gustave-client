@@ -25,7 +25,7 @@ export default class Chip extends Component {
         <View style={this.props.chipIcon && styles.chipIcon}>
           <Text style={this.props.chipIcon && [styles.chipText, this.props.chipTextStyle, styles.chipIconText,  this.props.chipIconTextStyle]}>
             {this.props.chipIcon}
-          </Text>       
+          </Text>
         </View>
         <Text style={[styles.chipText, this.props.chipTextStyle]}>
           {this.props.children}

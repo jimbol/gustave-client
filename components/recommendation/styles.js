@@ -2,6 +2,8 @@
 
 import React, {StyleSheet} from 'react-native';
 
+let OVERLAY_COLOR = 'rgba(98,12,59,.25)'
+
 export default StyleSheet.create({
 
   container: {
@@ -10,21 +12,13 @@ export default StyleSheet.create({
   },
 
   backgroundImage: {
-    flex: 0.50,
-    alignItems: 'stretch',
-    justifyContent: 'flex-end',
-  },
-
-  divider: {
-    height: StyleSheet.hairlineWidth,
-    backgroundColor: '#ddd',
-    marginRight: 16,
-    marginLeft: 16,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
 
   eventName: {
-    backgroundColor: 'rgba(98,12,59,.25)',
-    fontSize: 28,
+    backgroundColor: OVERLAY_COLOR,
+    fontSize: 32,
     color: '#fff',
     fontWeight: '400',
 
@@ -32,59 +26,26 @@ export default StyleSheet.create({
   },
 
   location: {
-    backgroundColor: 'rgba(98,12,59,.25)',
+    backgroundColor: OVERLAY_COLOR,
     fontWeight: '500',
-    fontSize: 36,
-    textAlign: 'left',
+    fontSize: 32,
     color: '#fff',
 
     paddingHorizontal: 16,
     paddingBottom: 16,
   },
 
-  description: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    paddingBottom: 16,
-    overflow: 'hidden',
-  },
-
-  fader: {
+  overlay: {
     flex: 1,
-    backgroundColor: 'rgba(98,12,59,.25)'
+    backgroundColor: OVERLAY_COLOR
   },
 
-  info: {
+  infoButton: {
     backgroundColor: 'rgba(0,0,0,0)',
     color: '#fff',
     position: 'absolute',
     top: 16,
-    right: 16,
+    right: 8,
     opacity: .85,
-  },
-
-  preview: {
-    fontSize: 14,
-    color: '#666',
-    paddingTop: 8
-  },
-
-  chipContainer: {
-    flex: 0.5,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-    overflow: 'hidden',
-  },
-
-  chip: {
-    backgroundColor: '#620c3b',
-  },
-
-  chipText: {
-    color: '#e3e4d9',
   },
 });

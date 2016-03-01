@@ -26,7 +26,12 @@
                   "light bites",
                   "intimate stage"
                ],
-               "address":"2313 N Milwaukee Ave, Chicago, IL 60647",
+               "location":{
+                  "street": "2313 N Milwaukee Ave",
+                  "city": "Chicago",
+                  "state": "IL",
+                  "zipCode": "60647"
+               },
                "geo":{
                   "lat":41.923364,
                   "lng":-87.697749
@@ -62,7 +67,12 @@
                   "pub grub",
                   "gin"
                ],
-               "address":"3201 W Armitage Ave, Chicago, IL 60647",
+               "location":{
+                  "street": "3201 W Armitage Ave",
+                  "city": "Chicago",
+                  "state": "IL",
+                  "zipCode": "60647"
+               },
                "geo":{
                   "lat":41.917163,
                   "lng":-87.707253
@@ -97,7 +107,12 @@
                   "whiskey",
                   "food truck"
                ],
-               "address":"2363 N Milwaukee Ave, Chicago, IL 60647",
+               "location":{
+                  "street": "2363 N Milwaukee Ave",
+                  "city": "Chicago",
+                  "state": "IL",
+                  "zipCode": "60647"
+               },
                "geo":{
                   "lat":41.9243532,
                   "lng":-87.6992166
@@ -130,7 +145,12 @@
                   "craft beer",
                   "gastropub"
                ],
-               "address":"2323 N Milwaukee Ave, Chicago, Illinois 60647",
+               "location":{
+                  "street": "2323 N Milwaukee Ave",
+                  "city": "Chicago",
+                  "state": "IL",
+                  "zipCode": "60647"
+               },
                "geo":{
                   "lat":41.923677,
                   "lng":-87.698078
