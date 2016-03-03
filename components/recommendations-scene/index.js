@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component, View, Text, Animated} from 'react-native';
+import React, {Component, View, Text} from 'react-native';
 import styles from './styles';
 
 import Button from '../button';
@@ -31,7 +31,7 @@ export default class RecommendationsScene extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.state.currentRecommendation) 
+    if (!this.state.currentRecommendation)
       this.syncRec(nextProps);
   }
 
@@ -45,7 +45,7 @@ export default class RecommendationsScene extends Component {
     this.syncRec();
   }
 
-  // Intentional deviation from React pattern b/c we need manual control 
+  // Intentional deviation from React pattern b/c we need manual control
   syncRec(nextProps) {
     let props = nextProps || this.props;
     this.setState({currentRecommendation: props.nextRecommendation});
@@ -61,7 +61,7 @@ export default class RecommendationsScene extends Component {
     let leftSwipeEdge = <Text style={styles.edgeLabel}>Dismiss</Text>;
     let rightSwipeEdge = <Text style={styles.edgeLabel}>Save</Text>;
 
-    let emptyState = this.props.isLoadingMore ? 
+    let emptyState = this.props.isLoadingMore ?
       <Text style={styles.emptyText}>Loading recommendations...</Text> :
       <Text style={styles.emptyText}>No recommendations available.</Text> ;
 
@@ -73,10 +73,10 @@ export default class RecommendationsScene extends Component {
     };
 
     return (
-      !currentRecommendation ? 
+      !currentRecommendation ?
       /* Empty view */
       <View style={[this.props.style, styles.scene, styles.empty]}>{emptyState}</View> :
-      
+
       /* Default view */
       <View style={[this.props.style, styles.scene]}>
         <Swipeable {...swipeableProps}>
@@ -92,7 +92,7 @@ export default class RecommendationsScene extends Component {
           G!
         </Button>
       </View>
-     
+
     );
   }
 }

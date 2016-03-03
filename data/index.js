@@ -1,7 +1,7 @@
 /**
  * This defines a basic set of data for our Gustave Schema.
  *
- * This data is hardcoded for the prototype, but it will 
+ * This data is hardcoded for the prototype, but it will
  * eventually be wired to our backend service.
  */
 
@@ -11,7 +11,7 @@ let event1 = {
   time: {
     start: '2016-02-17T23:30:00Z',
     end: '2016-02-18T04:00:00Z',
-  }, 
+  },
   description: 'Local Chicago favorite Dead on TV has stroked audiences all over the nation with their brand of explosive new-wave punk narcissism. Live music and self-referential antics start @ 9pm.',
   labels: [
     'live music',
@@ -34,7 +34,12 @@ let place1 = {
     'light bites',
     'intimate stage',
   ],
-  address: '2313 N Milwaukee Ave, Chicago, IL 60647',
+  location: {
+    street: '2313 N Milwaukee Ave',
+    city: 'Chicago',
+    state: 'IL',
+    zipCode: '60647'
+  },
   geo: {
     lat: 41.923364,
     lng: -87.697749
@@ -48,7 +53,7 @@ let event2 = {
   time: {
     start: '2016-02-17T23:00:00Z',
     end: '2016-02-18T04:00:00Z',
-  }, 
+  },
   description: 'Enjoy a menu of high-end gin cocktails plus chocolate chip cookies served at the stroke of midnight.',
   labels: [
     'sweet tooth',
@@ -71,7 +76,12 @@ let place2 = {
     'pub grub',
     'gin',
   ],
-  address: '3201 W Armitage Ave, Chicago, IL 60647',
+  location: {
+    street: '3201 W Armitage Ave',
+    city: 'Chicago',
+    state: 'IL',
+    zipCode: '60647'
+  },
   geo: {
     lat: 41.917163,
     lng: -87.707253
@@ -85,7 +95,7 @@ let event3 = {
   time: {
     start: '2016-02-18T00:00:00Z',
     end: '2016-02-18T04:00:00Z',
-  }, 
+  },
   description: 'Emporium just got MK1, 2 & 3! Single eliminaton tourney w/ boozey prizes and classic arcade bragging rights. Toasty!!!\n\nRegistration starts @ 5pm.',
   labels: [
     'arcade',
@@ -107,7 +117,12 @@ let place3 = {
     'whiskey',
     'food truck',
   ],
-  address: '2363 N Milwaukee Ave, Chicago, IL 60647',
+  location: {
+    street: '2363 N Milwaukee Ave',
+    city: 'Chicago',
+    state: 'IL',
+    zipCode: '60647'
+  },
   geo: {
     lat: 41.9243532,
     lng: -87.6992166
@@ -121,7 +136,7 @@ let event4 = {
   time: {
     start: '2016-02-18T00:30:00Z',
     end: '2016-02-18T04:00:00Z',
-  }, 
+  },
   description: 'Come grab a pint of Triple Fist! This seriously hoppy ale that was originally brewed in 2010 to celebrate our one-hundredth brewpub batch is released today at the brewpub.\n\nImperial Pale Ale. 8.6 ABV/IBU 95.',
   labels: [
     'craft beer',
@@ -141,7 +156,12 @@ let place4 = {
     'craft beer',
     'gastropub',
   ],
-  address: '2323 N Milwaukee Ave, Chicago, Illinois 60647',
+  location: {
+    street: '2323 N Milwaukee Ave',
+    city: 'Chicago',
+    state: 'IL',
+    zipCode: '60647'
+  },
   geo: {
     lat: 41.923677,
     lng: -87.698078
@@ -156,7 +176,7 @@ let user1 = {
   long: 0,
   recommendations: [1, 2, 3, 4],
   saved: [],
-  dismissed: [], 
+  dismissed: [],
 }
 
 
@@ -167,7 +187,7 @@ let _data = {
     2: place2,
     3: place3,
     4: place4,
-  }, 
+  },
   Event: {
     1: event1,
     2: event2,
