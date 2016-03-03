@@ -32,3 +32,8 @@ local.properties
 #
 node_modules/
 npm-debug.log
+
+ios/gustave.xcodeproj/project.pbxproj
+ios/gustave.xcodeproj/xcshareddata/xcschemes/gustave.xcscheme
+ios/gustave/Info.plist
+ios/gustave/AppDelegate.m
