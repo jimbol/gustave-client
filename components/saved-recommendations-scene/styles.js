@@ -21,7 +21,7 @@ export default StyleSheet.create({
     fontWeight: '900',
     padding: 10,
     textAlign: 'center',
-    color: 'red',
+    color: Theme.notInterested,
   },
 
   card: {

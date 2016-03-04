@@ -8,6 +8,8 @@ import Card from '../card';
 import Swipeable from '../swipeable';
 import Recommendation from '../recommendation';
 
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 
 export default class RecommendationsScene extends Component {
 
@@ -54,8 +56,8 @@ export default class RecommendationsScene extends Component {
   render() {
     let currentRecommendation = this.state.currentRecommendation;
 
-    let leftSwipeEdge = <Text style={styles.edgeLabel}>Dismiss</Text>;
-    let rightSwipeEdge = <Text style={styles.edgeLabel}>Save</Text>;
+    let leftSwipeEdge = <Icon name="not-interested" style={[styles.edgeLabel, styles.notInterested]} />;
+    let rightSwipeEdge = <Icon name="favorite" style={[styles.edgeLabel, styles.interested]} />;
 
     let emptyState = this.props.isLoadingMore ?
       <Text style={styles.emptyText}>Loading recommendations...</Text> :
