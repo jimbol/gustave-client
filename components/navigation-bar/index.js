@@ -19,6 +19,7 @@ export default class NavigationBar extends Component {
 
   static propTypes = {
     navigator: React.PropTypes.object,
+    heartNumber: React.PropTypes.number,
   };
 
   static defaultProps = {
@@ -27,6 +28,8 @@ export default class NavigationBar extends Component {
   state = {
   };
 
+  savedScale = new Animated.Value(1);
+
   componentWillReceiveProps() {
   }
 
@@ -34,6 +37,31 @@ export default class NavigationBar extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    let newHearted = this.props.heartNumber > prevProps.heartNumber;
+    if (newHearted) {
+      Animated.sequence([
+        Animated.timing(this.savedScale, {
+          toValue: 1.2,
+          duration: 200,
+          easing: Easing.inOut(Easing.quad)
+        }),
+        Animated.timing(this.savedScale, {
+          toValue: 1,
+          duration: 400,
+          easing: Easing.inOut(Easing.quad)
+        }),
+        Animated.timing(this.savedScale, {
+          toValue: 1.2,
+          duration: 200,
+          easing: Easing.inOut(Easing.quad)
+        }),
+        Animated.timing(this.savedScale, {
+          toValue: 1,
+          duration: 400,
+          easing: Easing.inOut(Easing.quad)
+        }),
+      ]).start()
+    }
   }
 
   onBackClick() {
@@ -63,8 +91,10 @@ export default class NavigationBar extends Component {
     let currentRoute = _.last(currentRoutes);
 
     let homeStyles = currentRoute.id === 'recommendations' ? {opacity:1} : null;
-    let heartsStyles = currentRoute.id === 'saved' ? {opacity:1} : null;
+    let heartsStyles = currentRoute.id === 'saved' ? {opacity:1} : {};
     let menuStyles = currentRoute.id === 'settings' ? {opacity:1} : null;
+
+    heartsStyles.transform = [{scale: this.savedScale}];
 
     return (
       <View style={styles.container}>
@@ -76,13 +106,13 @@ export default class NavigationBar extends Component {
           </TouchableOpacity>
         </View>
 
-        <View style={[styles.buttonContainer, heartsStyles]}>
+        <Animated.View style={[styles.buttonContainer, heartsStyles]}>
           <TouchableOpacity
             onPress={this.onHeartClick.bind(this)}
             style={[styles.button, styles.heartsButton]}>
             <Icon name="favorite" style={[styles.icon, styles.heartsIcon]} />
           </TouchableOpacity>
-        </View>
+        </Animated.View>
 
         <View style={[styles.buttonContainer, menuStyles]}>
           <TouchableOpacity

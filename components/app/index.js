@@ -63,6 +63,8 @@ export default class Gustave extends Component {
   }
 
   render() {
+    let heartNumber = database.getUserSavedRecommendations(this.state.user.id).length;
+
     return (
       <View style={styles.app}>
         <View style={styles.statusBar} />
@@ -72,7 +74,7 @@ export default class Gustave extends Component {
           renderScene={this.renderScene.bind(this)}
           configureScene={this.onConfigureScene.bind(this)}
           navigationBar={
-            <NavigationBar navigator={this.navigator} />
+            <NavigationBar navigator={this.navigator} heartNumber={heartNumber} />
           } />
       </View>
     );
