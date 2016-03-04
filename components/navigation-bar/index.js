@@ -30,6 +30,11 @@ export default class NavigationBar extends Component {
     clicked: null,
   };
 
+  componentWillMount() {
+    this.props.navigator.navigationContext.addListener('didfocus', 
+      () => this.setState({clicked: null})
+    );
+  }
 
   componentDidUpdate(prevProps) {
     let newHearted = this.props.heartNumber > prevProps.heartNumber;

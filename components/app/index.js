@@ -56,10 +56,9 @@ export default class Gustave extends Component {
 
   onConfigureScene(route, routeStack){
     return {
-      ...Navigator.SceneConfigs.FloatFromBottom,
+      ...Navigator.SceneConfigs.FloatFromBottomAndroid,
       // Overrides drag to dismiss gesture
       gestures: null,
-      defaultTransitionVelocity: 3,
     };
   }
 
