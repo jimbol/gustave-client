@@ -10,7 +10,6 @@ import {NavigationBarRouteMapper, NavigationBarStyles} from '../navigation-bar';
 
 import RecommendationsScene from '../recommendations-scene';
 import RecommendationScene from '../recommendation-scene';
-import ConciergeScene from '../concierge-scene';
 import SavedRecommendationsScene from '../saved-recommendations-scene';
 
 
@@ -60,14 +59,6 @@ export default class Gustave extends Component {
     this.checkNeedMoreRecs(); // Temp
   }
 
-  onViewConcierge(navigator, recommendationId) {
-    navigator.push({
-      id: 'concierge',
-      name: 'Concierge',
-      recommendationId,
-    });
-  }
-
   onConfigureScene(route, routeStack){
     return {
       ...Navigator.SceneConfigs.FloatFromBottom,
@@ -103,23 +94,14 @@ export default class Gustave extends Component {
             isLoadingMore={this.state.isLoadingMore}
             nextRecommendation={database.getUserRecommendations(this.state.user.id)[0]}
             dismissRecommendation={this.onDismissRecommendation.bind(this)}
-            saveRecommendation={this.onSaveRecommendation.bind(this)}
-            viewConcierge={this.onViewConcierge.bind(this, navigator)} />
+            saveRecommendation={this.onSaveRecommendation.bind(this)}/>
         );
 
       case 'recommendation':
         return (
           <RecommendationScene
             style={styles.scene}
-            recommendation={database.getUserRecommendation(route.recommendationId)}
-            viewConcierge={this.onViewConcierge.bind(this, navigator)} />
-        );
-
-      case 'concierge':
-        return (
-          <ConciergeScene
-            style={styles.scene}
-            recommendation={database.getUserRecommendation(route.recommendationId)} />
+            recommendation={database.getUserRecommendation(route.recommendationId)}/>
         );
 
       case 'saved':
@@ -127,8 +109,7 @@ export default class Gustave extends Component {
           <SavedRecommendationsScene
             style={styles.scene}
             savedRecommendations={database.getUserSavedRecommendations(this.state.user.id)}
-            removeSavedRecommendation={this.onDismissRecommendation.bind(this)}
-            viewRecommendation={this.onViewRecommendation.bind(this, navigator)} />
+            removeSavedRecommendation={this.onDismissRecommendation.bind(this)}/>
         );
     }
   }

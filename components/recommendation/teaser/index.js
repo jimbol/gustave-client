@@ -16,10 +16,6 @@ export default class Teaser extends Component {
 
     return (
       <View style={styles.container}>
-        <Text numberOfLines={3} style={styles.preview}>
-          {event.description}
-        </Text>
-        <View style={styles.divider} />
         <ChipList labels={labels} />
       </View>
     )

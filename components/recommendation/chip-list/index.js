@@ -15,11 +15,7 @@ export default class ChipList extends Component {
     return (
       <View style={styles.chipContainer}>
         {this.props.labels.map(tag =>
-          <Chip
-            key={tag}
-            chipStyle={styles.chip}
-            chipTextStyle={styles.chipText}
-            chipIcon={'\u2605'}>
+          <Chip key={tag}>
             {tag}
           </Chip>)
         }

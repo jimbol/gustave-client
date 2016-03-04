@@ -12,11 +12,4 @@ export default StyleSheet.create({
     overflow: 'hidden',
   },
 
-  chip: {
-    backgroundColor: '#620c3b',
-  },
-
-  chipText: {
-    color: '#e3e4d9',
-  },
 });

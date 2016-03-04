@@ -51,10 +51,6 @@ export default class RecommendationsScene extends Component {
     this.setState({currentRecommendation: props.nextRecommendation});
   }
 
-  viewConcierge() {
-    this.props.viewConcierge(this.state.currentRecommendation.id);
-  }
-
   render() {
     let currentRecommendation = this.state.currentRecommendation;
 
@@ -84,13 +80,6 @@ export default class RecommendationsScene extends Component {
             <Recommendation recommendation={currentRecommendation} />
           </Card>
         </Swipeable>
-
-        <Button
-          buttonStyle={styles.commitButton}
-          buttonTextStyle={styles.commitButtonText}
-          onPress={this.viewConcierge.bind(this)}>
-          G!
-        </Button>
       </View>
 
     );
