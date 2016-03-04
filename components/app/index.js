@@ -96,7 +96,8 @@ export default class Gustave extends Component {
         return (
           <RecommendationScene
             style={styles.scene}
-            recommendation={database.getUserRecommendation(route.recommendationId)}/>
+            recommendation={database.getUserRecommendation(route.recommendationId)}
+            goBack={navigator.pop}/>
         );
 
       case 'saved':

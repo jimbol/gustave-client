@@ -15,8 +15,8 @@ export default class RecommendationsScene extends Component {
 
   static propTypes = {
     nextRecommendation: React.PropTypes.object,
-    saveRecommendation: React.PropTypes.func,
-    dismissRecommendation: React.PropTypes.func,
+    saveRecommendation: React.PropTypes.func.isRequired,
+    dismissRecommendation: React.PropTypes.func.isRequired,
     isLoadingMore: React.PropTypes.bool, // Will prob be replaced with call to this.props.relay.hasOptimisticUpdate
   };
 
