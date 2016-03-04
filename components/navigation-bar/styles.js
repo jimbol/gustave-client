@@ -38,13 +38,4 @@ export default StyleSheet.create({
     fontSize: 30,
   },
 
-  backIcon: {
-  },
-
-  heartsIcon: {
-  },
-
-  settingsIcon: {
-  },
-
 });
