@@ -31,9 +31,13 @@ export default class NavigationBar extends Component {
   };
 
   componentWillMount() {
-    this.props.navigator.navigationContext.addListener('didfocus', 
+    this.didFocusListener = this.props.navigator.navigationContext.addListener('didfocus', 
       () => this.setState({clicked: null})
     );
+  }
+
+  componentWillUnmount() {
+    if (this.didFocusListener) this.didFocusListener.remove();
   }
 
   componentDidUpdate(prevProps) {
