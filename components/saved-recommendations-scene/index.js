@@ -5,6 +5,9 @@ import moment from 'moment';
 import styles from './styles';
 
 import Swipeable from '../swipeable';
+import Card from '../card';
+
+const CARD_CLICK_ACTIVE_OPACITY = 0.7
 
 export default class SavedRecommendationsScene extends Component {
 
@@ -37,31 +40,28 @@ export default class SavedRecommendationsScene extends Component {
 
     return (
       <Swipeable {...swipeableProps} key={recommendation.id}>
-
-        <TouchableOpacity onPress={this.props.viewRecommendation.bind(null, recommendation.id)}>
-
-          <View style={styles.recommendationContainer}>
-
-            <Image
-              style={styles.recommendationImage}
-              source={{uri: place.photo.uri}}/>
-
-            <View style={styles.recommendationTextContainer}>
-              <View style={styles.recommendationText}>
-                <Text numberOfLines={1} style={styles.recommendationTitle}>
-                  {event.name + ' @ ' + place.name}
-                </Text>
-                <Text numberOfLines={2} style={styles.recommendationDescription}>
-                  {event.description}
-                </Text>
-                <Text style={styles.info}>{start}</Text>
+        <Card cardStyle={styles.card}>
+          <TouchableOpacity 
+            activeOpacity={CARD_CLICK_ACTIVE_OPACITY} 
+            onPress={this.props.viewRecommendation.bind(null, recommendation.id)}>
+            <View style={styles.recommendationContainer}>
+              <Image
+                style={styles.recommendationImage}
+                source={{uri: place.photo.uri}}/>
+              <View style={styles.recommendationTextContainer}>
+                <View style={styles.recommendationText}>
+                  <Text numberOfLines={1} style={styles.recommendationTitle}>
+                    {event.name + ' @ ' + place.name}
+                  </Text>
+                  <Text numberOfLines={2} style={styles.recommendationDescription}>
+                    {event.description}
+                  </Text>
+                  <Text style={styles.info}>{start}</Text>
+                </View>
               </View>
             </View>
-
-          </View>
-
-        </TouchableOpacity>
-
+          </TouchableOpacity>
+        </Card>
       </Swipeable>
     );
   }

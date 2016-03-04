@@ -1,29 +1,35 @@
 'use strict';
 
 import React, {StyleSheet, Dimensions} from 'react-native';
+import Theme from '../../themes/default';
 
 export default StyleSheet.create({
   scene: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: Theme.gustaveLightPurple,
   },
 
   edgeContainer: {
     height: 100,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'red',
-    width: Dimensions.get('window').width,
+    width: 150,
   },
 
   edgeLabel: {
     padding: 10,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: 'red',
+  },
+
+  card: {
+    marginBottom: 0,
   },
 
   recommendationContainer: {
     flex: 0,
     flexDirection: 'row',
+    backgroundColor: '#fff',
   },
 
   recommendationTextContainer: {
