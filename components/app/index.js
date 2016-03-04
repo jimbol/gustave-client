@@ -1,13 +1,14 @@
 'use strict';
 
-import React, {Component, Navigator, StatusBar, View} from 'react-native';
+import React, {Component, Navigator, StatusBar, View, Text} from 'react-native';
 import _ from 'lodash';
 
 import * as database from '../../data';
 import styles from './styles';
 
-import {NavigationBarRouteMapper, NavigationBarStyles} from '../navigation-bar';
+// import {NavigationBarRouteMapper, NavigationBarStyles} from '../navigation-bar';
 
+import NavigationBar from '../navigation-bar';
 import RecommendationsScene from '../recommendations-scene';
 import RecommendationScene from '../recommendation-scene';
 import SavedRecommendationsScene from '../saved-recommendations-scene';
@@ -17,13 +18,11 @@ export default class Gustave extends Component {
 
   state = {
     isLoadingMore: false,
-    justSaved: false,
     user: database.getUser(1),
   };
 
   initialRoute = {
-    id: 'recommendations',
-    name: 'Recommendations',
+    id: 'recommendations'
   };
 
   // Temporary for demo only
@@ -39,23 +38,19 @@ export default class Gustave extends Component {
   onViewRecommendation(navigator, recommendationId) {
     navigator.push({
       id: 'recommendation',
-      name: 'Recommendation',
       recommendationId,
     });
   }
 
   onSaveRecommendation(recommendationId) {
     database.saveUserRecommendation(this.state.user.id, recommendationId);
-    this.setState({justSaved: true});
-    this.setState({justSaved: false});
-
+    this.forceUpdate();
     this.checkNeedMoreRecs(); // Temp
   }
 
   onDismissRecommendation(recommendationId) {
     database.dismissUserRecommendation(this.state.user.id, recommendationId);
     this.forceUpdate();
-
     this.checkNeedMoreRecs(); // Temp
   }
 
@@ -70,16 +65,14 @@ export default class Gustave extends Component {
   render() {
     return (
       <View style={styles.app}>
+        <View style={styles.statusBar} />
         <StatusBar barStyle="light-content" />
-        <Navigator ref="navigator"
-          justSaved={this.state.justSaved}
+        <Navigator
           initialRoute={this.initialRoute}
           renderScene={this.renderScene.bind(this)}
           configureScene={this.onConfigureScene.bind(this)}
           navigationBar={
-            <Navigator.NavigationBar
-              style={NavigationBarStyles.navigationBar}
-              routeMapper={NavigationBarRouteMapper} />
+            <NavigationBar navigator={this.navigator} />
           } />
       </View>
     );
@@ -109,6 +102,7 @@ export default class Gustave extends Component {
           <SavedRecommendationsScene
             style={styles.scene}
             savedRecommendations={database.getUserSavedRecommendations(this.state.user.id)}
+            viewRecommendation={this.onViewRecommendation.bind(this, navigator)}
             removeSavedRecommendation={this.onDismissRecommendation.bind(this)}/>
         );
     }
