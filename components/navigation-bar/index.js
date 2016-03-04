@@ -11,7 +11,7 @@ import React, {
   Easing,
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import styles from './styles';
 

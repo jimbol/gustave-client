@@ -17,6 +17,8 @@ export default StyleSheet.create({
   },
 
   edgeLabel: {
+    fontSize: 60,
+    fontWeight: '900',
     padding: 10,
     textAlign: 'center',
     color: 'red',

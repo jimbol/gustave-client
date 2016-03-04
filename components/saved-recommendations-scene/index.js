@@ -7,6 +7,8 @@ import styles from './styles';
 import Swipeable from '../swipeable';
 import Card from '../card';
 
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 const CARD_CLICK_ACTIVE_OPACITY = 0.7
 
 export default class SavedRecommendationsScene extends Component {
@@ -28,7 +30,7 @@ export default class SavedRecommendationsScene extends Component {
 
     let leftSwipeEdge =
       <TouchableOpacity onPress={this.removeRecommendation.bind(this, recommendation)} style={styles.edgeContainer}>
-        <Text style={styles.edgeLabel}>Remove</Text>
+        <Icon name="not-interested" style={styles.edgeLabel} />
       </TouchableOpacity>;
 
     let swipeableProps = {
