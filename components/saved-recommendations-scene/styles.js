@@ -24,6 +24,16 @@ export default StyleSheet.create({
     color: Theme.notInterested,
   },
 
+  empty: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  emptyText: {
+    color: '#fff',
+    textAlign: 'center',
+  },
+
   card: {
     marginBottom: 0,
   },

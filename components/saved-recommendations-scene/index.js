@@ -73,7 +73,16 @@ export default class SavedRecommendationsScene extends Component {
   }
 
   render() {
+    let hasSavedRecs = this.props.savedRecommendations.length > 0;
+
     return (
+      !hasSavedRecs ?
+      /* Empty view */
+      <View style={[this.props.style, styles.scene, styles.empty]}>
+        <Text style={styles.emptyText}>{'No <3\'d recommendations'}.</Text> 
+      </View> :
+
+      /* Default view */
       <ScrollView style={[this.props.style, styles.scene]}>
         {this.props.savedRecommendations
           .sort((a, b) => moment(b.event.time.start).isBefore(a.event.time.start))
