@@ -14,19 +14,11 @@ export default class Chip extends Component {
   static propTypes = {
     chipStyle: View.propTypes.style,
     chipTextStyle: Text.propTypes.style,
-    chipIconStyle: View.propTypes.style,
-    chipIconTextStyle: Text.propTypes.style,
-    chipIcon: React.PropTypes.string,
   };
 
   render() {
     return (
-      <View style={[styles.chip, this.props.chipIcon && styles.chipWithImage, this.props.chipStyle]}>
-        <View style={this.props.chipIcon && styles.chipIcon}>
-          <Text style={this.props.chipIcon && [styles.chipText, this.props.chipTextStyle, styles.chipIconText,  this.props.chipIconTextStyle]}>
-            {this.props.chipIcon}
-          </Text>
-        </View>
+      <View style={[styles.chip, this.props.chipStyle]}>
         <Text style={[styles.chipText, this.props.chipTextStyle]}>
           {this.props.children}
         </Text>

@@ -97,7 +97,6 @@ export default class Recommendation extends Component {
     );
   }
 
-
   createDetailView(event, place){
     return (
       <Animated.View style={[styles.container, this.getDetailStyles()]}>
