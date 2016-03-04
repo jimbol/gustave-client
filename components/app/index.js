@@ -58,7 +58,8 @@ export default class Gustave extends Component {
     return {
       ...Navigator.SceneConfigs.FloatFromBottom,
       // Overrides drag to dismiss gesture
-      gestures: null
+      gestures: null,
+      defaultTransitionVelocity: 3,
     };
   }
 

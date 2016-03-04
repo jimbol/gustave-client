@@ -26,6 +26,10 @@ export default class NavigationBar extends Component {
     heartNumber: React.PropTypes.number,
   };
 
+  state = {
+    clicked: null,
+  };
+
 
   componentDidUpdate(prevProps) {
     let newHearted = this.props.heartNumber > prevProps.heartNumber;
@@ -55,7 +59,7 @@ export default class NavigationBar extends Component {
     }
   }
 
-  onBackClick() {
+  onHomeClick() {
     this.goToOrPushRoute('recommendations');
   }
 
@@ -68,6 +72,8 @@ export default class NavigationBar extends Component {
   }
 
   goToOrPushRoute(id) {
+    this.setState({clicked: id});
+
     let route = _.find(this.props.navigator.getCurrentRoutes(), {id});
 
     if(route){
@@ -81,9 +87,13 @@ export default class NavigationBar extends Component {
     let currentRoutes = this.props.navigator.getCurrentRoutes();
     let currentRoute = _.last(currentRoutes);
 
-    let homeStyles = currentRoute.id === 'recommendations' ? {opacity:1} : null;
-    let heartsStyles = currentRoute.id === 'saved' ? {opacity:1} : {};
-    let menuStyles = currentRoute.id === 'settings' ? {opacity:1} : null;
+    let isHomeRoute = (!this.state.clicked && currentRoute.id === 'recommendations') || this.state.clicked === 'recommendations';
+    let isHeartRoute = (!this.state.clicked && currentRoute.id === 'saved') || this.state.clicked === 'saved';
+    let isMenuRoute = (!this.state.clicked && currentRoute.id === 'settings') || this.state.clicked === 'settings';
+
+    let homeStyles = isHomeRoute ? {opacity:1} : null;
+    let heartsStyles = isHeartRoute ? {opacity:1} : {};
+    let menuStyles = isMenuRoute ? {opacity:1} : null;
 
     heartsStyles.transform = [{scale: this.attributes.savedScale}];
 
@@ -91,7 +101,7 @@ export default class NavigationBar extends Component {
       <View style={styles.container}>
         <View style={[styles.buttonContainer, homeStyles]}>
           <TouchableOpacity
-            onPress={this.onBackClick.bind(this)}
+            onPress={this.onHomeClick.bind(this)}
             style={[styles.button, styles.backButton]}>
             <Icon name="home" style={styles.icon} />
           </TouchableOpacity>
