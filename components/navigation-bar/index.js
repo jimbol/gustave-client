@@ -1,111 +1,97 @@
 'use strict';
 
+var _ = require('lodash');
+
 import React, {
   Component,
   Text,
   TouchableOpacity,
   View,
-  Navigator,
-  StatusBar,
   Animated,
   Easing,
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/MaterialIcons'
+
 import styles from './styles';
 
-export {styles as NavigationBarStyles};
+export default class NavigationBar extends Component {
 
-export var NavigationBarRouteMapper = {
-  LeftButton(route, navigator, index, navState) {
-    if (index === 0) {
-      return null;
-    }
+  static propTypes = {
+    navigator: React.PropTypes.object,
+  };
 
-    let onPressBack = function(){
-      navigator.pop();
+  static defaultProps = {
+  };
+
+  state = {
+  };
+
+  componentWillReceiveProps() {
+  }
+
+  componentWillMount() {
+  }
+
+  componentDidUpdate(prevProps) {
+  }
+
+  onBackClick() {
+    this.goToOrPushRoute('recommendations');
+  }
+
+  onHeartClick() {
+    this.goToOrPushRoute('saved');
+  }
+
+  onSettingsClick() {
+    this.goToOrPushRoute('settings');
+  }
+
+  goToOrPushRoute(id) {
+    let route = _.find(this.props.navigator.getCurrentRoutes(), {id});
+
+    if(route){
+      this.props.navigator.popToRoute(route);
+    } else {
+      this.props.navigator.push({id});
     }
+  }
+
+  render() {
+    let currentRoutes = this.props.navigator.getCurrentRoutes();
+    let currentRoute = _.last(currentRoutes);
+
+    let homeStyles = currentRoute.id === 'recommendations' ? {opacity:1} : null;
+    let heartsStyles = currentRoute.id === 'saved' ? {opacity:1} : null;
+    let menuStyles = currentRoute.id === 'settings' ? {opacity:1} : null;
 
     return (
-      <TouchableOpacity onPress={onPressBack} style={styles.backButton}>
-        <Text style={styles.backText}>
-          Back
-        </Text>
-      </TouchableOpacity>
-    );
-  },
+      <View style={styles.container}>
+        <View style={[styles.buttonContainer, homeStyles]}>
+          <TouchableOpacity
+            onPress={this.onBackClick.bind(this)}
+            style={[styles.button, styles.backButton]}>
+            <Icon name="home" style={[styles.icon, styles.backIcon]} />
+          </TouchableOpacity>
+        </View>
 
-  Title(route, navigator, index, navState) {
-    return (
-      <Text style={styles.titleText}>
-        {route.name}
-      </Text>
-    );
-  },
+        <View style={[styles.buttonContainer, heartsStyles]}>
+          <TouchableOpacity
+            onPress={this.onHeartClick.bind(this)}
+            style={[styles.button, styles.heartsButton]}>
+            <Icon name="favorite" style={[styles.icon, styles.heartsIcon]} />
+          </TouchableOpacity>
+        </View>
 
-  savedScale: new Animated.Value(1),
-
-  RightButton(route, navigator, index, navState) {
-
-    let isSavedRoute = route.id === 'saved';
-    let savedIconOpacity = isSavedRoute ? 1 : undefined;
-
-    let onPressSaved = function(){
-      if(isSavedRoute) {
-        return;
-      }
-
-      navigator.push({
-        id: 'saved',
-        name: 'Saved',
-      });
-    }
-
-    let onPressMenu = function() {
-      console.log('noop');
-    }
-
-    let savedStyles = {
-      transform: [{scale: this.savedScale}]
-    };
-
-    if (navigator.props.justSaved) {
-      Animated.sequence([
-        Animated.timing(this.savedScale, {
-          toValue: 1.2,
-          duration: 200,
-          easing: Easing.inOut(Easing.quad)
-        }),
-        Animated.timing(this.savedScale, {
-          toValue: 1,
-          duration: 400,
-          easing: Easing.inOut(Easing.quad)
-        }),
-        Animated.timing(this.savedScale, {
-          toValue: 1.2,
-          duration: 200,
-          easing: Easing.inOut(Easing.quad)
-        }),
-        Animated.timing(this.savedScale, {
-          toValue: 1,
-          duration: 400,
-          easing: Easing.inOut(Easing.quad)
-        }),
-      ]).start()
-    }
-
-    return (
-      <View style={styles.rightAreaContainer}>
-        <TouchableOpacity onPress={onPressSaved.bind(this)} style={styles.savedButton} activeOpacity={savedIconOpacity}>
-          <Animated.Text style={[styles.savedText, savedStyles]}>
-            {'\u2605'}
-          </Animated.Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={onPressMenu.bind(this)} style={styles.menuButton}>
-          <Text style={styles.menuText}>
-            Cog
-          </Text>
-        </TouchableOpacity>
+        <View style={[styles.buttonContainer, menuStyles]}>
+          <TouchableOpacity
+            onPress={this.onSettingsClick.bind(this)}
+            style={[styles.button, styles.menuButton]}>
+            <Icon name="menu" style={[styles.icon, styles.settingsIcon]} />
+          </TouchableOpacity>
+        </View>
       </View>
     );
-  },
-};
+  }
+}

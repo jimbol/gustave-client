@@ -1,57 +1,50 @@
 'use strict';
 
 import React, {StyleSheet} from 'react-native';
+import Theme from '../../themes/default';
 
 export default StyleSheet.create({
-
-  navigationBar: {
-    backgroundColor: '#4a0b49',
-  },
-
-  backButton: {
-    padding: 12,
-  },
-
-  backText: {
-    flex: 1,
-    color: '#fff',
-  },
-
-  titleText: {
-    color: '#fff',
-    padding: 12,
-  },
-
-  rightAreaContainer: {
+  container: {
+    flex: 0,
+    backgroundColor: Theme.gustavePurple,
+    paddingHorizontal: 20,
     flexDirection: 'row',
   },
 
-  savedButton: {
-    padding: 12,
+  buttonContainer: {
+    flex: 1,
+    opacity: 0.6,
   },
 
-  savedText: {
-    textAlign: 'center',
-    color: '#fff',
-    fontSize: 16,
+  button: {
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    alignSelf: 'center',
+  },
+
+  backButton: {
+    alignSelf: 'flex-start',
+  },
+
+  heartsButton: {
   },
 
   menuButton: {
-    padding: 12,
+    alignSelf: 'flex-end',
   },
 
-  menuText: {
-    textAlign: 'center',
+  icon: {
     color: '#fff',
+    fontSize: 30,
   },
 
-  settingsButton: {
-    padding: 12,
+  backIcon: {
   },
 
-  settingsText: {
-    textAlign: 'right',
-    color: '#fff',
+  heartsIcon: {
+  },
+
+  settingsIcon: {
   },
 
 });

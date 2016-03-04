@@ -1,6 +1,7 @@
 'use strict';
 
 import React, {StyleSheet} from 'react-native';
+import Theme from '../../themes/default';
 
 export default StyleSheet.create({
   app: {
@@ -10,7 +11,11 @@ export default StyleSheet.create({
 
   scene: {
     flex: 1,
-    marginTop: 64,
+  },
+
+  statusBar: {
+    height: 20,
+    backgroundColor: Theme.gustavePurple,
   }
 
 });
