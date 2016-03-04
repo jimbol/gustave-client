@@ -8,13 +8,15 @@ import Card from '../card';
 import Swipeable from '../swipeable';
 import Recommendation from '../recommendation';
 
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 
 export default class RecommendationsScene extends Component {
 
   static propTypes = {
     nextRecommendation: React.PropTypes.object,
-    saveRecommendation: React.PropTypes.func,
-    dismissRecommendation: React.PropTypes.func,
+    saveRecommendation: React.PropTypes.func.isRequired,
+    dismissRecommendation: React.PropTypes.func.isRequired,
     isLoadingMore: React.PropTypes.bool, // Will prob be replaced with call to this.props.relay.hasOptimisticUpdate
   };
 
@@ -54,8 +56,8 @@ export default class RecommendationsScene extends Component {
   render() {
     let currentRecommendation = this.state.currentRecommendation;
 
-    let leftSwipeEdge = <Text style={styles.edgeLabel}>Dismiss</Text>;
-    let rightSwipeEdge = <Text style={styles.edgeLabel}>Save</Text>;
+    let leftSwipeEdge = <Icon name="not-interested" style={[styles.edgeLabel, styles.notInterested]} />;
+    let rightSwipeEdge = <Icon name="favorite" style={[styles.edgeLabel, styles.interested]} />;
 
     let emptyState = this.props.isLoadingMore ?
       <Text style={styles.emptyText}>Loading recommendations...</Text> :

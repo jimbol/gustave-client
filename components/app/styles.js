@@ -6,7 +6,7 @@ import Theme from '../../themes/default';
 export default StyleSheet.create({
   app: {
     flex: 1,
-    backgroundColor: '#93818e',
+    backgroundColor: Theme.gustaveLightPurple,
   },
 
   scene: {

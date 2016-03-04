@@ -5,12 +5,21 @@ import moment from 'moment';
 import styles from './styles';
 
 import Swipeable from '../swipeable';
+import Card from '../card';
+
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+const CARD_CLICK_ACTIVE_OPACITY = 0.7
 
 export default class SavedRecommendationsScene extends Component {
 
   static propTypes = {
     savedRecommendations: React.PropTypes.arrayOf(React.PropTypes.object),
-    removeSavedRecommendation: React.PropTypes.func,
+    removeSavedRecommendation: React.PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    savedRecommendations: [],
   };
 
   removeRecommendation(recommendation) {
@@ -25,7 +34,7 @@ export default class SavedRecommendationsScene extends Component {
 
     let leftSwipeEdge =
       <TouchableOpacity onPress={this.removeRecommendation.bind(this, recommendation)} style={styles.edgeContainer}>
-        <Text style={styles.edgeLabel}>Remove</Text>
+        <Icon name="not-interested" style={styles.edgeLabel} />
       </TouchableOpacity>;
 
     let swipeableProps = {
@@ -37,37 +46,43 @@ export default class SavedRecommendationsScene extends Component {
 
     return (
       <Swipeable {...swipeableProps} key={recommendation.id}>
-
-        <TouchableOpacity onPress={this.props.viewRecommendation.bind(null, recommendation.id)}>
-
-          <View style={styles.recommendationContainer}>
-
-            <Image
-              style={styles.recommendationImage}
-              source={{uri: place.photo.uri}}/>
-
-            <View style={styles.recommendationTextContainer}>
-              <View style={styles.recommendationText}>
-                <Text numberOfLines={1} style={styles.recommendationTitle}>
-                  {event.name + ' @ ' + place.name}
-                </Text>
-                <Text numberOfLines={2} style={styles.recommendationDescription}>
-                  {event.description}
-                </Text>
-                <Text style={styles.info}>{start}</Text>
+        <Card cardStyle={styles.card}>
+          <TouchableOpacity 
+            activeOpacity={CARD_CLICK_ACTIVE_OPACITY} 
+            onPress={this.props.viewRecommendation.bind(null, recommendation.id)}>
+            <View style={styles.recommendationContainer}>
+              <Image
+                style={styles.recommendationImage}
+                source={{uri: place.photo.uri}}/>
+              <View style={styles.recommendationTextContainer}>
+                <View style={styles.recommendationText}>
+                  <Text numberOfLines={1} style={styles.recommendationTitle}>
+                    {event.name + ' @ ' + place.name}
+                  </Text>
+                  <Text numberOfLines={2} style={styles.recommendationDescription}>
+                    {event.description}
+                  </Text>
+                  <Text style={styles.info}>{start}</Text>
+                </View>
               </View>
             </View>
-
-          </View>
-
-        </TouchableOpacity>
-
+          </TouchableOpacity>
+        </Card>
       </Swipeable>
     );
   }
 
   render() {
+    let hasSavedRecs = this.props.savedRecommendations.length > 0;
+
     return (
+      !hasSavedRecs ?
+      /* Empty view */
+      <View style={[this.props.style, styles.scene, styles.empty]}>
+        <Text style={styles.emptyText}>{'No <3\'d recommendations'}.</Text> 
+      </View> :
+
+      /* Default view */
       <ScrollView style={[this.props.style, styles.scene]}>
         {this.props.savedRecommendations
           .sort((a, b) => moment(b.event.time.start).isBefore(a.event.time.start))
