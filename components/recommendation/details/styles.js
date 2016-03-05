@@ -11,16 +11,9 @@ export default StyleSheet.create({
     margin: 16,
   },
 
-  divider: {
-    height: StyleSheet.hairlineWidth,
-    backgroundColor: '#ddd',
-    marginBottom: 16,
-  },
-
   description: {
-    paddingHorizontal: 16,
-    paddingBottom: 16,
-    overflow: 'hidden',
+    flex: 1,
+    color: '#333',
   },
 
   // Detail View styles
@@ -31,10 +24,11 @@ export default StyleSheet.create({
 
   row: {
     flexDirection: 'row',
+    paddingBottom: 12,
   },
 
   rowContent: {
-    flex: 1,
     flexWrap: 'wrap',
+    flex: 1,
   },
 });

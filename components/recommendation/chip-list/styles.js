@@ -8,7 +8,6 @@ export default StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    paddingVertical: 16,
     overflow: 'hidden',
   },
 
