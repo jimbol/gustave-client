@@ -2,7 +2,7 @@
 
 import React, {StyleSheet} from 'react-native';
 
-let OVERLAY_COLOR = 'rgba(98,12,59,.25)'
+let OVERLAY_COLOR = 'rgba(39, 5, 23,.45)'
 
 export default StyleSheet.create({
 
