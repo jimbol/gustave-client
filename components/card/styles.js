@@ -12,7 +12,7 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
     // Shadow won't work with overflow hidden, which is required for jumbotron image corners to match card corner
     shadowColor: "#000",
-    shadowOpacity: 0.8,
+    shadowOpacity: 1,
     shadowRadius: 2,
     shadowOffset: {
       height: 1,

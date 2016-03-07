@@ -25,6 +25,7 @@ export default StyleSheet.create({
   row: {
     flexDirection: 'row',
     paddingBottom: 12,
+    flex: 1,
   },
 
   rowContent: {

@@ -6,8 +6,9 @@ import _ from 'lodash';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import ChipList from '../chip-list';
+import Stagger from '../../stagger';
 import RecMap from '../rec-map';
+import ChipList from '../chip-list';
 
 class Row extends Component {
   render(){
@@ -35,38 +36,40 @@ export default class Details extends Component {
     let start = moment(event.time.start).format('h:mm A');
     let end  = moment(event.time.end).format('h:mm A');
 
+    let components = [
+      <Row>
+        <Text style={styles.description}>{event.description}</Text>
+      </Row>,
+      <Row>
+        <ChipList labels={event.labels} />
+      </Row>,
+      <Row icon={'access-time'}>
+        <Text>Today, {start} - {end}</Text>
+      </Row>,
+      <Row icon={'location-on'}>
+        <Text>{address}</Text>
+      </Row>,
+      <Row>
+        <RecMap
+          showUserPosition={true}
+          address={address}
+          lat={place.geo.lat}
+          lng={place.geo.lng} />
+      </Row>,
+      <Row>
+        <Text style={styles.description}>{place.description}</Text>
+      </Row>,
+      <Row>
+        <ChipList labels={place.labels} />
+      </Row>,
+      <Row icon={'date-range'}>
+        <Text>Open {place.hours}</Text>
+      </Row>,
+    ];
+
     return (
       <View style={styles.container}>
-        <Row>
-          <Text style={styles.description}>{event.description}</Text>
-        </Row>
-        <Row icon={'access-time'}>
-          <Text>Today, {start} - {end}</Text>
-        </Row>
-        <Row icon={'location-on'}>
-          <Text>{address}</Text>
-        </Row>
-        <Row>
-          <ChipList labels={event.labels} />
-        </Row>
-
-        <Row>
-          <RecMap
-            showUserPosition={true}
-            address={address}
-            lat={place.geo.lat}
-            lng={place.geo.lng} />
-        </Row>
-
-        <Row icon={'date-range'}>
-          <Text>Open {place.hours}</Text>
-        </Row>
-        <Row>
-          <ChipList labels={place.labels} />
-        </Row>
-        <Row>
-          <Text style={styles.description}>{place.description}</Text>
-        </Row>
+        <Stagger components={components} />
       </View>
     )
   }

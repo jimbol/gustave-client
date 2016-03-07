@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component, View, Animated} from 'react-native';
+import React, {Component, View, Animated, Easing} from 'react-native';
 
 import styles from './styles';
 
@@ -11,19 +11,23 @@ export default class Card extends Component {
   };
 
   state = {
-    scale: new Animated.Value(0),
+    enterAnimation: new Animated.Value(0),
   };
 
   componentDidMount() {
-    Animated.timing(this.state.scale, {toValue: 1, duration: 200}).start();
+    Animated.timing(this.state.enterAnimation, {
+      toValue: 1,
+      duration: 250,
+      easing: Easing.elastic(1),
+    }).start();
   }
 
   render() {
 
-    let transforms = [{scale: this.state.scale}, ];
+    let transforms = [{scale: this.state.enterAnimation}, ];
 
     return (
-      <Animated.View style={[styles.card, this.props.cardStyle, {transform: transforms}]}>
+      <Animated.View style={[styles.card, this.props.cardStyle, {transform: transforms, opacity: this.state.enterAnimation}]}>
         {this.props.children}
       </Animated.View>
     );

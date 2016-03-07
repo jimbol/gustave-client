@@ -47,8 +47,8 @@ export default class SavedRecommendationsScene extends Component {
     return (
       <Swipeable {...swipeableProps} key={recommendation.id}>
         <Card cardStyle={styles.card}>
-          <TouchableOpacity 
-            activeOpacity={CARD_CLICK_ACTIVE_OPACITY} 
+          <TouchableOpacity
+            activeOpacity={CARD_CLICK_ACTIVE_OPACITY}
             onPress={this.props.viewRecommendation.bind(null, recommendation.id)}>
             <View style={styles.recommendationContainer}>
               <Image
@@ -79,7 +79,7 @@ export default class SavedRecommendationsScene extends Component {
       !hasSavedRecs ?
       /* Empty view */
       <View style={[this.props.style, styles.scene, styles.empty]}>
-        <Text style={styles.emptyText}>{'No <3\'d recommendations'}.</Text> 
+        <Text style={styles.emptyText}>{'No <3\'d recommendations'}.</Text>
       </View> :
 
       /* Default view */

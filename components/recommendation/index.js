@@ -14,14 +14,14 @@ import Button from '../button';
 
 const TO_HIDDEN = {
   toValue: 0,
-  duration: 200,
-  easing: Easing.easeInOutCirc,
+  duration: 250,
+  easing: Easing.elastic(1),
 }
 
 const TO_SHOWN = {
   toValue: 1,
-  duration: 200,
-  easing: Easing.easeInOutCirc,
+  duration: 250,
+  easing: Easing.elastic(1),
 }
 
 export default class Recommendation extends Component {

@@ -26,6 +26,7 @@ export default class RecMap extends Component {
 
   // Lifecycle
   componentDidMount() {
+    InteractionManager.setDeadline(2000);
     InteractionManager.runAfterInteractions(this.getCurrentPosition.bind(this));
   }
 
