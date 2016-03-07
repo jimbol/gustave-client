@@ -1,6 +1,6 @@
 export default {
-  gustavePurple: '#4a0b49',
-  gustaveLightPurple: '#93818e',
-  interested: 'black',
-  notInterested: 'black',
+  darkBackground: '#4a0b49',
+  lightBackground: '#93818e',
+  interested: '#fff',
+  notInterested: '#fff',
 };

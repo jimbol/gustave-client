@@ -1,18 +1,14 @@
 'use strict';
 
-import React, {Component, Navigator, StatusBar, View, Text} from 'react-native';
+import React, {Component, StyleSheet, Navigator, StatusBar, View, Text} from 'react-native';
 import _ from 'lodash';
 
 import * as database from '../../data';
-import styles from './styles';
-
-// import {NavigationBarRouteMapper, NavigationBarStyles} from '../navigation-bar';
 
 import NavigationBar from '../navigation-bar';
 import RecommendationsScene from '../recommendations-scene';
 import RecommendationScene from '../recommendation-scene';
 import SavedRecommendationsScene from '../saved-recommendations-scene';
-
 
 export default class Gustave extends Component {
 
@@ -111,3 +107,20 @@ export default class Gustave extends Component {
     }
   }
 }
+
+var styles = StyleSheet.create({
+  app: {
+    flex: 1,
+    backgroundColor: GLOBAL.Theme,
+  },
+
+  scene: {
+    flex: 1,
+  },
+
+  statusBar: {
+    height: 20,
+    backgroundColor: GLOBAL.Theme,
+  }
+
+});
