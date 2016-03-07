@@ -7,10 +7,10 @@ export default StyleSheet.create({
   lightBackground: {
     backgroundColor: '#93818e',
   },
-  interested: {
-    color: '#fff',
+  positiveAction: {
+    color: '#000',
   },
-  notInterested: {
-    color: '#fff',
+  negativeAction: {
+    color: '#000',
   },
 });

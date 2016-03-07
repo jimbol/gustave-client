@@ -70,30 +70,11 @@ export default class Gustave extends Component {
     };
   }
 
-  render() {
-    let heartNumber = database.getUserSavedRecommendations(this.state.user.id).length;
-
-    return (
-      <View style={[styles.app, this.state.theme.lightBackground]}>
-        <View style={[styles.statusBar, this.state.theme.darkBackground]} />
-        <StatusBar barStyle="light-content" />
-        <Navigator
-          initialRoute={this.initialRoute}
-          renderScene={this.renderScene.bind(this)}
-          configureScene={this.onConfigureScene.bind(this)}
-          navigationBar={
-            <NavigationBar navigator={this.navigator} heartNumber={heartNumber} />
-          } />
-      </View>
-    );
-  }
-
   renderScene(route, navigator) {
     switch(route.id) {
       case 'recommendations':
         return (
           <RecommendationsScene
-            style={styles.scene}
             isLoadingMore={this.state.isLoadingMore}
             nextRecommendation={database.getUserRecommendations(this.state.user.id)[0]}
             dismissRecommendation={this.onDismissRecommendation.bind(this)}
@@ -103,7 +84,6 @@ export default class Gustave extends Component {
       case 'recommendation':
         return (
           <RecommendationScene
-            style={styles.scene}
             recommendation={database.getUserRecommendation(route.recommendationId)}
             goBack={navigator.pop}/>
         );
@@ -111,12 +91,30 @@ export default class Gustave extends Component {
       case 'saved':
         return (
           <SavedRecommendationsScene
-            style={styles.scene}
             savedRecommendations={database.getUserSavedRecommendations(this.state.user.id)}
             viewRecommendation={this.onViewRecommendation.bind(this, navigator)}
             removeSavedRecommendation={this.onDismissRecommendation.bind(this)}/>
         );
     }
+  }
+
+  render() {
+    let heartNumber = database.getUserSavedRecommendations(this.state.user.id).length;
+
+    return (
+      <View style={[styles.app, this.state.theme.lightBackground]}>
+        <View style={[styles.statusBar, this.state.theme.darkBackground]} />
+        <StatusBar barStyle="light-content" />
+        <Navigator
+          sceneStyle={styles.scene}
+          initialRoute={this.initialRoute}
+          renderScene={this.renderScene.bind(this)}
+          configureScene={this.onConfigureScene.bind(this)}
+          navigationBar={
+            <NavigationBar navigator={this.navigator} heartNumber={heartNumber} />
+          } />
+      </View>
+    );
   }
 }
 
@@ -125,7 +123,6 @@ var styles = StyleSheet.create({
     flex: 1,
   },
   scene: {
-    flex: 1,
     marginBottom: 50,
   },
   statusBar: {

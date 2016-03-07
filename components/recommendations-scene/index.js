@@ -1,7 +1,6 @@
 'use strict';
 
-import React, {Component, View, Text} from 'react-native';
-import styles from './styles';
+import React, {Component, StyleSheet, ScrollView, View, Text} from 'react-native';
 
 import Button from '../button';
 import Card from '../card';
@@ -60,8 +59,8 @@ export default class RecommendationsScene extends Component {
   render() {
     let currentRecommendation = this.state.currentRecommendation;
 
-    let leftSwipeEdge = <Icon name="not-interested" style={[styles.edgeLabel, styles.notInterested]} />;
-    let rightSwipeEdge = <Icon name="favorite" style={[styles.edgeLabel, styles.interested]} />;
+    let leftSwipeEdge = <Icon name="not-interested" style={[styles.edgeLabel, this.context.theme.negativeAction]} />;
+    let rightSwipeEdge = <Icon name="favorite" style={[styles.edgeLabel, this.context.theme.positiveAction]} />;
 
     let emptyState = this.props.isLoadingMore ?
       <Text style={styles.emptyText}>Loading recommendations...</Text> :
@@ -91,3 +90,25 @@ export default class RecommendationsScene extends Component {
     );
   }
 }
+
+var styles = StyleSheet.create({
+  scene: {
+    flex: 1,
+  },
+
+  empty: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  emptyText: {
+    color: '#fff',
+    textAlign: 'center',
+  },
+
+  edgeLabel: {
+    fontSize: 96,
+    fontWeight: '900',
+    textAlign: 'center'
+  },
+});
