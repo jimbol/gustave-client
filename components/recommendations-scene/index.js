@@ -1,11 +1,11 @@
 'use strict';
 
-import React, {Component, StyleSheet, ScrollView, View, Text} from 'react-native';
+import React, {Component, StyleSheet, ScrollView, View, Text, InteractionManager} from 'react-native';
 
 import Button from '../button';
 import Card from '../card';
 import Swipeable from '../swipeable';
-// import Recommendation from '../recommendation';
+import Recommendation from '../recommendation';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -38,12 +38,12 @@ export default class RecommendationsScene extends Component {
 
   handleLayout(event) {
     this.attributes.height = event.nativeEvent.layout.height;
-    this.checkOverflow();
+    InteractionManager.runAfterInteractions(this.checkOverflow.bind(this));
   }
 
   handleChildLayout(event) {
     this.attributes.childHeight = event.nativeEvent.layout.height;
-    this.checkOverflow();
+    InteractionManager.runAfterInteractions(this.checkOverflow.bind(this));
   }
 
   componentWillMount() {
@@ -114,16 +114,6 @@ export default class RecommendationsScene extends Component {
 
       </Swipeable>
 
-    );
-  }
-}
-
-class Recommendation extends React.Component {
-  render() {
-    return (
-      <View onLayout={this.props.onLayout} style={{height: 100}}>
-        <Text>Test</Text>
-      </View>
     );
   }
 }

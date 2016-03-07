@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component, StyleSheet, ScrollView, View, Text} from 'react-native';
+import React, {Component, StyleSheet, ScrollView, View, Text, InteractionManager} from 'react-native';
 
 import Button from '../button';
 import Recommendation from '../recommendation';
@@ -31,12 +31,12 @@ export default class RecommendationScene extends Component {
 
   handleLayout(event) {
     this.attributes.height = event.nativeEvent.layout.height;
-    this.checkOverflow();
+    InteractionManager.runAfterInteractions(this.checkOverflow.bind(this));
   }
 
   handleChildLayout(event) {
     this.attributes.childHeight = event.nativeEvent.layout.height;
-    this.checkOverflow();
+    InteractionManager.runAfterInteractions(this.checkOverflow.bind(this));
   }
 
   checkOverflow() {
@@ -70,7 +70,7 @@ export default class RecommendationScene extends Component {
         <ScrollView scrollEnabled={this.state.hasOverflow} contentContainerStyle={!this.state.hasOverflow && styles.flexFull}>
           {!this.state.cleared ?
             <Card style={!this.state.hasOverflow && styles.flexFull}>
-              <Recommendation onLayout={this.handleChildLayout.bind(this)} {...recommendation} />
+              <Recommendation onLayout={this.handleChildLayout.bind(this)} recommendation={recommendation} />
             </Card>
           :
           null}
