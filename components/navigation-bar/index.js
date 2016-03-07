@@ -4,6 +4,7 @@ var _ = require('lodash');
 
 import React, {
   Component,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -12,8 +13,6 @@ import React, {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
-import styles from './styles';
 
 export default class NavigationBar extends Component {
 
@@ -139,3 +138,42 @@ export default class NavigationBar extends Component {
     );
   }
 }
+
+
+var styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    height: 50,
+    right: 0, bottom: 0, left: 0,
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+  },
+
+  buttonContainer: {
+    flex: 1,
+    opacity: 0.6,
+  },
+
+  button: {
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    alignSelf: 'center',
+  },
+
+  backButton: {
+    alignSelf: 'flex-start',
+  },
+
+  heartsButton: {
+  },
+
+  menuButton: {
+    alignSelf: 'flex-end',
+  },
+
+  icon: {
+    color: '#fff',
+    fontSize: 30,
+  },
+
+});
