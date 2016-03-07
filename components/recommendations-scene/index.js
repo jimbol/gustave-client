@@ -1,13 +1,13 @@
 'use strict';
 
 import React, {Component, StyleSheet, ScrollView, View, Text, InteractionManager} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Button from '../button';
 import Card from '../card';
 import Swipeable from '../swipeable';
 import Recommendation from '../recommendation';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class RecommendationsScene extends Component {
 
@@ -106,10 +106,14 @@ export default class RecommendationsScene extends Component {
           style={[styles.flexFull, this.props.style]}
           {...swipeableProps} >
 
-        <ScrollView scrollEnabled={this.state.hasOverflow} contentContainerStyle={!this.state.hasOverflow && styles.flexFull}>
+        <ScrollView 
+          scrollEnabled={this.state.hasOverflow} 
+          contentContainerStyle={!this.state.hasOverflow && styles.flexFull}>
+
           <Card key={currentRecommendation.id} style={!this.state.hasOverflow && styles.flexFull}>
             <Recommendation onLayout={this.handleChildLayout.bind(this)} recommendation={currentRecommendation} />
           </Card>
+
         </ScrollView>
 
       </Swipeable>

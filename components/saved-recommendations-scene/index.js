@@ -37,7 +37,7 @@ export default class SavedRecommendationsScene extends Component {
 
     let leftSwipeEdge =
       <TouchableOpacity onPress={this.removeRecommendation.bind(this, recommendation)} style={styles.edgeContainer}>
-        <Icon name="not-interested" style={[styles.edgeLabe, this.context.theme.negativeAction]} />
+        <Icon name="not-interested" style={[styles.edgeLabel, this.context.theme.negativeAction]} />
       </TouchableOpacity>;
 
     let swipeableProps = {
@@ -49,9 +49,9 @@ export default class SavedRecommendationsScene extends Component {
 
     return (
       <Swipeable {...swipeableProps} key={recommendation.id}>
-        <Card cardStyle={styles.card}>
-          <TouchableOpacity
-            activeOpacity={CARD_CLICK_ACTIVE_OPACITY}
+        <Card style={styles.card}>
+          <TouchableOpacity 
+            activeOpacity={CARD_CLICK_ACTIVE_OPACITY} 
             onPress={this.props.viewRecommendation.bind(null, recommendation.id)}>
             <View style={styles.recommendationContainer}>
               <Image
