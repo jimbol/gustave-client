@@ -120,8 +120,7 @@ export default class Gustave extends Component {
 
 var styles = StyleSheet.create({
   app: {
-    position: 'absolute',
-    top: 0, right: 0, bottom: 0, left: 0,
+    flex: 1,
   },
   scene: {
     marginBottom: 50,

@@ -31,6 +31,21 @@ export default class RecommendationsScene extends Component {
     hasOverflow: false,
   };
 
+  attributes = {
+    height: 0,
+    childHeight: 0,
+  };
+
+  handleLayout(event) {
+    this.attributes.height = event.nativeEvent.layout.height;
+    this.checkOverflow();
+  }
+
+  handleChildLayout(event) {
+    this.attributes.childHeight = event.nativeEvent.layout.height;
+    this.checkOverflow();
+  }
+
   componentWillMount() {
     this.syncRec();
   }
@@ -56,8 +71,11 @@ export default class RecommendationsScene extends Component {
     this.setState({currentRecommendation: props.nextRecommendation});
   }
 
-  checkOverflow(event) {
-    // console.log(event.nativeEvent.layout);
+  checkOverflow() {
+    if (this.attributes.childHeight > this.attributes.height)
+      this.setState({hasOverflow: true});
+    else
+      this.setState({hasOverflow: false});
   }
 
   render() {
@@ -80,15 +98,20 @@ export default class RecommendationsScene extends Component {
     return (
       !currentRecommendation ?
       /* Empty view */
-      <View style={[styles.scene, styles.empty]}>{emptyState}</View> :
+      <View style={[styles.flexFull, styles.empty]}>{emptyState}</View> :
 
       /* Default view */
-      <Swipeable {...swipeableProps} style={[styles.scene, this.props.style]}>
+      <Swipeable 
+          onLayout={this.handleLayout.bind(this)} 
+          style={[styles.flexFull, this.props.style]}
+          {...swipeableProps} >
+
         <ScrollView scrollEnabled={this.state.hasOverflow} contentContainerStyle={!this.state.hasOverflow && styles.flexFull}>
           <Card key={currentRecommendation.id} style={!this.state.hasOverflow && styles.flexFull}>
-            <Recommendation onLayout={this.checkOverflow.bind(this)} recommendation={currentRecommendation} />
+            <Recommendation onLayout={this.handleChildLayout.bind(this)} recommendation={currentRecommendation} />
           </Card>
         </ScrollView>
+
       </Swipeable>
 
     );
@@ -98,7 +121,7 @@ export default class RecommendationsScene extends Component {
 class Recommendation extends React.Component {
   render() {
     return (
-      <View onLayout={this.props.onLayout} style={{height: 1000}}>
+      <View onLayout={this.props.onLayout} style={{height: 100}}>
         <Text>Test</Text>
       </View>
     );
@@ -106,11 +129,6 @@ class Recommendation extends React.Component {
 }
 
 var styles = StyleSheet.create({
-  scene: {
-    position: 'absolute',
-    top: 0, right: 0, bottom: 0, left: 0,
-  },
-
   flexFull: {
     flex: 1,
   },

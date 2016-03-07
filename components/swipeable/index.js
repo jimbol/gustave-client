@@ -2,6 +2,7 @@
 
 import React, {
   Component,
+  StyleSheet,
   View,
   Text,
   Animated,
@@ -63,7 +64,7 @@ export default class Swipeable extends Component {
     this.attributes.width = layout.width;
     this.attributes.height = layout.height;
     if (this.props.onLayout) 
-      this.props.onLayout();
+      this.props.onLayout(event);
   }
 
   componentWillUnmount() {
@@ -242,17 +243,14 @@ export default class Swipeable extends Component {
     }
   }
 
-  createAnimationStyles() {
-    return {
-      flex: 1,
-      opacity: (this.state.isSwiping) ? IS_SWIPING_OPACITY : 1,
+  render() {
+
+    let swipeAnimations = {
+      opacity: this.state.isSwiping && IS_SWIPING_OPACITY || 1,
       transform: [
         {translateX: this.state.offsetX},
       ],
     };
-  }
-
-  render() {
 
     return (
       <View onLayout={this.setEdgeHeight.bind(this)} style={this.props.style}>
@@ -275,13 +273,22 @@ export default class Swipeable extends Component {
           </Edge>
         }
 
-        <Animated.View onLayout={this.handleLayout.bind(this)} style={this.createAnimationStyles()} {...this.panResponder.panHandlers}>
+        <Animated.View 
+            onLayout={this.handleLayout.bind(this)} 
+            style={[swipeAnimations, styles.innerContent]} 
+            {...this.panResponder.panHandlers} >
+
           {this.props.children}
+
         </Animated.View>
 
       </View>
     );
   }
-
-
 }
+
+var styles = StyleSheet.create({
+  innerContent: {
+    flex: 1,
+  },
+});

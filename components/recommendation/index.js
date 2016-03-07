@@ -109,7 +109,7 @@ export default class Recommendation extends Component {
       : this.createRecView(event, place);
 
     return (
-      <View style={styles.container}>
+      <View style={styles.container} onLayout={this.props.onLayout}>
 
         <Animated.Image
           style={this.getImageStyles()}
