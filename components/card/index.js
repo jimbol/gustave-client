@@ -7,7 +7,7 @@ import styles from './styles';
 export default class Card extends Component {
 
   static propTypes = {
-    cardStyle: View.propTypes.style,
+    style: View.propTypes.style,
   };
 
   state = {

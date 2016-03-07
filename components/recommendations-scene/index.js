@@ -5,10 +5,9 @@ import React, {Component, StyleSheet, ScrollView, View, Text} from 'react-native
 import Button from '../button';
 import Card from '../card';
 import Swipeable from '../swipeable';
-import Recommendation from '../recommendation';
+// import Recommendation from '../recommendation';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
 
 export default class RecommendationsScene extends Component {
 
@@ -29,6 +28,7 @@ export default class RecommendationsScene extends Component {
 
   state = {
     currentRecommendation: null,
+    hasOverflow: false,
   };
 
   componentWillMount() {
@@ -56,6 +56,10 @@ export default class RecommendationsScene extends Component {
     this.setState({currentRecommendation: props.nextRecommendation});
   }
 
+  checkOverflow(event) {
+    // console.log(event.nativeEvent.layout);
+  }
+
   render() {
     let currentRecommendation = this.state.currentRecommendation;
 
@@ -76,23 +80,38 @@ export default class RecommendationsScene extends Component {
     return (
       !currentRecommendation ?
       /* Empty view */
-      <View style={[this.props.style, styles.scene, styles.empty]}>{emptyState}</View> :
+      <View style={[styles.scene, styles.empty]}>{emptyState}</View> :
 
       /* Default view */
-      <View style={[this.props.style, styles.scene]}>
-        <Swipeable {...swipeableProps}>
-          <Card key={currentRecommendation.id}>
-            <Recommendation recommendation={currentRecommendation} />
+      <Swipeable {...swipeableProps} style={[styles.scene, this.props.style]}>
+        <ScrollView scrollEnabled={this.state.hasOverflow} contentContainerStyle={!this.state.hasOverflow && styles.flexFull}>
+          <Card key={currentRecommendation.id} style={!this.state.hasOverflow && styles.flexFull}>
+            <Recommendation onLayout={this.checkOverflow.bind(this)} recommendation={currentRecommendation} />
           </Card>
-        </Swipeable>
-      </View>
+        </ScrollView>
+      </Swipeable>
 
+    );
+  }
+}
+
+class Recommendation extends React.Component {
+  render() {
+    return (
+      <View onLayout={this.props.onLayout} style={{height: 1000}}>
+        <Text>Test</Text>
+      </View>
     );
   }
 }
 
 var styles = StyleSheet.create({
   scene: {
+    position: 'absolute',
+    top: 0, right: 0, bottom: 0, left: 0,
+  },
+
+  flexFull: {
     flex: 1,
   },
 
