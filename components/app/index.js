@@ -13,7 +13,7 @@ import SavedRecommendationsScene from '../saved-recommendations-scene';
 
 export default class Gustave extends Component {
 
-  // This makes values available for child components without passing it all the way down the tree
+  // This makes props available for child components without passing it all the way down the tree
   // See: https://facebook.github.io/react/docs/context.html
   static childContextTypes = {
     theme: React.PropTypes.object,
@@ -71,7 +71,6 @@ export default class Gustave extends Component {
   }
 
   render() {
-    console.log(theme);
     let heartNumber = database.getUserSavedRecommendations(this.state.user.id).length;
 
     return (
@@ -124,16 +123,12 @@ export default class Gustave extends Component {
 var styles = StyleSheet.create({
   app: {
     flex: 1,
-    // backgroundColor: this.context.theme.lightBackground,
   },
-
   scene: {
     flex: 1,
+    marginBottom: 50,
   },
-
   statusBar: {
     height: 20,
-    // backgroundColor: theme.,
   }
-
 });
