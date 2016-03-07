@@ -17,8 +17,8 @@ import styles from './styles';
 
 export default class NavigationBar extends Component {
 
-  attributes = {
-    savedScale: new Animated.Value(1)
+  static contextTypes = {
+    theme: React.PropTypes.object,
   };
 
   static propTypes = {
@@ -28,6 +28,10 @@ export default class NavigationBar extends Component {
 
   state = {
     clicked: null,
+  };
+
+  attributes = {
+    savedScale: new Animated.Value(1)
   };
 
   componentWillMount() {
@@ -107,7 +111,7 @@ export default class NavigationBar extends Component {
     heartsStyles.transform = [{scale: this.attributes.savedScale}];
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, this.context.theme.darkBackground]}>
         <View style={[styles.buttonContainer, homeStyles]}>
           <TouchableOpacity
             onPress={this.onHomeClick.bind(this)}

@@ -3,6 +3,7 @@
 import React, {Component, StyleSheet, Navigator, StatusBar, View, Text} from 'react-native';
 import _ from 'lodash';
 
+import theme from '../../themes/default';
 import * as database from '../../data';
 
 import NavigationBar from '../navigation-bar';
@@ -12,9 +13,20 @@ import SavedRecommendationsScene from '../saved-recommendations-scene';
 
 export default class Gustave extends Component {
 
+  // This makes values available for child components without passing it all the way down the tree
+  // See: https://facebook.github.io/react/docs/context.html
+  static childContextTypes = {
+    theme: React.PropTypes.object,
+    user: React.PropTypes.object,
+  };
+  getChildContext() {
+    return {theme: this.state.theme, user: this.state.user};
+  }
+
   state = {
     isLoadingMore: false,
     user: database.getUser(1),
+    theme,
   };
 
   initialRoute = {
@@ -59,11 +71,12 @@ export default class Gustave extends Component {
   }
 
   render() {
+    console.log(theme);
     let heartNumber = database.getUserSavedRecommendations(this.state.user.id).length;
 
     return (
-      <View style={styles.app}>
-        <View style={styles.statusBar} />
+      <View style={[styles.app, this.state.theme.lightBackground]}>
+        <View style={[styles.statusBar, this.state.theme.darkBackground]} />
         <StatusBar barStyle="light-content" />
         <Navigator
           initialRoute={this.initialRoute}
@@ -111,7 +124,7 @@ export default class Gustave extends Component {
 var styles = StyleSheet.create({
   app: {
     flex: 1,
-    backgroundColor: GLOBAL.Theme,
+    // backgroundColor: this.context.theme.lightBackground,
   },
 
   scene: {
@@ -120,7 +133,7 @@ var styles = StyleSheet.create({
 
   statusBar: {
     height: 20,
-    backgroundColor: GLOBAL.Theme,
+    // backgroundColor: theme.,
   }
 
 });

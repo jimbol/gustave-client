@@ -13,6 +13,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class RecommendationsScene extends Component {
 
+  static contextTypes = {
+    theme: React.PropTypes.object,
+  };
+
   static propTypes = {
     nextRecommendation: React.PropTypes.object,
     saveRecommendation: React.PropTypes.func.isRequired,
