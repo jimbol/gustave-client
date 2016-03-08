@@ -20,18 +20,35 @@ const MAP_CONFIG = {
 };
 
 export default class RecMap extends Component {
-  watchID = null;
-  state = { position: null, };
+
+  static propTypes = {
+    lat: React.PropTypes.number,
+    lng: React.PropTypes.number,
+  };
+
+  static defaultProps = {
+    lat: 0,
+    lng: 0,
+  };
+
+  state = { 
+    position: null, 
+  };
+
+  attributes = {
+    watchID: null,
+    mounted: false,
+  };
 
   // Lifecycle
   componentDidMount() {
     InteractionManager.runAfterInteractions(this.getCurrentPosition.bind(this));
-    this.mounted = true;
+    this.attributes.mounted = true;
   }
 
   componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchID);
-    this.mounted = false;
+    this.attributes.mounted = false;
+    navigator.geolocation.clearWatch(this.attributes.watchID);
   }
 
   getCurrentPosition() {
@@ -40,13 +57,13 @@ export default class RecMap extends Component {
     navigator.geolocation
       .getCurrentPosition(onGetPosition, this.onGeoError, GEO_OPTIONS);
 
-    this.watchID = navigator.geolocation.watchPosition(onGetPosition);
+    this.attributes.watchID = navigator.geolocation.watchPosition(onGetPosition);
   }
 
   onGeoError(){}
 
   onGetPosition(position){
-    if (!this.mounted) return;
+    if (!this.attributes.mounted) return;
     
     this.setState({
       position: {
@@ -57,22 +74,24 @@ export default class RecMap extends Component {
   }
 
   // Rendering
-  renderMapView(){
+  renderMapView() {
     let region = this.getMapRegion(this.state.position);
     let annotations = this.getMapAnnotations();
 
-    return <MapView
+    return (
+      <MapView
       style={styles.map}
       region={region}
       annotations={annotations}
       {...MAP_CONFIG} />
+    );
   }
 
   getMapAnnotations(){
     return [{
       latitude: this.props.lat,
       longitude: this.props.lng,
-    }]
+    }];
   }
 
   getMapRegion(position){
@@ -92,7 +111,7 @@ export default class RecMap extends Component {
       longitude,
       latitudeDelta,
       longitudeDelta,
-    }
+    };
   }
 
   getDefaultRegion(){
@@ -101,32 +120,34 @@ export default class RecMap extends Component {
       longitude: this.props.lng,
       latitudeDelta: DEFAULT_DELTA,
       longitudeDelta: DEFAULT_DELTA,
-    }
+    };
   }
 
-  renderPlaceholder(){
+  renderPlaceholder() {
     return (
       <View style={styles.placeholderContainer}>
         <Image
           style={styles.placeholderImage}
-          source={require('../../../assets/defaultMapView.png')} />
+          source={require('../../../assets/defaultMapView.jpg')} />
       </View>
     );
   }
 
   render() {
-    let partial = this.state.position && this.renderMapView() || this.renderPlaceholder();
+    let partial = this.state.position ? this.renderMapView() : this.renderPlaceholder();
 
-    return (<TouchableOpacity
-      onPress={this.onGetDirections.bind(this)}
-      activeOpacity={0.6}>
+    return (
+      <TouchableOpacity
+          onPress={this.onGetDirections.bind(this)}
+          activeOpacity={0.6}>
 
-      <View>
-        {partial}
-        <Icon name={'directions'} style={styles.directionIcon} size={30} />
-      </View>
+        <View>
+          {partial}
+          <Icon name={'directions'} style={[styles.directionIcon, !this.state.position && styles.altDirectionIcon]} size={30} />
+        </View>
 
-    </TouchableOpacity>);
+      </TouchableOpacity>
+    );
   }
 
   onGetDirections(){

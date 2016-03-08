@@ -1,7 +1,6 @@
 'use strict';
 
 import React, {StyleSheet, Dimensions} from 'react-native';
-import Theme from '../../../themes/default';
 
 export default StyleSheet.create({
   map: {
@@ -17,7 +16,7 @@ export default StyleSheet.create({
   },
 
   placeholderImage: {
-    height: null,
+    height: 100,
     width: null,
   },
 
@@ -29,7 +28,11 @@ export default StyleSheet.create({
     right: 0,
     left: 0,
     margin: 8,
-    color: Theme.gustavePurple,
+    color: '#111',
     backgroundColor: 'rgba(0,0,0,0)'
+  },
+
+  altDirectionIcon: {
+    color: '#fff',
   },
 });
