@@ -22,7 +22,7 @@ export default class ChipList extends Component {
 
     return (
       <View style={[styles.chipContainer, this.props.style]}>
-        <Stagger components={chips} staggerStyle={styles.staggerStyle} />
+        <Stagger components={chips} style={styles.staggerStyle} />
       </View>
     );
   }
