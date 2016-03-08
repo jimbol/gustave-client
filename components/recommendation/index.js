@@ -20,6 +20,12 @@ const TO_SHOWN = {
 }
 
 export default class Recommendation extends Component {
+
+  static propTypes = {
+    willFocus: React.PropTypes.func,
+    onLayout: React.PropTypes.func,
+  };
+
   state = {
     isDetailed: false,
     recAnimation: new Animated.Value(1),
@@ -37,13 +43,18 @@ export default class Recommendation extends Component {
       }),
       fontSizeAnimation: this.state.recAnimation.interpolate({
         inputRange: [0, 1],
-        outputRange: [20, 36],
+        outputRange: [20, 32],
       })
     });
   }
 
 
   toggleLayout() {
+
+    // Needed to notify parent that the view is going to toggle, and what the new state will be
+    if(this.props.onToggle)
+      this.props.willToggle(!this.state.isDetailed);
+
     if(this.state.isDetailed){
       this.showRecommendation();
     } else {
@@ -109,22 +120,31 @@ export default class Recommendation extends Component {
       : this.createRecView(event, place);
 
     return (
-      <View style={styles.container} onLayout={this.props.onLayout}>
+      <View 
+          /* The check for isDetailed is where the magic happens */
+          style={[styles.container, !this.state.isDetailed ? styles.flexFull : styles.flexNone]} 
+          /* Must pass the prop function down to notify parent of new sizes on toggle */
+          onLayout={this.props.onLayout}>
 
         <Animated.Image
-          style={this.getImageStyles()}
+          style={[this.getImageStyles(), styles.backgroundImage]}
           source={{uri: place.photo.uri}}>
 
-          <View style={styles.overlay} />
-
-          <Icon name="info-outline" size={30} style={styles.infoButton} onPress={this.toggleLayout.bind(this)} />
-
-          <Animated.Text numberOfLines={2} style={[styles.eventName, this.getTitleStyles()]}>
+          <Animated.Text numberOfLines={1} style={[styles.title, this.getTitleStyles()]}>
             {event.name}
           </Animated.Text>
-          <Animated.Text numberOfLines={2} style={[styles.location, this.getTitleStyles()]}>
+          <Animated.Text numberOfLines={1} style={[styles.title, this.getTitleStyles()]}>
             @ {place.name}
           </Animated.Text>
+
+          <View style={{flexDirection: 'row', backgroundColor: 'rgba(0, 0, 0, .1)'}}>
+            <View style={{flex: 0.5}}>
+              <Icon name="favorite-border" size={30} style={[styles.infoButton, {alignSelf: 'flex-start', padding: 5}]}>+</Icon>
+            </View>
+            <View style={{flex: 0.5}}>
+              <Icon name="info" size={30} style={[styles.infoButton, {alignSelf: 'flex-end', padding: 5}]} onPress={this.toggleLayout.bind(this)} />
+            </View>        
+          </View>
         </Animated.Image>
 
         {partial}

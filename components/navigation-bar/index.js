@@ -79,10 +79,6 @@ export default class NavigationBar extends Component {
     this.goToOrPushRoute('saved');
   }
 
-  onSettingsClick() {
-    this.goToOrPushRoute('settings');
-  }
-
   goToOrPushRoute(id) {
     this.setState({clicked: id});
 
@@ -119,6 +115,13 @@ export default class NavigationBar extends Component {
           </TouchableOpacity>
         </View>
 
+        <View style={[styles.buttonContainer, menuStyles]}>
+          <TouchableOpacity
+            style={[styles.button, styles.menuButton]}>
+            <Icon name="search" style={styles.icon} />
+          </TouchableOpacity>
+        </View>
+
         <Animated.View style={[styles.buttonContainer, heartsStyles]}>
           <TouchableOpacity
             onPress={this.onHeartClick.bind(this)}
@@ -129,7 +132,6 @@ export default class NavigationBar extends Component {
 
         <View style={[styles.buttonContainer, menuStyles]}>
           <TouchableOpacity
-            onPress={this.onSettingsClick.bind(this)}
             style={[styles.button, styles.menuButton]}>
             <Icon name="menu" style={styles.icon} />
           </TouchableOpacity>
@@ -145,7 +147,7 @@ var styles = StyleSheet.create({
     position: 'absolute',
     height: 50,
     right: 0, bottom: 0, left: 0,
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
     flexDirection: 'row',
   },
 
@@ -161,14 +163,14 @@ var styles = StyleSheet.create({
   },
 
   backButton: {
-    alignSelf: 'flex-start',
+    // alignSelf: 'flex-start',
   },
 
   heartsButton: {
   },
 
   menuButton: {
-    alignSelf: 'flex-end',
+    // alignSelf: 'flex-end',
   },
 
   icon: {

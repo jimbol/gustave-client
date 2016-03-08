@@ -21,6 +21,8 @@ export default class RecommendationScene extends Component {
 
   state = {
     cleared: false,
+    hasOverflow: false,
+    toggleState: false,
   };
 
   attributes = {
@@ -68,11 +70,14 @@ export default class RecommendationScene extends Component {
 
         <ScrollView 
           scrollEnabled={this.state.hasOverflow} 
-          contentContainerStyle={!this.state.hasOverflow && styles.flexFull}>
+          contentContainerStyle={styles.flexFull}>
 
           {!this.state.cleared && 
-          <Card style={!this.state.hasOverflow && styles.flexFull}>
-            <Recommendation onLayout={this.handleChildLayout.bind(this)} recommendation={recommendation} />
+          <Card style={(!this.state.toggleState || !this.state.hasOverflow) && styles.flexFull}>
+            <Recommendation 
+                  willToggle={this.handleToggle.bind(this)}
+                  onLayout={this.handleChildLayout.bind(this)} 
+                  recommendation={recommendation} />
           </Card>
           }
 

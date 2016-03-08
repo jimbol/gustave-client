@@ -4,8 +4,11 @@ import React, {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   chipContainer: {
-    flexDirection: 'row',
     flexWrap: 'wrap',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    overflow: 'hidden',
   },
 
   staggerStyle: {

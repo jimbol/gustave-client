@@ -29,6 +29,7 @@ export default class RecommendationsScene extends Component {
   state = {
     currentRecommendation: null,
     hasOverflow: false,
+    toggleState: false,
   };
 
   attributes = {
@@ -44,6 +45,18 @@ export default class RecommendationsScene extends Component {
   handleChildLayout(event) {
     this.attributes.childHeight = event.nativeEvent.layout.height;
     InteractionManager.runAfterInteractions(this.checkOverflow.bind(this));
+  }
+
+  checkOverflow() {
+    if (this.attributes.childHeight > this.attributes.height)
+      !this.state.hasOverflow && this.setState({hasOverflow: true});
+    else
+      this.state.hasOverflow && this.setState({hasOverflow: false});
+  }
+
+  handleToggle(nextIsDetailed) {
+    if (this.state.togggleState !== nextIsDetailed) 
+      this.setState({toggleState: nextIsDetailed});
   }
 
   componentWillMount() {
@@ -71,13 +84,6 @@ export default class RecommendationsScene extends Component {
     this.setState({currentRecommendation: props.nextRecommendation});
   }
 
-  checkOverflow() {
-    if (this.attributes.childHeight > this.attributes.height)
-      this.setState({hasOverflow: true});
-    else
-      this.setState({hasOverflow: false});
-  }
-
   render() {
     let currentRecommendation = this.state.currentRecommendation;
 
@@ -101,22 +107,28 @@ export default class RecommendationsScene extends Component {
       <View style={[styles.flexFull, styles.empty]}>{emptyState}</View> :
 
       /* Default view */
-      <Swipeable 
-          onLayout={this.handleLayout.bind(this)} 
-          style={[styles.flexFull, this.props.style]}
-          {...swipeableProps} >
+      <View style={[styles.flexFull, this.props.style]}>
+        <View style={[styles.heading, this.context.theme.darkBackground]}><Text style={styles.headingText}>Happening Nearby</Text></View>
+        <Swipeable 
+            onLayout={this.handleLayout.bind(this)} 
+            style={styles.flexFull}
+            {...swipeableProps} >
 
-        <ScrollView 
-          scrollEnabled={this.state.hasOverflow} 
-          contentContainerStyle={!this.state.hasOverflow && styles.flexFull}>
+          <ScrollView 
+            scrollEnabled={this.state.hasOverflow} 
+            contentContainerStyle={styles.flexFull}>
 
-          <Card key={currentRecommendation.id} style={!this.state.hasOverflow && styles.flexFull}>
-            <Recommendation onLayout={this.handleChildLayout.bind(this)} recommendation={currentRecommendation} />
-          </Card>
+            <Card key={currentRecommendation.id} style={(!this.state.toggleState || !this.state.hasOverflow) && styles.flexFull}>
+              <Recommendation 
+                willToggle={this.handleToggle.bind(this)}
+                onLayout={this.handleChildLayout.bind(this)} 
+                recommendation={currentRecommendation} />
+            </Card>
 
-        </ScrollView>
+          </ScrollView>
 
-      </Swipeable>
+        </Swipeable>
+      </View>
 
     );
   }
@@ -133,6 +145,15 @@ var styles = StyleSheet.create({
   },
 
   emptyText: {
+    color: '#fff',
+    textAlign: 'center',
+  },
+
+  heading: {
+    opacity: 0.5,
+  },
+
+  headingText: {
     color: '#fff',
     textAlign: 'center',
   },
