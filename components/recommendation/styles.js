@@ -42,12 +42,15 @@ export default StyleSheet.create({
     // backgroundColor: OVERLAY_COLOR,
   },
 
-  infoButton: {
-    backgroundColor: 'rgba(0,0,0,0)',
+  topButtonIcon: {
     color: '#fff',
-    // position: 'absolute',
-    // top: 16,
-    // right: 8,
     opacity: .85,
+    padding: 5,
+  },
+  heartButton: {
+    alignSelf: 'flex-start', 
+  },
+  infoButton: {
+    alignSelf: 'flex-end', 
   },
 });

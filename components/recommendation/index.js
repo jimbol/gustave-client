@@ -160,13 +160,13 @@ export default class Recommendation extends Component {
 
           <View style={styles.overlay}>
             <View style={{flex: 0.5}}>
-              <TouchableOpacity onPress={this.toggleRecommendation.bind(this)}>
-                <Icon name={isUserSaved ? 'favorite' : 'favorite-border'} size={30} style={[styles.infoButton, {alignSelf: 'flex-start', padding: 5}]}>+</Icon>
+              <TouchableOpacity onPress={this.toggleRecommendation.bind(this)} style={styles.heartButton}>
+                <Icon name={isUserSaved ? 'favorite' : 'favorite-border'} size={30} style={[styles.topButtonIcon]}>+</Icon>
               </TouchableOpacity>
             </View>
             <View style={{flex: 0.5}}>
               <TouchableOpacity onPress={this.toggleLayout.bind(this)}>
-                <Icon name="info-outline" size={30} style={[styles.infoButton, {alignSelf: 'flex-end', padding: 5}]}/>
+                <Icon name="info-outline" size={30} style={[styles.infoButton, styles.topButtonIcon]}/>
               </TouchableOpacity>
             </View>        
           </View>
