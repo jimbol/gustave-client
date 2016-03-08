@@ -228,6 +228,14 @@ export function saveUserRecommendation(userId, recommendationId) {
     user.saved.push(recommendationId);
 }
 
+export function removeSavedUserRecommendation(userId, recommendationId) {
+  let user = getUser(userId);
+  let index = user.saved.indexOf(recommendationId);
+
+  if (index !== -1)
+    user.saved.splice(index, 1);
+}
+
 export function getUserRecommendations(userId) {
   let user = getUser(userId);
 
@@ -240,6 +248,12 @@ export function getUserSavedRecommendations(userId) {
   let user = getUser(userId);
 
   return user.saved.map(eventId => getUserRecommendation(eventId));
+}
+
+export function isUserSavedRecommendation(userId, recommendationId) {
+  let user = getUser(userId);
+
+  return user.saved.includes(recommendationId);
 }
 
 export function getUserRecommendation(eventId) {

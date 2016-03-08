@@ -64,6 +64,10 @@ export default class Gustave extends Component {
     this.checkNeedMoreRecs(); // Temp
   }
 
+  onToggleRecommendation() {
+    this.forceUpdate();
+  }
+
   onConfigureScene(route, routeStack){
     return {
       ...Navigator.SceneConfigs.FloatFromBottomAndroid,
@@ -80,7 +84,8 @@ export default class Gustave extends Component {
             isLoadingMore={this.state.isLoadingMore}
             nextRecommendation={database.getUserRecommendations(this.state.user.id)[0]}
             dismissRecommendation={this.onDismissRecommendation.bind(this)}
-            saveRecommendation={this.onSaveRecommendation.bind(this)}/>
+            saveRecommendation={this.onSaveRecommendation.bind(this)}
+            onToggleRecommendation={this.onToggleRecommendation.bind(this)}/>
         );
 
       case 'recommendation':
@@ -88,7 +93,7 @@ export default class Gustave extends Component {
           <RecommendationScene
             recommendation={database.getUserRecommendation(route.recommendationId)}
             goBack={navigator.pop}
-            saveRecommendation={this.onSaveRecommendation.bind(this)}/>
+            onToggleRecommendation={this.onToggleRecommendation.bind(this)}/>
         );
 
       case 'saved':

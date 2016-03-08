@@ -19,6 +19,7 @@ export default class RecommendationsScene extends Component {
     nextRecommendation: React.PropTypes.object,
     saveRecommendation: React.PropTypes.func.isRequired,
     dismissRecommendation: React.PropTypes.func.isRequired,
+    onToggleRecommendation: React.PropTypes.func,
     isLoadingMore: React.PropTypes.bool, // Will prob be replaced with call to this.props.relay.hasOptimisticUpdate
   };
 
@@ -147,7 +148,7 @@ export default class RecommendationsScene extends Component {
                 willToggle={this.handleToggle.bind(this)}
                 onLayout={this.handleChildLayout.bind(this)} 
                 recommendation={currentRecommendation}
-                saveRecommendation={this.props.saveRecommendation} />
+                onToggleRecommendation={this.props.onToggleRecommendation}/>
             </Card>
 
           </ScrollView>

@@ -21,11 +21,16 @@ const TO_SHOWN = {
 
 export default class Recommendation extends Component {
 
+  static contextTypes = {
+    user: React.PropTypes.object,
+    database: React.PropTypes.object,
+  };
+
   static propTypes = {
     recommendation: React.PropTypes.object,
     willFocus: React.PropTypes.func,
     onLayout: React.PropTypes.func,
-    saveRecommendation: React.PropTypes.func.isRequired,
+    onToggleRecommendation: React.PropTypes.func,
   };
 
   state = {
@@ -46,8 +51,21 @@ export default class Recommendation extends Component {
       fontSizeAnimation: this.state.recAnimation.interpolate({
         inputRange: [0, 1],
         outputRange: [20, 32],
-      })
+      }),
     });
+  }
+
+  toggleRecommendation() {
+
+  let isUserSaved = this.context.database
+      .isUserSavedRecommendation(this.context.user.id, this.props.recommendation.id);
+
+    if (isUserSaved)
+      this.context.database.removeSavedUserRecommendation(this.context.user.id, this.props.recommendation.id);
+    else 
+      this.context.database.saveUserRecommendation(this.context.user.id, this.props.recommendation.id);
+   
+    this.props.onToggleRecommendation(this.props.recommendation.id);
   }
 
   toggleLayout() {
@@ -119,6 +137,9 @@ export default class Recommendation extends Component {
       ? this.createDetailView(event, place)
       : this.createRecView(event, place);
 
+    let isUserSaved = this.context.database
+      .isUserSavedRecommendation(this.context.user.id, this.props.recommendation.id);
+    
     return (
       <View 
           /* The check for isDetailed is where the magic happens */
@@ -139,8 +160,8 @@ export default class Recommendation extends Component {
 
           <View style={styles.overlay}>
             <View style={{flex: 0.5}}>
-              <TouchableOpacity onPress={this.props.saveRecommendation.bind(null, this.props.recommendation.id)}>
-                <Icon name="favorite-border" size={30} style={[styles.infoButton, {alignSelf: 'flex-start', padding: 5}]}>+</Icon>
+              <TouchableOpacity onPress={this.toggleRecommendation.bind(this)}>
+                <Icon name={isUserSaved ? 'favorite' : 'favorite-border'} size={30} style={[styles.infoButton, {alignSelf: 'flex-start', padding: 5}]}>+</Icon>
               </TouchableOpacity>
             </View>
             <View style={{flex: 0.5}}>
