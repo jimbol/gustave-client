@@ -70,10 +70,10 @@ export default class Recommendation extends Component {
   }
 
   composeAnimations(toHide, toShow, isDetailed) {
+
     return Animated.timing(toHide, TO_HIDDEN)
       .start(function(){
         this.setState({isDetailed: isDetailed});
-
         Animated.timing(toShow, TO_SHOWN).start();
       }.bind(this));
   }

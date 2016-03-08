@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component, StyleSheet, ScrollView, View, Text, InteractionManager} from 'react-native';
+import React, {Component, StyleSheet, ScrollView, View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Button from '../button';
@@ -39,12 +39,12 @@ export default class RecommendationsScene extends Component {
 
   handleLayout(event) {
     this.attributes.height = event.nativeEvent.layout.height;
-    InteractionManager.runAfterInteractions(this.checkOverflow.bind(this));
+    this.checkOverflow();
   }
 
   handleChildLayout(event) {
     this.attributes.childHeight = event.nativeEvent.layout.height;
-    InteractionManager.runAfterInteractions(this.checkOverflow.bind(this));
+    this.checkOverflow();
   }
 
   checkOverflow() {
