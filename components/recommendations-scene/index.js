@@ -120,7 +120,9 @@ export default class RecommendationsScene extends Component {
 
       /* Default view */
       <View style={[styles.flexFull, this.props.style]}>
-        <View style={[styles.heading, this.context.theme.darkBackground]}><Text style={styles.headingText}>Happening Nearby</Text></View>
+        <View style={[styles.heading, this.context.theme.darkBackground]}>
+          <Text style={styles.headingText}>Happening Nearby</Text>
+        </View>
         <Swipeable 
             onLayout={this.handleLayout.bind(this)} 
             style={styles.flexFull}
