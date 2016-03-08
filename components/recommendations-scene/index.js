@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component, StyleSheet, ScrollView, View, Text} from 'react-native';
+import React, {Component, StyleSheet, ScrollView, View, Text, TouchableWithoutFeedback} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Button from '../button';
@@ -68,7 +68,12 @@ export default class RecommendationsScene extends Component {
 
     let shouldScroll = this.state.isChildDetailed && this.state.hasOverflow;
     if (!shouldScroll)
-      this.refs.scroll.scrollTo({x: 0, y:0, animated: false});
+      this.scrollToTop();
+  }
+
+  scrollToTop() {
+    if (!this.refs.scroll) return;
+    this.refs.scroll.scrollTo({x: 0, y:0, animated: false});
   }
 
   componentWillMount() {
@@ -122,9 +127,11 @@ export default class RecommendationsScene extends Component {
 
       /* Default view */
       <View style={[styles.flexFull, this.props.style]}>
-        <View style={[styles.heading, this.context.theme.darkBackground]}>
-          <Text style={styles.headingText}>Happening Nearby</Text>
-        </View>
+        <TouchableWithoutFeedback onPress={this.scrollToTop.bind(this)} >
+          <View style={[styles.heading, this.context.theme.darkBackground]}>
+            <Text style={styles.headingText}>Happening Nearby</Text>
+          </View>
+        </TouchableWithoutFeedback>
         <Swipeable 
             onLayout={this.handleLayout.bind(this)} 
             style={styles.flexFull}
