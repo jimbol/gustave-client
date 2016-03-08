@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component, View, Text, Image, Animated, Easing} from 'react-native';
+import React, {Component, View, Text, Image, Animated, Easing, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -138,10 +138,14 @@ export default class Recommendation extends Component {
 
           <View style={{flexDirection: 'row', backgroundColor: 'rgba(0, 0, 0, .1)'}}>
             <View style={{flex: 0.5}}>
-              <Icon name="favorite-border" size={30} style={[styles.infoButton, {alignSelf: 'flex-start', padding: 5}]}>+</Icon>
+              <TouchableOpacity>
+                <Icon name="favorite-border" size={30} style={[styles.infoButton, {alignSelf: 'flex-start', padding: 5}]}>+</Icon>
+              </TouchableOpacity>
             </View>
             <View style={{flex: 0.5}}>
-              <Icon name="info" size={30} style={[styles.infoButton, {alignSelf: 'flex-end', padding: 5}]} onPress={this.toggleLayout.bind(this)} />
+              <TouchableOpacity onPress={this.toggleLayout.bind(this)}>
+                <Icon name="info-outline" size={30} style={[styles.infoButton, {alignSelf: 'flex-end', padding: 5}]}/>
+              </TouchableOpacity>
             </View>        
           </View>
         </Animated.Image>
