@@ -21,7 +21,7 @@ export default class Details extends Component {
     let components = [
         <Text style={[styles.row, styles.description]}>{event.description}</Text>,
 
-        <ChipList labels={event.labels} style={styles.row} />,
+        <ChipList labels={event.labels} style={styles.row} chipTextStyle={{fontSize: 8}}/>,
 
         <View style={styles.row}>
           <Icon name={'access-time'} size={18} style={styles.descIcon} />
@@ -40,13 +40,16 @@ export default class Details extends Component {
           lat={place.geo.lat}
           lng={place.geo.lng} />,
 
-        <Text style={[styles.row, styles.description]}>{place.description}</Text>,
 
-        <ChipList labels={place.labels} style={styles.row} />,
+        <Text style={[styles.row, {fontWeight: 'bold'}]}>{place.name}</Text>,
+
+        <Text style={[styles.row, styles.description]}>{place.description}</Text>,
 
         <View style={styles.row}>
           <Icon name={'date-range'} size={18} style={styles.descIcon} /><Text>Open {place.hours}</Text>
-        </View>
+        </View>,
+
+        <ChipList labels={place.labels} style={styles.row} chipTextStyle={{fontSize: 8}}/>,
     ];
 
     return (
