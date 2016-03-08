@@ -68,12 +68,12 @@ export default class RecommendationsScene extends Component {
 
     let shouldScroll = this.state.isChildDetailed && this.state.hasOverflow;
     if (!shouldScroll)
-      this.scrollToTop();
+      this.scrollToTop(false);
   }
 
-  scrollToTop() {
+  scrollToTop(doAnimate) {
     if (!this.refs.scroll) return;
-    this.refs.scroll.scrollTo({x: 0, y:0, animated: false});
+    this.refs.scroll.scrollTo({x: 0, y:0, animated: doAnimate || true});
   }
 
   componentWillMount() {
