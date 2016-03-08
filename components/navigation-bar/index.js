@@ -81,15 +81,15 @@ export default class NavigationBar extends Component {
 
   resetToRoute(id) {
     this.setState({clicked: id});
-    this.props.navigator.resetTo({id});
+    // this.props.navigator.resetTo({id});
 
-    // let route = _.find(this.props.navigator.getCurrentRoutes(), {id});
+    let route = _.find(this.props.navigator.getCurrentRoutes(), {id});
 
-    // if(route){
-    //   this.props.navigator.popToRoute(route);
-    // } else {
-    //   this.props.navigator.push({id});
-    // }
+    if(route){
+      this.props.navigator.popToRoute(route);
+    } else {
+      this.props.navigator.push({id});
+    }
   }
 
   render() {
