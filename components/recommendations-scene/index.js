@@ -91,7 +91,7 @@ export default class RecommendationsScene extends Component {
   // Intentional deviation from React pattern b/c we need manual control
   syncRec(nextProps) {
     let props = nextProps || this.props;
-    this.setState({currentRecommendation: props.nextRecommendation});
+    this.setState({currentRecommendation: props.nextRecommendation, hasOverflow: false, isChildDetailed: false});
   }
 
   render() {
@@ -130,7 +130,8 @@ export default class RecommendationsScene extends Component {
 
           <ScrollView ref="scroll"
             scrollEnabled={this.state.hasOverflow} 
-            contentContainerStyle={!shouldScroll && styles.flexFull}>
+            contentContainerStyle={!shouldScroll && styles.flexFull}
+            showsVerticalScrollIndicator={false}>
 
             <Card key={currentRecommendation.id} style={!shouldScroll && styles.flexFull}>
               <Recommendation 
