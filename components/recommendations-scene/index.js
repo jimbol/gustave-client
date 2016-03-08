@@ -64,6 +64,8 @@ export default class RecommendationsScene extends Component {
   }
 
   checkScrollTop() {
+    if (!this.refs.scroll) return; 
+
     let shouldScroll = this.state.isChildDetailed && this.state.hasOverflow;
     if (!shouldScroll)
       this.refs.scroll.scrollTo({x: 0, y:0, animated: false});
