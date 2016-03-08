@@ -2,7 +2,7 @@
 
 import React, {StyleSheet} from 'react-native';
 
-let OVERLAY_COLOR = 'rgba(0, 0, 0, .5)'
+let OVERLAY_COLOR = 'rgba(0, 0, 0, 0.75)'
 
 export default StyleSheet.create({
 
@@ -27,11 +27,12 @@ export default StyleSheet.create({
   title: {
     backgroundColor: OVERLAY_COLOR,
     fontSize: 10,
-    color: '#fff',
+    color: '#ddd',
     fontWeight: '400',
     marginHorizontal: 8,
     marginVertical: 4,
     paddingHorizontal: 8,
+    paddingVertical: 4,
     alignSelf: 'flex-start',
   },
 
