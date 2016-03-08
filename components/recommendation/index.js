@@ -35,7 +35,7 @@ export default class Recommendation extends Component {
     detailAnimation: new Animated.Value(0),
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({
       imageAnimation: this.state.recAnimation.interpolate({
         inputRange: [0, 1],

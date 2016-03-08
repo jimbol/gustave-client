@@ -26,13 +26,15 @@ export default class RecMap extends Component {
   // Lifecycle
   componentDidMount() {
     InteractionManager.runAfterInteractions(this.getCurrentPosition.bind(this));
+    this.mounted = true;
   }
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID);
+    this.mounted = false;
   }
 
-  getCurrentPosition(){
+  getCurrentPosition() {
     let onGetPosition = this.onGetPosition.bind(this);
 
     navigator.geolocation
@@ -44,6 +46,8 @@ export default class RecMap extends Component {
   onGeoError(){}
 
   onGetPosition(position){
+    if (!this.mounted) return;
+    
     this.setState({
       position: {
         lat: position.coords.latitude,
@@ -111,9 +115,9 @@ export default class RecMap extends Component {
   }
 
   render() {
-    let partial = this.state.position && this.renderMapView() || this.renderPlaceholder()
+    let partial = this.state.position && this.renderMapView() || this.renderPlaceholder();
 
-    return <TouchableOpacity
+    return (<TouchableOpacity
       onPress={this.onGetDirections.bind(this)}
       activeOpacity={0.6}>
 
@@ -122,7 +126,7 @@ export default class RecMap extends Component {
         <Icon name={'directions'} style={styles.directionIcon} size={30} />
       </View>
 
-    </TouchableOpacity>
+    </TouchableOpacity>);
   }
 
   onGetDirections(){
