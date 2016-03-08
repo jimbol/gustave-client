@@ -3,7 +3,6 @@
 import React, {Component, View, Image, MapView, InteractionManager, TouchableOpacity, Linking} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import styles from './styles';
-import Theme from '../../../themes/default';
 
 const DEFAULT_DELTA = 0.01;
 const DELTA_COEF = 2.5;
@@ -26,7 +25,6 @@ export default class RecMap extends Component {
 
   // Lifecycle
   componentDidMount() {
-    InteractionManager.setDeadline(2000);
     InteractionManager.runAfterInteractions(this.getCurrentPosition.bind(this));
   }
 
@@ -113,9 +111,7 @@ export default class RecMap extends Component {
   }
 
   render() {
-    let partial = (this.props.lat && this.props.lng)
-      ? this.renderMapView()
-      : this.renderPlaceholder()
+    let partial = this.state.position && this.renderMapView() || this.renderPlaceholder()
 
     return <TouchableOpacity
       onPress={this.onGetDirections.bind(this)}

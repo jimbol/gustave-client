@@ -1,18 +1,6 @@
 'use strict';
 
-import React, {Component, View, Text, Animated} from 'react-native';
-import styles from './styles';
-
-
-
-
-// START HERE
-//
-// Flex direction
-// Weird wrapping in detail screen
-//
-
-
+import React, {Component, View, Animated} from 'react-native';
 
 export default class Stagger extends Component {
   static propTypes = {
@@ -42,11 +30,8 @@ export default class Stagger extends Component {
   }
 
   getComponentStyle(i){
-    let animation = this.state.animationValues[i];
-
     return {
-      opacity: animation,
-      flexWrap: 'wrap',
+      opacity: this.state.animationValues[i],
     };
   }
 
@@ -63,7 +48,7 @@ export default class Stagger extends Component {
     }.bind(this));
 
     return (
-      <View style={styles.container}>
+      <View style={this.props.staggerStyle}>
         {animatedComponents}
       </View>
     );

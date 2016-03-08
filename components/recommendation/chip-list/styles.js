@@ -6,9 +6,11 @@ export default StyleSheet.create({
   chipContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    overflow: 'hidden',
   },
 
+  staggerStyle: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    flex: 1,
+  },
 });

@@ -2,15 +2,10 @@
 
 import React, {Component, View, Text, Image, Animated, Easing} from 'react-native';
 import styles from './styles';
-import _ from 'lodash';
-import moment from 'moment';
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import IonIcon from 'react-native-vector-icons/Ionicons'
 
-import ChipList from './chip-list';
 import Details from './details';
 import Teaser from './teaser';
-import Button from '../button';
 
 const TO_HIDDEN = {
   toValue: 0,

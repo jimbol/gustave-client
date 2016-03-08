@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component, View, Text, Animated} from 'react-native';
+import React, {Component, View} from 'react-native';
 import styles from './styles';
 
 import Chip from '../../chip';
@@ -18,8 +18,8 @@ export default class ChipList extends Component {
     }.bind(this));
 
     return (
-      <View style={styles.chipContainer}>
-        <Stagger components={chips} />
+      <View style={[styles.chipContainer, this.props.style]}>
+        <Stagger components={chips} staggerStyle={styles.staggerStyle} />
       </View>
     );
   }
