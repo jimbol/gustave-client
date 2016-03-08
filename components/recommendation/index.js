@@ -22,8 +22,10 @@ const TO_SHOWN = {
 export default class Recommendation extends Component {
 
   static propTypes = {
+    recommendation: React.PropTypes.object,
     willFocus: React.PropTypes.func,
     onLayout: React.PropTypes.func,
+    saveRecommendation: React.PropTypes.func.isRequired,
   };
 
   state = {
@@ -47,7 +49,6 @@ export default class Recommendation extends Component {
       })
     });
   }
-
 
   toggleLayout() {
     // Needed to notify parent that the view is going to toggle, and what the new state will be
@@ -136,9 +137,9 @@ export default class Recommendation extends Component {
             @ {place.name}
           </Animated.Text>
 
-          <View style={{flexDirection: 'row', backgroundColor: 'rgba(0, 0, 0, .1)'}}>
+          <View style={styles.overlay}>
             <View style={{flex: 0.5}}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this.props.saveRecommendation.bind(null, this.props.recommendation.id)}>
                 <Icon name="favorite-border" size={30} style={[styles.infoButton, {alignSelf: 'flex-start', padding: 5}]}>+</Icon>
               </TouchableOpacity>
             </View>

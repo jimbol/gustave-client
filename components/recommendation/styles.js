@@ -37,7 +37,8 @@ export default StyleSheet.create({
   },
 
   overlay: {
-    // flex: 1,
+    flexDirection: 'row', 
+    backgroundColor: 'rgba(0, 0, 0, .15)'
     // backgroundColor: OVERLAY_COLOR,
   },
 

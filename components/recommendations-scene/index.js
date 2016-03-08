@@ -146,7 +146,8 @@ export default class RecommendationsScene extends Component {
               <Recommendation 
                 willToggle={this.handleToggle.bind(this)}
                 onLayout={this.handleChildLayout.bind(this)} 
-                recommendation={currentRecommendation} />
+                recommendation={currentRecommendation}
+                saveRecommendation={this.props.saveRecommendation} />
             </Card>
 
           </ScrollView>

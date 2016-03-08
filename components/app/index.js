@@ -18,15 +18,17 @@ export default class Gustave extends Component {
   static childContextTypes = {
     theme: React.PropTypes.object,
     user: React.PropTypes.object,
+    database: React.PropTypes.object,
   };
   getChildContext() {
-    return {theme: this.state.theme, user: this.state.user};
+    return {theme: this.state.theme, user: this.state.user, database: this.state.database};
   }
 
   state = {
     isLoadingMore: false,
     user: database.getUser(1),
     theme,
+    database,
   };
 
   initialRoute = {
@@ -85,7 +87,8 @@ export default class Gustave extends Component {
         return (
           <RecommendationScene
             recommendation={database.getUserRecommendation(route.recommendationId)}
-            goBack={navigator.pop}/>
+            goBack={navigator.pop}
+            saveRecommendation={this.onSaveRecommendation.bind(this)}/>
         );
 
       case 'saved':

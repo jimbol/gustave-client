@@ -17,6 +17,7 @@ export default class RecommendationScene extends Component {
 
   static propTypes = {
     goBack: React.PropTypes.func.isRequired,
+    saveRecommendation: React.PropTypes.func.isRequired,
   };
 
   state = {
@@ -94,7 +95,8 @@ export default class RecommendationScene extends Component {
             <Recommendation 
                   willToggle={this.handleToggle.bind(this)}
                   onLayout={this.handleChildLayout.bind(this)} 
-                  recommendation={recommendation} />
+                  recommendation={recommendation} 
+                  saveRecommendation={this.props.saveRecommendation}/>
           </Card>
           }
 
