@@ -19,8 +19,8 @@ const IS_SWIPING_OPACITY = 0.8;
 
 const RESET_TO_ZERO_PROPS = {
   toValue: 0,
-  duration: 200,
-  easing: Easing.inOut(Easing.quad),
+  duration: 250,
+  easing: Easing.elastic(1),
 };
 
 
@@ -77,7 +77,7 @@ export default class Swipeable extends Component {
   }
 
   getWantsControl(event, gestureState) {
-    let isSwipingUpDown = Math.abs(gestureState.dy) > Math.abs(gestureState.dx) 
+    let isSwipingUpDown = Math.abs(gestureState.dy) > Math.abs(gestureState.dx)
                         || Math.abs(gestureState.vy) > Math.abs(gestureState.vx);
 
     if (isSwipingUpDown) return false;
@@ -235,7 +235,7 @@ export default class Swipeable extends Component {
   createAnimationStyles() {
     return {
       flex: 1,
-      opacity: this.state.isSwiping && IS_SWIPING_OPACITY || 1,
+      opacity: (this.state.isSwiping) ? IS_SWIPING_OPACITY : 1,
       transform: [
         {translateX: this.state.offsetX},
       ],

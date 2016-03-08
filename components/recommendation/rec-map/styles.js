@@ -5,12 +5,14 @@ import Theme from '../../../themes/default';
 
 export default StyleSheet.create({
   map: {
+    marginBottom: 16,
     height: 100,
     overflow: 'hidden',
   },
 
   placeholderContainer: {
     height: 100,
+    marginBottom: 16,
     backgroundColor: '#eee',
   },
 

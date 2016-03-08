@@ -2,26 +2,21 @@
 
 import React, {Component, View, Text, Image, Animated, Easing} from 'react-native';
 import styles from './styles';
-import _ from 'lodash';
-import moment from 'moment';
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import IonIcon from 'react-native-vector-icons/Ionicons'
 
-import ChipList from './chip-list';
 import Details from './details';
 import Teaser from './teaser';
-import Button from '../button';
 
 const TO_HIDDEN = {
   toValue: 0,
-  duration: 200,
-  easing: Easing.easeInOutCirc,
+  duration: 250,
+  easing: Easing.elastic(1),
 }
 
 const TO_SHOWN = {
   toValue: 1,
-  duration: 200,
-  easing: Easing.easeInOutCirc,
+  duration: 250,
+  easing: Easing.elastic(1),
 }
 
 export default class Recommendation extends Component {

@@ -1,7 +1,6 @@
 'use strict';
 
 import React, {
-  AppRegistry,
   Component,
   Text,
   View
