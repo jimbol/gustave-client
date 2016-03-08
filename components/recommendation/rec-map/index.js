@@ -38,12 +38,13 @@ export default class RecMap extends Component {
   attributes = {
     watchID: null,
     mounted: false,
+    cached: null,
   };
 
   // Lifecycle
-  componentDidMount() {
-    InteractionManager.runAfterInteractions(this.getCurrentPosition.bind(this));
+  componentWillMount() {
     this.attributes.mounted = true;
+    InteractionManager.runAfterInteractions(this.getInitialPosition.bind(this));
   }
 
   componentWillUnmount() {
@@ -51,9 +52,10 @@ export default class RecMap extends Component {
     navigator.geolocation.clearWatch(this.attributes.watchID);
   }
 
-  getCurrentPosition() {
-    let onGetPosition = this.onGetPosition.bind(this);
+  getInitialPosition() {
+    if (!this.attributes.mounted) return;
 
+    let onGetPosition = this.onGetPosition.bind(this);
     navigator.geolocation
       .getCurrentPosition(onGetPosition, this.onGeoError, GEO_OPTIONS);
 
@@ -62,14 +64,21 @@ export default class RecMap extends Component {
 
   onGeoError(){}
 
-  onGetPosition(position){
+  onGetPosition(position) {
     if (!this.attributes.mounted) return;
-    
-    this.setState({
-      position: {
+
+    // Intentional rerender prevention, we'll forceUpdate() after interactions
+    this.state.position = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
-      }
+      };
+
+    this.attributes.cached = this.renderMapView();
+    
+    // This prevents interference with scrolling the detail view
+    InteractionManager.runAfterInteractions(() => {
+      if (this.attributes.mounted)
+       this.forceUpdate();
     });
   }
 
@@ -80,10 +89,10 @@ export default class RecMap extends Component {
 
     return (
       <MapView
-      style={styles.map}
-      region={region}
-      annotations={annotations}
-      {...MAP_CONFIG} />
+          style={styles.map}
+          region={region}
+          annotations={annotations}
+          {...MAP_CONFIG} />
     );
   }
 
@@ -134,7 +143,7 @@ export default class RecMap extends Component {
   }
 
   render() {
-    let partial = this.state.position ? this.renderMapView() : this.renderPlaceholder();
+    let partial = this.attributes.cached || this.renderPlaceholder();
 
     return (
       <TouchableOpacity

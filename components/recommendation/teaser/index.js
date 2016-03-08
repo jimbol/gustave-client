@@ -30,7 +30,7 @@ export default class Teaser extends Component {
 
     let components = [
       <Stagger 
-          style={{flex: 1, flexDirection: 'row', alignItems: 'flex-end', marginBottom: 16}} 
+          style={{flex: 1, flexDirection: 'row', alignItems: 'flex-end', marginBottom: 24}} 
           components={innerComponents} />,
       <ChipList labels={labels} />,
     ];
