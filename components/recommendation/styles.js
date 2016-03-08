@@ -30,7 +30,7 @@ export default StyleSheet.create({
     color: '#fff',
     fontWeight: '400',
     marginHorizontal: 8,
-    marginBottom: 8,
+    marginVertical: 4,
     paddingHorizontal: 8,
     alignSelf: 'flex-start',
   },

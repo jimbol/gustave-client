@@ -42,9 +42,24 @@ export default class RecommendationScene extends Component {
 
   checkOverflow() {
     if (this.attributes.childHeight > this.attributes.height)
-      this.setState({hasOverflow: true});
+      !this.state.hasOverflow && this.setState({hasOverflow: true});
     else
-      this.setState({hasOverflow: false});
+      this.state.hasOverflow && this.setState({hasOverflow: false});
+
+    this.checkScrollTop();
+  }
+
+  handleToggle(nextIsDetailed) {
+    if (this.state.isChildDetailed !== nextIsDetailed) 
+      this.setState({isChildDetailed: nextIsDetailed});
+
+    this.checkScrollTop();
+  }
+
+  checkScrollTop() {
+    let shouldScroll = this.state.isChildDetailed && this.state.hasOverflow;
+    if (!shouldScroll)
+      this.refs.scroll.scrollTo({x: 0, y:0, animated: false});
   }
 
   didSwipeLeft() {
@@ -62,18 +77,20 @@ export default class RecommendationScene extends Component {
       leftSwipeEdge,
     };
 
+    let shouldScroll = this.state.isChildDetailed && this.state.hasOverflow;
+
     return (
       <Swipeable 
           onLayout={this.handleLayout.bind(this)} 
           style={[styles.flexFull, this.props.style]}
           {...swipeableProps} >
 
-        <ScrollView 
-          scrollEnabled={this.state.hasOverflow} 
-          contentContainerStyle={styles.flexFull}>
+        <ScrollView ref="scroll"
+            scrollEnabled={this.state.hasOverflow} 
+            contentContainerStyle={!shouldScroll && styles.flexFull}>
 
           {!this.state.cleared && 
-          <Card style={(!this.state.toggleState || !this.state.hasOverflow) && styles.flexFull}>
+          <Card style={!shouldScroll && styles.flexFull}>
             <Recommendation 
                   willToggle={this.handleToggle.bind(this)}
                   onLayout={this.handleChildLayout.bind(this)} 

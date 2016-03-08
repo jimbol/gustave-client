@@ -29,7 +29,7 @@ export default class RecommendationsScene extends Component {
   state = {
     currentRecommendation: null,
     hasOverflow: false,
-    toggleState: false,
+    isChildDetailed: false,
   };
 
   attributes = {
@@ -52,11 +52,21 @@ export default class RecommendationsScene extends Component {
       !this.state.hasOverflow && this.setState({hasOverflow: true});
     else
       this.state.hasOverflow && this.setState({hasOverflow: false});
+
+    this.checkScrollTop();
   }
 
   handleToggle(nextIsDetailed) {
-    if (this.state.togggleState !== nextIsDetailed) 
-      this.setState({toggleState: nextIsDetailed});
+    if (this.state.isChildDetailed !== nextIsDetailed) 
+      this.setState({isChildDetailed: nextIsDetailed});
+
+    this.checkScrollTop();
+  }
+
+  checkScrollTop() {
+    let shouldScroll = this.state.isChildDetailed && this.state.hasOverflow;
+    if (!shouldScroll)
+      this.refs.scroll.scrollTo({x: 0, y:0, animated: false});
   }
 
   componentWillMount() {
@@ -101,6 +111,8 @@ export default class RecommendationsScene extends Component {
       leftSwipeEdge,
     };
 
+    let shouldScroll = this.state.isChildDetailed && this.state.hasOverflow;
+
     return (
       !currentRecommendation ?
       /* Empty view */
@@ -114,11 +126,11 @@ export default class RecommendationsScene extends Component {
             style={styles.flexFull}
             {...swipeableProps} >
 
-          <ScrollView 
+          <ScrollView ref="scroll"
             scrollEnabled={this.state.hasOverflow} 
-            contentContainerStyle={styles.flexFull}>
+            contentContainerStyle={!shouldScroll && styles.flexFull}>
 
-            <Card key={currentRecommendation.id} style={(!this.state.toggleState || !this.state.hasOverflow) && styles.flexFull}>
+            <Card key={currentRecommendation.id} style={!shouldScroll && styles.flexFull}>
               <Recommendation 
                 willToggle={this.handleToggle.bind(this)}
                 onLayout={this.handleChildLayout.bind(this)} 

@@ -52,7 +52,7 @@ export default class Recommendation extends Component {
   toggleLayout() {
 
     // Needed to notify parent that the view is going to toggle, and what the new state will be
-    if(this.props.onToggle)
+    if(this.props.willToggle)
       this.props.willToggle(!this.state.isDetailed);
 
     if(this.state.isDetailed){
