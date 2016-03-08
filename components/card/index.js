@@ -27,7 +27,7 @@ export default class Card extends Component {
     let transforms = [{scale: this.state.enterAnimation}, ];
 
     return (
-      <Animated.View style={[styles.card, this.props.cardStyle, {transform: transforms, opacity: this.state.enterAnimation}]}>
+      <Animated.View style={[styles.card, this.props.style, {transform: transforms, opacity: this.state.enterAnimation}]}>
         {this.props.children}
       </Animated.View>
     );
