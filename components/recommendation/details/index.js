@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component, View, Text} from 'react-native';
+import React, {Component, View, Text, Image} from 'react-native';
 import styles from './styles';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -40,6 +40,10 @@ export default class Details extends Component {
           lat={place.geo.lat}
           lng={place.geo.lng} />,
 
+
+        <Image
+          style={[styles.row, {height: 100, marginBottom: 8}]}
+          source={{uri: place.photo.uri}} />,
 
         <Text style={[styles.row, {fontWeight: 'bold'}]}>{place.name}</Text>,
 
