@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component, View, Text, Image, Animated, Easing} from 'react-native';
+import React, {Component, View, Text, Image, Animated, Easing, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -20,6 +20,19 @@ const TO_SHOWN = {
 }
 
 export default class Recommendation extends Component {
+
+  static contextTypes = {
+    user: React.PropTypes.object,
+    database: React.PropTypes.object,
+  };
+
+  static propTypes = {
+    recommendation: React.PropTypes.object,
+    willFocus: React.PropTypes.func,
+    onLayout: React.PropTypes.func,
+    onToggleRecommendation: React.PropTypes.func,
+  };
+
   state = {
     isDetailed: false,
     recAnimation: new Animated.Value(1),
@@ -29,7 +42,7 @@ export default class Recommendation extends Component {
     detailAnimation: new Animated.Value(0),
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({
       imageAnimation: this.state.recAnimation.interpolate({
         inputRange: [0, 1],
@@ -37,13 +50,29 @@ export default class Recommendation extends Component {
       }),
       fontSizeAnimation: this.state.recAnimation.interpolate({
         inputRange: [0, 1],
-        outputRange: [20, 36],
-      })
+        outputRange: [20, 32],
+      }),
     });
   }
 
+  toggleRecommendation() {
+
+  let isUserSaved = this.context.database
+      .isUserSavedRecommendation(this.context.user.id, this.props.recommendation.id);
+
+    if (isUserSaved)
+      this.context.database.removeSavedUserRecommendation(this.context.user.id, this.props.recommendation.id);
+    else 
+      this.context.database.saveUserRecommendation(this.context.user.id, this.props.recommendation.id);
+   
+    this.props.onToggleRecommendation(this.props.recommendation.id);
+  }
 
   toggleLayout() {
+    // Needed to notify parent that the view is going to toggle, and what the new state will be
+    if(this.props.willToggle)
+      this.props.willToggle(!this.state.isDetailed);
+
     if(this.state.isDetailed){
       this.showRecommendation();
     } else {
@@ -60,10 +89,10 @@ export default class Recommendation extends Component {
   }
 
   composeAnimations(toHide, toShow, isDetailed) {
+
     return Animated.timing(toHide, TO_HIDDEN)
       .start(function(){
         this.setState({isDetailed: isDetailed});
-
         Animated.timing(toShow, TO_SHOWN).start();
       }.bind(this));
   }
@@ -108,23 +137,39 @@ export default class Recommendation extends Component {
       ? this.createDetailView(event, place)
       : this.createRecView(event, place);
 
+    let isUserSaved = this.context.database
+      .isUserSavedRecommendation(this.context.user.id, this.props.recommendation.id);
+    
     return (
-      <View style={styles.container}>
+      <View 
+          /* The check for isDetailed is where the magic happens */
+          style={[styles.container, !this.state.isDetailed ? styles.flexFull : styles.flexNone]} 
+          /* Must pass the prop function down to notify parent of new sizes on toggle */
+          onLayout={this.props.onLayout}>
 
         <Animated.Image
-          style={this.getImageStyles()}
+          style={[this.getImageStyles(), styles.backgroundImage]}
           source={{uri: place.photo.uri}}>
 
-          <View style={styles.overlay} />
-
-          <Icon name="info-outline" size={30} style={styles.infoButton} onPress={this.toggleLayout.bind(this)} />
-
-          <Animated.Text numberOfLines={2} style={[styles.eventName, this.getTitleStyles()]}>
+          <Animated.Text numberOfLines={1} style={[styles.title, this.getTitleStyles()]}>
             {event.name}
           </Animated.Text>
-          <Animated.Text numberOfLines={2} style={[styles.location, this.getTitleStyles()]}>
+          <Animated.Text numberOfLines={1} style={[styles.title, this.getTitleStyles()]}>
             @ {place.name}
           </Animated.Text>
+
+          <View style={styles.overlay}>
+            <View style={{flex: 0.5}}>
+              <TouchableOpacity onPress={this.toggleRecommendation.bind(this)} style={styles.heartButton}>
+                <Icon name={isUserSaved ? 'favorite' : 'favorite-border'} size={30} style={[styles.topButtonIcon]}>+</Icon>
+              </TouchableOpacity>
+            </View>
+            <View style={{flex: 0.5}}>
+              <TouchableOpacity onPress={this.toggleLayout.bind(this)}>
+                <Icon name="info-outline" size={30} style={[styles.infoButton, styles.topButtonIcon]}/>
+              </TouchableOpacity>
+            </View>        
+          </View>
         </Animated.Image>
 
         {partial}

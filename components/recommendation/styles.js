@@ -2,7 +2,7 @@
 
 import React, {StyleSheet} from 'react-native';
 
-let OVERLAY_COLOR = 'rgba(39, 5, 23,.45)'
+let OVERLAY_COLOR = 'rgba(0, 0, 0, 0.75)'
 
 export default StyleSheet.create({
 
@@ -11,41 +11,46 @@ export default StyleSheet.create({
     flexDirection: 'column',
   },
 
+  flexFull: {
+    flex: 1,
+  }, 
+
+  flexNone: {
+    flex: 0,
+  },  
+
   backgroundImage: {
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
   },
 
-  eventName: {
+  title: {
     backgroundColor: OVERLAY_COLOR,
-    fontSize: 32,
-    color: '#fff',
+    fontSize: 10,
+    color: '#ddd',
     fontWeight: '400',
-
-    paddingHorizontal: 16,
-  },
-
-  location: {
-    backgroundColor: OVERLAY_COLOR,
-    fontWeight: '500',
-    fontSize: 32,
-    color: '#fff',
-
-    paddingHorizontal: 16,
-    paddingBottom: 16,
+    marginHorizontal: 8,
+    marginVertical: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    alignSelf: 'flex-start',
   },
 
   overlay: {
-    flex: 1,
-    backgroundColor: OVERLAY_COLOR
+    flexDirection: 'row', 
+    backgroundColor: 'rgba(0, 0, 0, .15)'
+    // backgroundColor: OVERLAY_COLOR,
   },
 
-  infoButton: {
-    backgroundColor: 'rgba(0,0,0,0)',
+  topButtonIcon: {
     color: '#fff',
-    position: 'absolute',
-    top: 16,
-    right: 8,
     opacity: .85,
+    padding: 5,
+  },
+  heartButton: {
+    alignSelf: 'flex-start', 
+  },
+  infoButton: {
+    alignSelf: 'flex-end', 
   },
 });

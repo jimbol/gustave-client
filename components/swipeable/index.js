@@ -2,6 +2,7 @@
 
 import React, {
   Component,
+  StyleSheet,
   View,
   Text,
   Animated,
@@ -10,7 +11,6 @@ import React, {
   Dimensions,
 } from 'react-native';
 
-import styles from './styles';
 import Edge from './edge';
 
 
@@ -38,6 +38,8 @@ export default class Swipeable extends Component {
     pinOffsetLeft: React.PropTypes.number,
     pinOffsetRight: React.PropTypes.number,
     snapBack: React.PropTypes.bool,
+    style: View.propTypes.style,
+    onLayout: React.PropTypes.func,
   };
 
   static defaultProps = {
@@ -51,6 +53,19 @@ export default class Swipeable extends Component {
     edgeHeight: 0,
     isSwiping: false,
   };
+
+  attributes = {
+    height: 0,
+    width: 0,
+  };
+
+  handleLayout(event) {
+    let layout = event.nativeEvent.layout;
+    this.attributes.width = layout.width;
+    this.attributes.height = layout.height;
+    if (this.props.onLayout) 
+      this.props.onLayout(event);
+  }
 
   componentWillUnmount() {
     this.state.offsetX.removeListener(this._offsetXListener);
@@ -169,7 +184,7 @@ export default class Swipeable extends Component {
     }
 
     if (this.getIsPinable()) {
-      this.handleStickiness();
+      this.handleStickiness(event, gestureState);
 
     } else if (this.props.snapBack) {
       this.animatedResetToValue();
@@ -189,28 +204,24 @@ export default class Swipeable extends Component {
     return Boolean(this.props.pinThresholdLeft) || Boolean(this.props.pinThresholdRight);
   }
 
-  handleStickiness() {
+  handleStickiness(event, gestureState) {
     if (this._isStuck) {
       this._isStuck = false;
       this.animatedResetToValue();
-
     } else{
-      this.refs['swiped'].refs['node'].measure((ox, oy, width, height, px, py) => {
-        let pinThreshold = ox > 0 ? this.props.pinThresholdRight : this.props.pinThresholdLeft;
+      let pinThreshold = gestureState.dx > 0 ? this.props.pinThresholdRight : this.props.pinThresholdLeft;
+      let shouldStick = Math.abs(gestureState.dx) > this.attributes.width * pinThreshold;
 
-        let shouldStick = Math.abs(ox) > width * pinThreshold;
+      if (!shouldStick)
+        return this.animatedResetToValue();
 
-        if (!shouldStick)
-          return this.animatedResetToValue();
+      this._isStuck = true;
 
-        this._isStuck = true;
+      let rightOffset = this.props.pinOffsetRight;
+      let leftOffset = -this.props.pinOffsetLeft;
+      let offset = gestureState.dx > 0 ? rightOffset : leftOffset;
 
-        let rightOffset = this.props.pinOffsetRight;
-        let leftOffset = -this.props.pinOffsetLeft;
-        let offset = ox > 0 ? rightOffset : leftOffset;
-
-        this.animatedResetToValue(offset);
-      });
+      this.animatedResetToValue(offset);
     }
   }
 
@@ -232,20 +243,17 @@ export default class Swipeable extends Component {
     }
   }
 
-  createAnimationStyles() {
-    return {
-      flex: 1,
-      opacity: (this.state.isSwiping) ? IS_SWIPING_OPACITY : 1,
+  render() {
+
+    let swipeAnimations = {
+      opacity: this.state.isSwiping && IS_SWIPING_OPACITY || 1,
       transform: [
         {translateX: this.state.offsetX},
       ],
     };
-  }
-
-  render() {
 
     return (
-      <View onLayout={this.setEdgeHeight.bind(this)} style={styles.container}>
+      <View onLayout={this.setEdgeHeight.bind(this)} style={this.props.style}>
 
         {this.props.rightSwipeEdge &&
           <Edge
@@ -265,13 +273,22 @@ export default class Swipeable extends Component {
           </Edge>
         }
 
-        <Animated.View ref="swiped" style={this.createAnimationStyles()} {...this.panResponder.panHandlers}>
+        <Animated.View 
+            onLayout={this.handleLayout.bind(this)} 
+            style={[swipeAnimations, styles.innerContent]} 
+            {...this.panResponder.panHandlers} >
+
           {this.props.children}
+
         </Animated.View>
 
       </View>
     );
   }
-
-
 }
+
+var styles = StyleSheet.create({
+  innerContent: {
+    flex: 1,
+  },
+});

@@ -1,24 +1,34 @@
 'use strict';
 
-import React, {Component, Navigator, StatusBar, View, Text} from 'react-native';
+import React, {Component, StyleSheet, Navigator, StatusBar, View, Text} from 'react-native';
 import _ from 'lodash';
 
+import theme, {statusBar} from '../../themes/default';
 import * as database from '../../data';
-import styles from './styles';
-
-// import {NavigationBarRouteMapper, NavigationBarStyles} from '../navigation-bar';
 
 import NavigationBar from '../navigation-bar';
 import RecommendationsScene from '../recommendations-scene';
 import RecommendationScene from '../recommendation-scene';
 import SavedRecommendationsScene from '../saved-recommendations-scene';
 
-
 export default class Gustave extends Component {
+
+  // This makes props available for child components without passing it all the way down the tree
+  // See: https://facebook.github.io/react/docs/context.html
+  static childContextTypes = {
+    theme: React.PropTypes.object,
+    user: React.PropTypes.object,
+    database: React.PropTypes.object,
+  };
+  getChildContext() {
+    return {theme: this.state.theme, user: this.state.user, database: this.state.database};
+  }
 
   state = {
     isLoadingMore: false,
     user: database.getUser(1),
+    theme,
+    database,
   };
 
   initialRoute = {
@@ -54,6 +64,10 @@ export default class Gustave extends Component {
     this.checkNeedMoreRecs(); // Temp
   }
 
+  onToggleRecommendation() {
+    this.forceUpdate();
+  }
+
   onConfigureScene(route, routeStack){
     return {
       ...Navigator.SceneConfigs.FloatFromBottomAndroid,
@@ -62,14 +76,45 @@ export default class Gustave extends Component {
     };
   }
 
+  renderScene(route, navigator) {
+    switch(route.id) {
+      case 'recommendations':
+        return (
+          <RecommendationsScene
+            isLoadingMore={this.state.isLoadingMore}
+            nextRecommendation={database.getUserRecommendations(this.state.user.id)[0]}
+            dismissRecommendation={this.onDismissRecommendation.bind(this)}
+            saveRecommendation={this.onSaveRecommendation.bind(this)}
+            onToggleRecommendation={this.onToggleRecommendation.bind(this)}/>
+        );
+
+      case 'recommendation':
+        return (
+          <RecommendationScene
+            recommendation={database.getUserRecommendation(route.recommendationId)}
+            goBack={navigator.pop}
+            onToggleRecommendation={this.onToggleRecommendation.bind(this)}/>
+        );
+
+      case 'saved':
+        return (
+          <SavedRecommendationsScene
+            savedRecommendations={database.getUserSavedRecommendations(this.state.user.id)}
+            viewRecommendation={this.onViewRecommendation.bind(this, navigator)}
+            removeSavedRecommendation={this.onDismissRecommendation.bind(this)}/>
+        );
+    }
+  }
+
   render() {
     let heartNumber = database.getUserSavedRecommendations(this.state.user.id).length;
 
     return (
-      <View style={styles.app}>
-        <View style={styles.statusBar} />
-        <StatusBar barStyle="light-content" />
+      <View style={[styles.app, this.state.theme.lightBackground]}>
+        <View style={[styles.statusBar, this.state.theme.darkBackground]} />
+        <StatusBar barStyle={statusBar} />
         <Navigator
+          sceneStyle={styles.scene}
           initialRoute={this.initialRoute}
           renderScene={this.renderScene.bind(this)}
           configureScene={this.onConfigureScene.bind(this)}
@@ -79,35 +124,16 @@ export default class Gustave extends Component {
       </View>
     );
   }
-
-  renderScene(route, navigator) {
-    switch(route.id) {
-      case 'recommendations':
-        return (
-          <RecommendationsScene
-            style={styles.scene}
-            isLoadingMore={this.state.isLoadingMore}
-            nextRecommendation={database.getUserRecommendations(this.state.user.id)[0]}
-            dismissRecommendation={this.onDismissRecommendation.bind(this)}
-            saveRecommendation={this.onSaveRecommendation.bind(this)}/>
-        );
-
-      case 'recommendation':
-        return (
-          <RecommendationScene
-            style={styles.scene}
-            recommendation={database.getUserRecommendation(route.recommendationId)}
-            goBack={navigator.pop}/>
-        );
-
-      case 'saved':
-        return (
-          <SavedRecommendationsScene
-            style={styles.scene}
-            savedRecommendations={database.getUserSavedRecommendations(this.state.user.id)}
-            viewRecommendation={this.onViewRecommendation.bind(this, navigator)}
-            removeSavedRecommendation={this.onDismissRecommendation.bind(this)}/>
-        );
-    }
-  }
 }
+
+var styles = StyleSheet.create({
+  app: {
+    flex: 1,
+  },
+  scene: {
+    marginBottom: 50,
+  },
+  statusBar: {
+    height: 20,
+  }
+});

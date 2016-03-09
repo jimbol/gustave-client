@@ -1,8 +1,7 @@
 'use strict';
 
-import React, {Component, Dimensions, View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
+import React, {Component, StyleSheet, Dimensions, View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
 import moment from 'moment';
-import styles from './styles';
 
 import Swipeable from '../swipeable';
 import Card from '../card';
@@ -12,6 +11,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 const CARD_CLICK_ACTIVE_OPACITY = 0.7
 
 export default class SavedRecommendationsScene extends Component {
+
+  static contextTypes = {
+    theme: React.PropTypes.object,
+  };
 
   static propTypes = {
     savedRecommendations: React.PropTypes.arrayOf(React.PropTypes.object),
@@ -34,7 +37,7 @@ export default class SavedRecommendationsScene extends Component {
 
     let leftSwipeEdge =
       <TouchableOpacity onPress={this.removeRecommendation.bind(this, recommendation)} style={styles.edgeContainer}>
-        <Icon name="not-interested" style={styles.edgeLabel} />
+        <Icon name="not-interested" style={[styles.edgeLabel, this.context.theme.negativeAction]} />
       </TouchableOpacity>;
 
     let swipeableProps = {
@@ -46,9 +49,9 @@ export default class SavedRecommendationsScene extends Component {
 
     return (
       <Swipeable {...swipeableProps} key={recommendation.id}>
-        <Card cardStyle={styles.card}>
-          <TouchableOpacity
-            activeOpacity={CARD_CLICK_ACTIVE_OPACITY}
+        <Card style={styles.card}>
+          <TouchableOpacity 
+            activeOpacity={CARD_CLICK_ACTIVE_OPACITY} 
             onPress={this.props.viewRecommendation.bind(null, recommendation.id)}>
             <View style={styles.recommendationContainer}>
               <Image
@@ -78,12 +81,12 @@ export default class SavedRecommendationsScene extends Component {
     return (
       !hasSavedRecs ?
       /* Empty view */
-      <View style={[this.props.style, styles.scene, styles.empty]}>
-        <Text style={styles.emptyText}>{'No <3\'d recommendations'}.</Text>
+      <View style={[styles.flexFull, styles.empty]}>
+        <Text style={styles.emptyText}>{'No <3\'d recommendations'}.</Text> 
       </View> :
 
       /* Default view */
-      <ScrollView style={[this.props.style, styles.scene]}>
+      <ScrollView style={[styles.flexFull, this.props.style]}>
         {this.props.savedRecommendations
           .sort((a, b) => moment(b.event.time.start).isBefore(a.event.time.start))
           .map(savedRec => this._renderSavedRec(savedRec))}
@@ -91,3 +94,81 @@ export default class SavedRecommendationsScene extends Component {
     );
   }
 }
+
+var styles = StyleSheet.create({
+  flexFull: {
+    flex: 1,
+  },
+
+  edgeContainer: {
+    height: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 150,
+  },
+
+  edgeLabel: {
+    fontSize: 60,
+    fontWeight: '900',
+    padding: 10,
+    textAlign: 'center',
+  },
+
+  empty: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  emptyText: {
+    color: '#fff',
+    textAlign: 'center',
+  },
+
+  card: {
+    marginBottom: 0,
+  },
+
+  recommendationContainer: {
+    flex: 0,
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+  },
+
+  recommendationTextContainer: {
+    flex: 0.7,
+    height: 100,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0,0,0,0.25)',
+  },
+
+  recommendationText: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    margin: 8
+  },
+
+  recommendationTitle: {
+    fontSize: 12,
+    color: '#000',
+    paddingBottom: 16, 
+  },
+
+  recommendationDescription: {
+    fontSize: 10,
+    color: '#111',
+    paddingBottom: 8,
+  },
+
+  info: {
+    fontSize: 10,
+    color: '#ccc',
+    paddingBottom: 4
+  },
+
+  recommendationImage: {
+    width: 100,
+    height: 100,
+  }
+
+});

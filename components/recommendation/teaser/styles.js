@@ -9,6 +9,7 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     margin: 16,
+    marginTop: 8,
   },
 
   divider: {
@@ -20,5 +21,10 @@ export default StyleSheet.create({
     fontSize: 14,
     color: '#666',
     paddingVertical: 16,
+  },
+
+  serviceIcon: {
+    marginHorizontal: 5, 
+    opacity: 0.75,
   },
 });

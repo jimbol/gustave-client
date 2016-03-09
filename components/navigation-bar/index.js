@@ -4,6 +4,7 @@ var _ = require('lodash');
 
 import React, {
   Component,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -13,12 +14,10 @@ import React, {
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import styles from './styles';
-
 export default class NavigationBar extends Component {
 
-  attributes = {
-    savedScale: new Animated.Value(1)
+  static contextTypes = {
+    theme: React.PropTypes.object,
   };
 
   static propTypes = {
@@ -28,6 +27,10 @@ export default class NavigationBar extends Component {
 
   state = {
     clicked: null,
+  };
+
+  attributes = {
+    savedScale: new Animated.Value(1)
   };
 
   componentWillMount() {
@@ -69,19 +72,16 @@ export default class NavigationBar extends Component {
   }
 
   onHomeClick() {
-    this.goToOrPushRoute('recommendations');
+    this.resetToRoute('recommendations');
   }
 
   onHeartClick() {
-    this.goToOrPushRoute('saved');
+    this.resetToRoute('saved');
   }
 
-  onSettingsClick() {
-    this.goToOrPushRoute('settings');
-  }
-
-  goToOrPushRoute(id) {
+  resetToRoute(id) {
     this.setState({clicked: id});
+    // this.props.navigator.resetTo({id});
 
     let route = _.find(this.props.navigator.getCurrentRoutes(), {id});
 
@@ -107,12 +107,19 @@ export default class NavigationBar extends Component {
     heartsStyles.transform = [{scale: this.attributes.savedScale}];
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, this.context.theme.darkBackground]}>
         <View style={[styles.buttonContainer, homeStyles]}>
           <TouchableOpacity
             onPress={this.onHomeClick.bind(this)}
             style={[styles.button, styles.backButton]}>
-            <Icon name="home" style={styles.icon} />
+            <Icon name="home" style={[styles.icon, this.context.theme.navBarIcon]} />
+          </TouchableOpacity>
+        </View>
+
+        <View style={[styles.buttonContainer, menuStyles]}>
+          <TouchableOpacity
+            style={[styles.button, styles.menuButton]}>
+            <Icon name="search" style={[styles.icon, this.context.theme.navBarIcon]} />
           </TouchableOpacity>
         </View>
 
@@ -120,18 +127,55 @@ export default class NavigationBar extends Component {
           <TouchableOpacity
             onPress={this.onHeartClick.bind(this)}
             style={[styles.button, styles.heartsButton]}>
-            <Icon name="favorite" style={styles.icon} />
+            <Icon name="favorite" style={[styles.icon, this.context.theme.navBarIcon]} />
           </TouchableOpacity>
         </Animated.View>
 
         <View style={[styles.buttonContainer, menuStyles]}>
           <TouchableOpacity
-            onPress={this.onSettingsClick.bind(this)}
             style={[styles.button, styles.menuButton]}>
-            <Icon name="menu" style={styles.icon} />
+            <Icon name="menu" style={[styles.icon, this.context.theme.navBarIcon]} />
           </TouchableOpacity>
         </View>
       </View>
     );
   }
 }
+
+
+var styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    height: 50,
+    right: 0, bottom: 0, left: 0,
+    // paddingHorizontal: 20,
+    flexDirection: 'row',
+  },
+
+  buttonContainer: {
+    flex: 1,
+    opacity: 0.6,
+  },
+
+  button: {
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    alignSelf: 'center',
+  },
+
+  backButton: {
+    // alignSelf: 'flex-start',
+  },
+
+  heartsButton: {
+  },
+
+  menuButton: {
+    // alignSelf: 'flex-end',
+  },
+
+  icon: {
+    fontSize: 30,
+  },
+
+});

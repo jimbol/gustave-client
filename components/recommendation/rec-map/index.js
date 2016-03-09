@@ -20,55 +20,87 @@ const MAP_CONFIG = {
 };
 
 export default class RecMap extends Component {
-  watchID = null;
-  state = { position: null, };
+
+  static propTypes = {
+    lat: React.PropTypes.number,
+    lng: React.PropTypes.number,
+  };
+
+  static defaultProps = {
+    lat: 0,
+    lng: 0,
+  };
+
+  state = { 
+    position: null, 
+  };
+
+  attributes = {
+    watchID: null,
+    mounted: false,
+    cached: null,
+  };
 
   // Lifecycle
-  componentDidMount() {
-    InteractionManager.runAfterInteractions(this.getCurrentPosition.bind(this));
+  componentWillMount() {
+    this.attributes.mounted = true;
+    InteractionManager.runAfterInteractions(this.getInitialPosition.bind(this));
   }
 
   componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchID);
+    this.attributes.mounted = false;
+    navigator.geolocation.clearWatch(this.attributes.watchID);
   }
 
-  getCurrentPosition(){
-    let onGetPosition = this.onGetPosition.bind(this);
+  getInitialPosition() {
+    if (!this.attributes.mounted) return;
 
+    let onGetPosition = this.onGetPosition.bind(this);
     navigator.geolocation
       .getCurrentPosition(onGetPosition, this.onGeoError, GEO_OPTIONS);
 
-    this.watchID = navigator.geolocation.watchPosition(onGetPosition);
+    this.attributes.watchID = navigator.geolocation.watchPosition(onGetPosition);
   }
 
   onGeoError(){}
 
-  onGetPosition(position){
-    this.setState({
-      position: {
+  onGetPosition(position) {
+    if (!this.attributes.mounted) return;
+
+    // Intentional rerender prevention, we'll forceUpdate() after interactions
+    this.state.position = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
-      }
+      };
+
+    this.attributes.cached = this.renderMapView();
+    
+    // This prevents interference with scrolling the detail view
+    InteractionManager.runAfterInteractions(() => {
+      if (this.attributes.mounted)
+       this.forceUpdate();
     });
   }
 
   // Rendering
-  renderMapView(){
+  renderMapView() {
     let region = this.getMapRegion(this.state.position);
     let annotations = this.getMapAnnotations();
 
-    return <MapView
-      style={styles.map}
-      region={region}
-      annotations={annotations}
-      {...MAP_CONFIG} />
+    return (
+      <MapView
+          style={styles.map}
+          region={region}
+          annotations={annotations}
+          {...MAP_CONFIG} />
+    );
   }
 
   getMapAnnotations(){
     return [{
       latitude: this.props.lat,
       longitude: this.props.lng,
-    }]
+    }];
   }
 
   getMapRegion(position){
@@ -88,7 +120,7 @@ export default class RecMap extends Component {
       longitude,
       latitudeDelta,
       longitudeDelta,
-    }
+    };
   }
 
   getDefaultRegion(){
@@ -97,32 +129,34 @@ export default class RecMap extends Component {
       longitude: this.props.lng,
       latitudeDelta: DEFAULT_DELTA,
       longitudeDelta: DEFAULT_DELTA,
-    }
+    };
   }
 
-  renderPlaceholder(){
+  renderPlaceholder() {
     return (
       <View style={styles.placeholderContainer}>
         <Image
           style={styles.placeholderImage}
-          source={require('../../../assets/defaultMapView.png')} />
+          source={require('../../../assets/defaultMapView.jpg')} />
       </View>
     );
   }
 
   render() {
-    let partial = this.state.position && this.renderMapView() || this.renderPlaceholder()
+    let partial = this.attributes.cached || this.renderPlaceholder();
 
-    return <TouchableOpacity
-      onPress={this.onGetDirections.bind(this)}
-      activeOpacity={0.6}>
+    return (
+      <TouchableOpacity
+          onPress={this.onGetDirections.bind(this)}
+          activeOpacity={0.6}>
 
-      <View>
-        {partial}
-        <Icon name={'directions'} style={styles.directionIcon} size={30} />
-      </View>
+        <View>
+          {partial}
+          <Icon name={'directions'} style={[styles.directionIcon, !this.state.position && styles.altDirectionIcon]} size={30} />
+        </View>
 
-    </TouchableOpacity>
+      </TouchableOpacity>
+    );
   }
 
   onGetDirections(){
