@@ -112,14 +112,14 @@ export default class NavigationBar extends Component {
           <TouchableOpacity
             onPress={this.onHomeClick.bind(this)}
             style={[styles.button, styles.backButton]}>
-            <Icon name="home" style={styles.icon} />
+            <Icon name="home" style={[styles.icon, this.context.theme.navBarIcon]} />
           </TouchableOpacity>
         </View>
 
         <View style={[styles.buttonContainer, menuStyles]}>
           <TouchableOpacity
             style={[styles.button, styles.menuButton]}>
-            <Icon name="search" style={styles.icon} />
+            <Icon name="search" style={[styles.icon, this.context.theme.navBarIcon]} />
           </TouchableOpacity>
         </View>
 
@@ -127,14 +127,14 @@ export default class NavigationBar extends Component {
           <TouchableOpacity
             onPress={this.onHeartClick.bind(this)}
             style={[styles.button, styles.heartsButton]}>
-            <Icon name="favorite" style={styles.icon} />
+            <Icon name="favorite" style={[styles.icon, this.context.theme.navBarIcon]} />
           </TouchableOpacity>
         </Animated.View>
 
         <View style={[styles.buttonContainer, menuStyles]}>
           <TouchableOpacity
             style={[styles.button, styles.menuButton]}>
-            <Icon name="menu" style={styles.icon} />
+            <Icon name="menu" style={[styles.icon, this.context.theme.navBarIcon]} />
           </TouchableOpacity>
         </View>
       </View>
@@ -175,7 +175,6 @@ var styles = StyleSheet.create({
   },
 
   icon: {
-    color: '#fff',
     fontSize: 30,
   },
 

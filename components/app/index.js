@@ -3,7 +3,7 @@
 import React, {Component, StyleSheet, Navigator, StatusBar, View, Text} from 'react-native';
 import _ from 'lodash';
 
-import theme from '../../themes/default';
+import theme, {statusBar} from '../../themes/default';
 import * as database from '../../data';
 
 import NavigationBar from '../navigation-bar';
@@ -112,7 +112,7 @@ export default class Gustave extends Component {
     return (
       <View style={[styles.app, this.state.theme.lightBackground]}>
         <View style={[styles.statusBar, this.state.theme.darkBackground]} />
-        <StatusBar barStyle="light-content" />
+        <StatusBar barStyle={statusBar} />
         <Navigator
           sceneStyle={styles.scene}
           initialRoute={this.initialRoute}

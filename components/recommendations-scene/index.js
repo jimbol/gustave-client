@@ -130,7 +130,7 @@ export default class RecommendationsScene extends Component {
       <View style={[styles.flexFull, this.props.style]}>
         <TouchableWithoutFeedback onPress={this.scrollToTop.bind(this)} >
           <View style={[styles.heading, this.context.theme.darkBackground]}>
-            <Text style={styles.headingText}>Happening Nearby</Text>
+            <Text style={[styles.headingText, this.context.theme.headerText]}>Happening Nearby</Text>
           </View>
         </TouchableWithoutFeedback>
         <Swipeable 
@@ -180,7 +180,6 @@ var styles = StyleSheet.create({
   },
 
   headingText: {
-    color: '#fff',
     textAlign: 'center',
   },
 

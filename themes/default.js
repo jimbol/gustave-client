@@ -13,4 +13,13 @@ export default StyleSheet.create({
   negativeAction: {
     color: '#000',
   },
+  navBarIcon: {
+    color: '#fff',
+  },
+  headerText: {
+    color: '#fff',
+  },
 });
+
+export var statusBar = 'light-content';
+
