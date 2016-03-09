@@ -68,6 +68,19 @@ export default class Gustave extends Component {
     this.forceUpdate();
   }
 
+  onGoBack() {
+    let routeStack = this.refs.navigator.getCurrentRoutes();
+    if (routeStack.length > 1) {
+      let index = routeStack.length - 2;
+      let route = routeStack[index];
+
+      if (route.id === 'recommendation')
+        this.refs.navigator.popToRoute(route);
+      else
+        this.refs.navigator.resetTo({id: route.id});
+    }
+  }
+
   onConfigureScene(route, routeStack){
     return {
       ...Navigator.SceneConfigs.FloatFromBottomAndroid,
@@ -92,7 +105,7 @@ export default class Gustave extends Component {
         return (
           <RecommendationScene
             recommendation={database.getUserRecommendation(route.recommendationId)}
-            goBack={navigator.pop}
+            goBack={this.onGoBack.bind(this)}
             onToggleRecommendation={this.onToggleRecommendation.bind(this)}/>
         );
 
@@ -114,6 +127,7 @@ export default class Gustave extends Component {
         <View style={[styles.statusBar, this.state.theme.darkBackground]} />
         <StatusBar barStyle={statusBar} />
         <Navigator
+          ref="navigator"
           sceneStyle={styles.scene}
           initialRoute={this.initialRoute}
           renderScene={this.renderScene.bind(this)}
