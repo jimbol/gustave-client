@@ -130,7 +130,9 @@ export default class RecommendationsScene extends Component {
       <View style={[styles.flexFull, this.props.style]}>
         <TouchableWithoutFeedback onPress={this.scrollToTop.bind(this)} >
           <View style={[this.context.theme.headerView]}>
-            <Text style={[styles.headingText, this.context.theme.headerText]}>Happening Nearby</Text>
+            <Text style={[styles.headingText, this.context.theme.headerText]}>
+              {this.state.isChildDetailed ? 'Gustave: "Here are the details..."' : 'Gustave: "I think you\'ll like..."'}
+            </Text>
           </View>
         </TouchableWithoutFeedback>
         <Swipeable 
