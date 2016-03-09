@@ -117,7 +117,16 @@ export default class Recommendation extends Component {
   getTitleStyles(){
     return {
       fontSize: this.state.fontSizeAnimation,
-      padding: this.state.fontPaddingAnimation,
+      paddingHorizontal: this.state.fontPaddingAnimation,
+      paddingTop: this.state.fontPaddingAnimation,
+    }
+  }
+
+  getSubTitleStyles(){
+    return {
+      fontSize: this.state.fontSizeAnimation,
+      paddingHorizontal: this.state.fontPaddingAnimation,
+      paddingBottom: this.state.fontPaddingAnimation,
     }
   }
 
@@ -166,21 +175,22 @@ export default class Recommendation extends Component {
           style={[this.getImageStyles(), styles.backgroundImage]}
           source={{uri: place.photo.uri}}>
 
+          <View style={styles.overlay}>
+            <TouchableOpacity onPress={this.toggleRecommendation.bind(this)} style={styles.topButton}>
+              <Icon name={isUserSaved ? 'favorite' : 'favorite-border'} size={30} style={styles.topButtonIcon}></Icon>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.toggleLayout.bind(this)} style={styles.topButton}>
+              <Icon name="info-outline" size={30} style={styles.topButtonIcon}/>
+            </TouchableOpacity>
+          </View>
+
           <Animated.Text numberOfLines={1} style={[styles.title, this.getTitleStyles()]}>
             {event.name}
           </Animated.Text>
-          <Animated.Text numberOfLines={1} style={[styles.title, this.getTitleStyles()]}>
+          <Animated.Text numberOfLines={1} style={[styles.title, styles.subtitle, this.getSubTitleStyles()]}>
             @ {place.name}
           </Animated.Text>
 
-          <View style={styles.overlay}>
-            <TouchableOpacity onPress={this.toggleLayout.bind(this)}>
-              <Icon name="info-outline" size={30} style={styles.topButtonIcon}/>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this.toggleRecommendation.bind(this)}>
-              <Icon name={isUserSaved ? 'favorite' : 'favorite-border'} size={30} style={[styles.topButtonIcon]}></Icon>
-            </TouchableOpacity>
-          </View>
         </Animated.Image>
 
         {partial}
