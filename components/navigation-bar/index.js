@@ -87,7 +87,7 @@ export default class NavigationBar extends Component {
       homeRoute = _.find(this.props.navigator.getCurrentRoutes(), {id});
     }
 
-    if(homeRoute){
+    if (homeRoute) {
       this.props.navigator.popToRoute(homeRoute);
     } else {
       this.props.navigator.resetTo({id});
