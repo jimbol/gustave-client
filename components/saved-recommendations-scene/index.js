@@ -86,7 +86,7 @@ export default class SavedRecommendationsScene extends Component {
     );
   }
 
-  renderRow(rowData, sectionId, rowId, highlightRow) {
+  renderRow(rowData, sectionID, rowID, highlightRow) {
  
     let recommendation = rowData;
 
@@ -103,12 +103,10 @@ export default class SavedRecommendationsScene extends Component {
     let swipeableProps = {
       onSwipeLeft: this.removeRecommendation.bind(this, recommendation),
       leftSwipeEdge,
-      // pinThresholdLeft: 0.25,
-      // pinOffsetLeft: 90,
     };
 
     return (
-      <Swipeable {...swipeableProps} key={recommendation.id}>
+      <Swipeable {...swipeableProps}>
         <Card>
           <TouchableOpacity 
             activeOpacity={CARD_CLICK_ACTIVE_OPACITY} 
@@ -192,7 +190,10 @@ export default class SavedRecommendationsScene extends Component {
       !hasSavedRecs ?
       /* Empty view */
       <View style={[styles.flexFull, styles.empty]}>
-        <Text style={styles.emptyText}>No recent <Icon name={'favorite'}/> activity {'\n'} Try swiping right on a recommendation</Text> 
+        <Text style={styles.emptyText}>
+          No recent <Icon name={'favorite'}/> activity {'\n'}
+          Try swiping right on a recommendation
+        </Text> 
         <TouchableOpacity style={styles.menuLink}>
           <Text style={styles.emptyText}>View full history</Text>
         </TouchableOpacity>
