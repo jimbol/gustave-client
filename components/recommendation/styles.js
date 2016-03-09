@@ -13,11 +13,11 @@ export default StyleSheet.create({
 
   flexFull: {
     flex: 1,
-  }, 
+  },
 
   flexNone: {
     flex: 0,
-  },  
+  },
 
   backgroundImage: {
     flexDirection: 'column',
@@ -30,27 +30,18 @@ export default StyleSheet.create({
     color: '#ddd',
     fontWeight: '400',
     marginHorizontal: 8,
-    marginVertical: 4,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
     alignSelf: 'flex-start',
   },
 
   overlay: {
-    flexDirection: 'row', 
-    backgroundColor: 'rgba(0, 0, 0, .15)'
-    // backgroundColor: OVERLAY_COLOR,
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    right: 0,
   },
 
   topButtonIcon: {
     color: '#fff',
-    opacity: .85,
     padding: 5,
-  },
-  heartButton: {
-    alignSelf: 'flex-start', 
-  },
-  infoButton: {
-    alignSelf: 'flex-end', 
   },
 });

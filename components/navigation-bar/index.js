@@ -34,7 +34,7 @@ export default class NavigationBar extends Component {
   };
 
   componentWillMount() {
-    this.didFocusListener = this.props.navigator.navigationContext.addListener('didfocus', 
+    this.didFocusListener = this.props.navigator.navigationContext.addListener('didfocus',
       () => this.setState({clicked: null})
     );
   }
@@ -81,7 +81,6 @@ export default class NavigationBar extends Component {
 
   resetToRoute(id) {
     this.setState({clicked: id});
-    // this.props.navigator.resetTo({id});
 
     let route = _.find(this.props.navigator.getCurrentRoutes(), {id});
 
@@ -148,7 +147,6 @@ var styles = StyleSheet.create({
     position: 'absolute',
     height: 50,
     right: 0, bottom: 0, left: 0,
-    // paddingHorizontal: 20,
     flexDirection: 'row',
   },
 
@@ -161,17 +159,6 @@ var styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 12,
     alignSelf: 'center',
-  },
-
-  backButton: {
-    // alignSelf: 'flex-start',
-  },
-
-  heartsButton: {
-  },
-
-  menuButton: {
-    // alignSelf: 'flex-end',
   },
 
   icon: {

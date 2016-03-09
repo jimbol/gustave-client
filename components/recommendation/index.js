@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component, View, Text, Image, Animated, Easing, TouchableOpacity} from 'react-native';
+import React, {Component, View, Text, Image, Animated, Easing, TouchableOpacity, Dimensions} from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -36,36 +36,49 @@ export default class Recommendation extends Component {
   state = {
     isDetailed: false,
     recAnimation: new Animated.Value(1),
-    imageAnimation: .5,
-    fontSizeAnimation: .5,
+    imageAnimation: null,
+    fontSizeAnimation: null,
+    fontPaddingAnimation: null,
 
     detailAnimation: new Animated.Value(0),
   };
 
   componentDidMount() {
+    // accounts for each ui element
+    var {height} = Dimensions.get('window');
+
+    let offset = 50 + 20 + 20 + 4 + 4;
+    let cardHeight = (height - offset);
+
     this.setState({
       imageAnimation: this.state.recAnimation.interpolate({
         inputRange: [0, 1],
-        outputRange: [.25, 1],
+        outputRange: [cardHeight/5, cardHeight/2],
       }),
       fontSizeAnimation: this.state.recAnimation.interpolate({
         inputRange: [0, 1],
         outputRange: [20, 32],
       }),
+      fontPaddingAnimation: this.state.recAnimation.interpolate({
+        inputRange: [0, 1],
+        outputRange: [4, 8],
+      }),
     });
   }
 
   toggleRecommendation() {
+    let userId = this.context.user.id;
+    let recId = this.props.recommendation.id;
+    let db = this.context.database;
 
-  let isUserSaved = this.context.database
-      .isUserSavedRecommendation(this.context.user.id, this.props.recommendation.id);
+    let isUserSaved = db.isUserSavedRecommendation(userId, recId);
 
     if (isUserSaved)
-      this.context.database.removeSavedUserRecommendation(this.context.user.id, this.props.recommendation.id);
-    else 
-      this.context.database.saveUserRecommendation(this.context.user.id, this.props.recommendation.id);
-   
-    this.props.onToggleRecommendation(this.props.recommendation.id);
+      db.removeSavedUserRecommendation(userId, recId);
+    else
+      db.saveUserRecommendation(userId, recId);
+
+    this.props.onToggleRecommendation(recId);
   }
 
   toggleLayout() {
@@ -98,11 +111,14 @@ export default class Recommendation extends Component {
   }
 
   getImageStyles(){
-    return { flex: this.state.imageAnimation };
+    return { height: this.state.imageAnimation };
   }
 
   getTitleStyles(){
-    return { fontSize: this.state.fontSizeAnimation, }
+    return {
+      fontSize: this.state.fontSizeAnimation,
+      padding: this.state.fontPaddingAnimation,
+    }
   }
 
   getRecStyles(){
@@ -139,13 +155,12 @@ export default class Recommendation extends Component {
 
     let isUserSaved = this.context.database
       .isUserSavedRecommendation(this.context.user.id, this.props.recommendation.id);
-    
+
     return (
-      <View 
-          /* The check for isDetailed is where the magic happens */
-          style={[styles.container, !this.state.isDetailed ? styles.flexFull : styles.flexNone]} 
-          /* Must pass the prop function down to notify parent of new sizes on toggle */
-          onLayout={this.props.onLayout}>
+      <View
+        style={[styles.container, !this.state.isDetailed ? styles.flexFull : styles.flexNone]}
+        // Must pass the prop function down to notify parent of new sizes on toggle
+        onLayout={this.props.onLayout}>
 
         <Animated.Image
           style={[this.getImageStyles(), styles.backgroundImage]}
@@ -159,16 +174,12 @@ export default class Recommendation extends Component {
           </Animated.Text>
 
           <View style={styles.overlay}>
-            <View style={{flex: 0.5}}>
-              <TouchableOpacity onPress={this.toggleRecommendation.bind(this)} style={styles.heartButton}>
-                <Icon name={isUserSaved ? 'favorite' : 'favorite-border'} size={30} style={[styles.topButtonIcon]}>+</Icon>
-              </TouchableOpacity>
-            </View>
-            <View style={{flex: 0.5}}>
-              <TouchableOpacity onPress={this.toggleLayout.bind(this)}>
-                <Icon name="info-outline" size={30} style={[styles.infoButton, styles.topButtonIcon]}/>
-              </TouchableOpacity>
-            </View>        
+            <TouchableOpacity onPress={this.toggleLayout.bind(this)}>
+              <Icon name="info-outline" size={30} style={styles.topButtonIcon}/>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.toggleRecommendation.bind(this)}>
+              <Icon name={isUserSaved ? 'favorite' : 'favorite-border'} size={30} style={[styles.topButtonIcon]}></Icon>
+            </TouchableOpacity>
           </View>
         </Animated.Image>
 

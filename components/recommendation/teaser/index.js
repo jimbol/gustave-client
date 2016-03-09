@@ -29,15 +29,15 @@ export default class Teaser extends Component {
 
 
     let components = [
-      <Stagger 
-          style={{flex: 1, flexDirection: 'row', alignItems: 'flex-end', marginBottom: 24}} 
-          components={innerComponents} />,
       <ChipList labels={labels} />,
     ];
 
     return (
       <View style={styles.container}>
-        <Stagger components={components} />
+        <Stagger style={{marginTop: 16}} components={components} />
+        <Stagger
+            style={{flex: 1, flexDirection: 'row', alignItems: 'flex-end', bottom: 0}}
+            components={innerComponents} />
       </View>
     )
   }
