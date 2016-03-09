@@ -2,10 +2,10 @@ import React, {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   darkBackground: {
-    backgroundColor: '#2c072c',
+    backgroundColor: '#ddd',
   },
   lightBackground: {
-    backgroundColor: '#958390',
+    backgroundColor: '#999',
   },
   positiveAction: {
     color: '#000',
@@ -14,15 +14,14 @@ export default StyleSheet.create({
     color: '#000',
   },
   navBarIcon: {
-    color: '#fff',
+    color: '#111',
   },
   headerView: {
-    backgroundColor: '#694968',
+    backgroundColor: '#eee',
   },
   headerText: {
-    color: '#fff',
+    color: '#000',
   },
 });
 
-export var statusBar = 'light-content';
-
+export var statusBar = 'default';

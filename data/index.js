@@ -9,10 +9,10 @@ let event1 = {
   id: 1,
   name: 'Dead On TV',
   time: {
-    start: '2016-02-17T23:30:00Z',
-    end: '2016-02-18T04:00:00Z',
+    start: '2016-02-18T03:00:00Z',
+    end: '2016-02-18T04:30:00Z',
   },
-  description: 'Local Chicago favorite Dead on TV has stroked audiences all over the nation with their brand of explosive new-wave punk narcissism. Live music and self-referential antics start @ 9pm.',
+  description: 'Local Chicago favorite Dead on TV has stroked audiences all over the nation with their brand of explosive new-wave punk narcissism.',
   labels: [
     'live music',
     'punk rock',
@@ -51,8 +51,8 @@ let event2 = {
   id: 2,
   name: 'Cookies and Cocktails',
   time: {
-    start: '2016-02-17T23:00:00Z',
-    end: '2016-02-18T04:00:00Z',
+    start: '2016-02-18T05:00:00Z',
+    end: '2016-02-18T07:00:00Z',
   },
   description: 'Enjoy a menu of high-end gin cocktails plus chocolate chip cookies served at the stroke of midnight.',
   labels: [
@@ -93,8 +93,8 @@ let event3 = {
   id: 3,
   name: 'Mortal Kombat Showdown',
   time: {
-    start: '2016-02-18T00:00:00Z',
-    end: '2016-02-18T04:00:00Z',
+    start: '2016-02-17T23:00:00Z',
+    end: '2016-02-18T02:00:00Z',
   },
   description: 'Emporium just got MK1, 2 & 3! Single eliminaton tourney w/ boozey prizes and classic arcade bragging rights. Toasty!!!\n\nRegistration starts @ 5pm.',
   labels: [
@@ -134,8 +134,8 @@ let event4 = {
   id: 4,
   name: 'New Beers',
   time: {
-    start: '2016-02-18T00:30:00Z',
-    end: '2016-02-18T04:00:00Z',
+    start: '2016-02-17T23:00:00Z',
+    end: '2016-02-18T08:00:00Z',
   },
   description: 'Come grab a pint of Triple Fist! This seriously hoppy ale that was originally brewed in 2010 to celebrate our one-hundredth brewpub batch is released today at the brewpub.\n\nImperial Pale Ale. 8.6 ABV/IBU 95.',
   labels: [

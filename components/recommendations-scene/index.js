@@ -129,7 +129,7 @@ export default class RecommendationsScene extends Component {
       /* Default view */
       <View style={[styles.flexFull, this.props.style]}>
         <TouchableWithoutFeedback onPress={this.scrollToTop.bind(this)} >
-          <View style={[styles.heading, this.context.theme.darkBackground]}>
+          <View style={[this.context.theme.headerView]}>
             <Text style={[styles.headingText, this.context.theme.headerText]}>Happening Nearby</Text>
           </View>
         </TouchableWithoutFeedback>
@@ -175,12 +175,10 @@ var styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  heading: {
-    opacity: 0.5,
-  },
-
   headingText: {
+    opacity: 0.85,
     textAlign: 'center',
+    padding: 2.5,
   },
 
   edgeLabel: {
