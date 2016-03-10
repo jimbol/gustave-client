@@ -23,6 +23,7 @@ export default StyleSheet.create({
   backgroundImage: {
     flexDirection: 'column',
     justifyContent: 'flex-end',
+    backgroundColor: '#2c072c',
   },
 
   title: {
@@ -51,11 +52,12 @@ export default StyleSheet.create({
   },
 
   topButton: {
-    borderRadius: 10,
+    borderRadius: 20,
     backgroundColor: ICON_BACKGROUND,
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
     margin: 4,
+    padding: 4,
   },
 });

@@ -42,7 +42,7 @@ export default class Gustave extends Component {
     this.setState({isLoadingMore: true});
     this.state.user.dismissed = [];
 
-    setTimeout(() => this.setState({isLoadingMore: false}), 2000);
+    setTimeout(() => this.setState({isLoadingMore: false}), 750);
   }
 
   onViewRecommendation(navigator, recommendationId) {

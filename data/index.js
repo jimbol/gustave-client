@@ -1,3 +1,4 @@
+import _ from 'lodash';
 /**
  * This defines a basic set of data for our Gustave Schema.
  *
@@ -215,7 +216,7 @@ function getPlace(id) {
 export function dismissUserRecommendation(userId, recommendationId) {
   let user = getUser(userId);
 
-  if (!user.dismissed.includes(recommendationId))
+  if (!_.includes(user.dismissed, recommendationId))
     user.dismissed.push(recommendationId);
 
   user.saved = user.saved.filter(eventId => eventId !== recommendationId);
@@ -224,7 +225,7 @@ export function dismissUserRecommendation(userId, recommendationId) {
 export function saveUserRecommendation(userId, recommendationId) {
   let user = getUser(userId);
 
-  if (!user.saved.includes(recommendationId))
+  if (!_.includes(user.saved, recommendationId))
     user.saved.push(recommendationId);
 }
 
@@ -240,7 +241,7 @@ export function getUserRecommendations(userId) {
   let user = getUser(userId);
 
   return user.recommendations
-      .filter(event => !user.saved.includes(event) && !user.dismissed.includes(event))
+      .filter(event => !_.includes(user.saved, event) && !_.includes(user.dismissed, event))
       .map(eventId => getUserRecommendation(eventId));
 }
 
@@ -253,7 +254,7 @@ export function getUserSavedRecommendations(userId) {
 export function isUserSavedRecommendation(userId, recommendationId) {
   let user = getUser(userId);
 
-  return user.saved.includes(recommendationId);
+  return _.includes(user.saved, recommendationId);
 }
 
 export function getUserRecommendation(eventId) {

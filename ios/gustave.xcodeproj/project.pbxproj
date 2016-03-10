@@ -26,6 +26,7 @@
 		4A4439C8BC8F485CB7DE7F6C /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 56F33C0C228D4225972582A9 /* Octicons.ttf */; };
 		791D7B4E1C8FC71B00ECD1D8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 791D7B4D1C8FC71B00ECD1D8 /* Launch Screen.storyboard */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		B36208631C91124B0032283F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B36208621C91124B0032283F /* MapKit.framework */; };
 		B41A06FF6B104C6C88095AF1 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 758B25F57CD34737ADA224E6 /* libRNVectorIcons.a */; };
 		BEC08C92426742D688984B43 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B9968F6F66104A659038A2D6 /* Foundation.ttf */; };
 		D5EAFEF87B504EBEB96AC290 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 856B48384E814010AAB10D1D /* EvilIcons.ttf */; };
@@ -149,6 +150,7 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		856B48384E814010AAB10D1D /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		A016A7A3C0204A0587405334 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
+		B36208621C91124B0032283F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		B9968F6F66104A659038A2D6 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		D8FE5EC9B452443DA78F37EB /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		F70B095325D7407C9056D726 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				B36208631C91124B0032283F /* MapKit.framework in Frameworks */,
 				B41A06FF6B104C6C88095AF1 /* libRNVectorIcons.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -315,6 +318,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				B36208621C91124B0032283F /* MapKit.framework */,
 				13B07FAE1A68108700A75B9A /* gustave */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* gustaveTests */,
@@ -410,7 +414,12 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = GBWJG85DQB;
+						DevelopmentTeam = W8K67GE77H;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -694,7 +703,7 @@
 				INFOPLIST_FILE = gustave/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "gustave-dev-conrad";
+				PRODUCT_BUNDLE_IDENTIFIER = "gustave-dev-jim";
 				PRODUCT_NAME = gustave;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -717,7 +726,7 @@
 				INFOPLIST_FILE = gustave/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "gustave-dev-conrad";
+				PRODUCT_BUNDLE_IDENTIFIER = "gustave-dev-jim";
 				PRODUCT_NAME = gustave;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
