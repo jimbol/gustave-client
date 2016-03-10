@@ -2,7 +2,8 @@
 
 import React, {StyleSheet} from 'react-native';
 
-let OVERLAY_COLOR = 'rgba(0, 0, 0, 0.75)'
+let OVERLAY_COLOR = 'rgba(0, 0, 0, 0.75)';
+let ICON_BACKGROUND = 'rgba(0, 0, 0, 0.45)';
 
 export default StyleSheet.create({
 
@@ -33,15 +34,28 @@ export default StyleSheet.create({
     alignSelf: 'flex-start',
   },
 
+  subtitle: {
+    marginBottom: 8,
+  },
+
   overlay: {
-    justifyContent: 'flex-end',
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
     flexDirection: 'row',
-    backgroundColor: 'rgba(0, 0, 0, 0)',
-    right: 0,
   },
 
   topButtonIcon: {
-    color: '#fff',
-    padding: 5,
+    color: '#ccc',
+    padding: 3,
+  },
+
+  topButton: {
+    borderRadius: 10,
+    backgroundColor: ICON_BACKGROUND,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 4,
   },
 });

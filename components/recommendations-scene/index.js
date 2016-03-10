@@ -131,7 +131,8 @@ export default class RecommendationsScene extends Component {
         <TouchableWithoutFeedback onPress={this.scrollToTop.bind(this)} >
           <View style={[this.context.theme.headerView]}>
             <Text style={[styles.headingText, this.context.theme.headerText]}>
-              {this.state.isChildDetailed ? 'Gustave: "Here are the details..."' : 'Gustave: "I think you\'ll like..."'}
+              <Text style={{fontWeight: 'bold'}}>Gustave: </Text>
+              {this.state.isChildDetailed ? '"Here are the details..."' : '"I think you\'ll like..."'}
             </Text>
           </View>
         </TouchableWithoutFeedback>
